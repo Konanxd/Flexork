@@ -1,4 +1,5 @@
 import Checkbox from '@/Components/Checkbox';
+import FormTitle from '@/Components/FormTitle';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -23,7 +24,9 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title="Masuk Pelamar" />
+
+            <FormTitle title="MASUK" />
 
             {status && (
                 <div className="mb-4 text-sm font-medium text-green-600">
@@ -41,7 +44,7 @@ export default function Login({ status, canResetPassword }) {
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
-                        autoComplete="username"
+                        autoComplete="email"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
                     />
@@ -50,7 +53,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value="Kata Sandi" />
 
                     <TextInput
                         id="password"
@@ -75,24 +78,27 @@ export default function Login({ status, canResetPassword }) {
                             }
                         />
                         <span className="ms-2 text-sm text-gray-600">
-                            Remember me
+                            Ingat saya
                         </span>
                     </label>
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
+                <div className="mt-4 flex flex-col items-center justify-center text-center">
+                    <PrimaryButton
+                        className="w-full py-3"
+                        disabled={processing}
+                    >
+                        Log in
+                    </PrimaryButton>
+
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
-                            className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            className="my-7 rounded-md text-sm text-[#1673DE] hover:text-[#6FACF1] focus:outline-none focus:ring-2 focus:ring-[#6FACF1] focus:ring-offset-2"
                         >
-                            Forgot your password?
+                            LUPA KATA SANDI?
                         </Link>
                     )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
                 </div>
             </form>
         </GuestLayout>
