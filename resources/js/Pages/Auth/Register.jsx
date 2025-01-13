@@ -19,7 +19,7 @@ export default function Register() {
 
     const optionItems = [
         { label: 'Pilih jenis kelamin Anda', value: '', disabled: true },
-        { label: 'Laki-Laki', value: 'laki', disabled: false },
+        { label: 'Laki-Laki', value: 'laki-laki', disabled: false },
         { label: 'Perempuan', value: 'perempuan', disabled: false },
     ];
 
@@ -79,8 +79,11 @@ export default function Register() {
 
                     <OptionInput
                         name="gender"
+                        id="gender"
                         value={data.gender}
                         optionItems={optionItems}
+                        onChange={(e) => setData('gender', e.target.value)}
+                        required
                     />
 
                     <InputError message={errors.gender} className="mt-2" />
