@@ -3,7 +3,9 @@ import GuestLayout from '@/Layouts/GuestLayout';
 export default function checking() {
     return (
         <GuestLayout>
-            <h1>CEK</h1>
+            <div>
+                <h1>KONYOL</h1>
+            </div>
         </GuestLayout>
     );
 }
