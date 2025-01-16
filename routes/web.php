@@ -31,5 +31,5 @@ require __DIR__.'/auth.php';
 // });
 
 Route::get('/profile', function (){
-    return Inertia::render('profile');
-})->middleware(['auth', 'verified'])->name('profile');
+    return Inertia::render('Profile');
+});
