@@ -1,11 +1,6 @@
-import GuestLayout from '@/Layouts/GuestLayout';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 
-export default function checking() {
-    return (
-        <GuestLayout>
-            <div>
-                <h1>KONYOL</h1>
-            </div>
-        </GuestLayout>
-    );
+export default function profile() {
+    return;
+    <AuthenticatedLayout></AuthenticatedLayout>;
 }
