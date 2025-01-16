@@ -14,6 +14,7 @@
         "sourceType": "module"
     },
     "rules": {
+        "react/jsx-uses-react": 0,
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
         "react/no-unescaped-entities": "off",

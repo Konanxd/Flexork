@@ -1,5 +1,7 @@
+import FormTitle from '@/Components/FormTitle';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import OptionInput from '@/Components/OptionInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
@@ -9,9 +11,17 @@ export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
+        gender: '',
+        phone: '',
         password: '',
         password_confirmation: '',
     });
+
+    const optionItems = [
+        { label: 'Pilih jenis kelamin Anda', value: '', disabled: true },
+        { label: 'Laki-Laki', value: 'laki-laki', disabled: false },
+        { label: 'Perempuan', value: 'perempuan', disabled: false },
+    ];
 
     const submit = (e) => {
         e.preventDefault();
@@ -23,11 +33,13 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title="Daftar Pelamar" />
+
+            <FormTitle title="DAFTAR" />
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="name" value="Nama Lengkap" />
 
                     <TextInput
                         id="name"
@@ -35,6 +47,7 @@ export default function Register() {
                         value={data.name}
                         className="mt-1 block w-full"
                         autoComplete="name"
+                        placeholder="Isi nama lengkap Anda di sini"
                         isFocused={true}
                         onChange={(e) => setData('name', e.target.value)}
                         required
@@ -52,7 +65,8 @@ export default function Register() {
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
-                        autoComplete="username"
+                        autoComplete="email"
+                        placeholder="Isi email Anda di sini"
                         onChange={(e) => setData('email', e.target.value)}
                         required
                     />
@@ -61,7 +75,40 @@ export default function Register() {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="gender" value="Jenis Kelamin" />
+
+                    <OptionInput
+                        name="gender"
+                        id="gender"
+                        value={data.gender}
+                        optionItems={optionItems}
+                        onChange={(e) => setData('gender', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.gender} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="phone" value="Nomor Telepon" />
+
+                    <TextInput
+                        id="phone"
+                        type="text"
+                        name="phone"
+                        value={data.phone}
+                        className="mt-1 block w-full"
+                        autoComplete="phone"
+                        placeholder="Isi kata sandi Anda di sini"
+                        onChange={(e) => setData('phone', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.password} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="password" value="Kata Sandi" />
 
                     <TextInput
                         id="password"
@@ -70,6 +117,7 @@ export default function Register() {
                         value={data.password}
                         className="mt-1 block w-full"
                         autoComplete="new-password"
+                        placeholder="Isi kata sandi Anda di sini"
                         onChange={(e) => setData('password', e.target.value)}
                         required
                     />
@@ -80,7 +128,7 @@ export default function Register() {
                 <div className="mt-4">
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value="Konfirmasi Kata Sandi"
                     />
 
                     <TextInput
@@ -90,6 +138,7 @@ export default function Register() {
                         value={data.password_confirmation}
                         className="mt-1 block w-full"
                         autoComplete="new-password"
+                        placeholder="Isi ulang kata sandi yang sama di sini"
                         onChange={(e) =>
                             setData('password_confirmation', e.target.value)
                         }
@@ -102,17 +151,20 @@ export default function Register() {
                     />
                 </div>
 
-                <div className="mt-4 flex items-center justify-end">
+                <div className="mt-4 flex flex-col items-center justify-center text-center">
+                    <PrimaryButton
+                        className="w-full py-3"
+                        disabled={processing}
+                    >
+                        DAFTAR
+                    </PrimaryButton>
+
                     <Link
                         href={route('login')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="my-7 rounded-md text-sm text-[#1673DE] hover:text-[#6FACF1] focus:outline-none focus:ring-2 focus:ring-[#6FACF1] focus:ring-offset-2"
                     >
-                        Already registered?
+                        SUDAH PUNYA AKUN?
                     </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
                 </div>
             </form>
         </GuestLayout>
