@@ -30,6 +30,10 @@ require __DIR__ . '/auth.php';
 
 // });
 
+Route::get('/details', function () {
+    return Inertia::render('Jobs/Details');
+});
+
 Route::get('/profile', function () {
     return Inertia::render('Profile');
 });
