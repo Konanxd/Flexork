@@ -4,8 +4,8 @@ import GuestLayout from '@/Layouts/GuestLayout';
 export default function Dashboard() {
     return (
         <GuestLayout>
-            <div className="flex w-full flex-row">
-                <div className="flex flex-row items-center justify-center bg-[#9F9F9F] p-2 text-lg text-white">
+            <div className="flex w-full flex-row justify-center">
+                <div className="flex flex-row items-center justify-center bg-[#9F9F9F] py-2 pl-4 text-lg text-white">
                     FILTER
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@ export default function Dashboard() {
                     className="w-full"
                     placeholder="Saya sedang mencari..."
                 />
-                <div className="flex flex-row items-center justify-center bg-[#9F9F9F] p-2 text-lg text-white">
+                <div className="flex flex-row items-center justify-center bg-[#9F9F9F] px-4 py-2 text-lg text-white">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -33,6 +33,42 @@ export default function Dashboard() {
                     </svg>
                     &nbsp; CARI
                 </div>
+            </div>
+            <div className="flex w-full flex-row justify-center gap-5 p-4">
+                {['Lowongan Dilamar', 'Diterima', 'Ditolak', 'Menunggu'].map(
+                    (status, index) => (
+                        <div
+                            key={index}
+                            className="flex w-full flex-row items-center gap-3 rounded-2xl border bg-white p-6"
+                        >
+                            <div className="rounded-lg bg-[#9F9F9F] p-4">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    height="24"
+                                    fill="rgba(255,255,255,1)"
+                                >
+                                    <path d="M15 4H5V20H19V8H15V4ZM3 2.9918C3 2.44405 3.44749 2 3.9985 2H16L20.9997 7L21 20.9925C21 21.5489 20.5551 22 20.0066 22H3.9934C3.44476 22 3 21.5447 3 21.0082V2.9918ZM13 12V16H11V12H8L12 8L16 12H13Z"></path>
+                                </svg>
+                            </div>
+                            <div className="flex flex-col">
+                                <span className="poppins-semibold">
+                                    {status}
+                                </span>
+                                <span className="text-xs text-[#9F9F9F]">
+                                    {index === 0
+                                        ? '10 Lowongan'
+                                        : index === 1
+                                          ? '2 Lowongan'
+                                          : index === 2
+                                            ? '12 Lowongan'
+                                            : '1 Lowongan'}
+                                </span>
+                            </div>
+                        </div>
+                    ),
+                )}
             </div>
         </GuestLayout>
     );
