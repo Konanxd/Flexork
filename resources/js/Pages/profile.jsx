@@ -9,8 +9,8 @@ export default function profile() {
             <Head title="Akun Saya" />
             <div className="flex h-screen w-full flex-row gap-5 p-5">
                 <AccountMenu></AccountMenu>
-                <div className="h-full w-full rounded-lg bg-white">
-                    <MyAccount></MyAccount>
+                <div className="scrollbar-none h-full w-full overflow-x-scroll rounded-lg bg-white">
+                    <MyAccount title="masuk"></MyAccount>
                 </div>
             </div>
         </GuestLayout>
