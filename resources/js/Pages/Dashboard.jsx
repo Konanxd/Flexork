@@ -67,14 +67,14 @@ export default function Dashboard() {
     const renderPopularCategories = () => {
         return categoriesPopular.map((item, index) => (
             <div
-                className="flex flex-col rounded-lg border border-gray-300 bg-white shadow-lg"
+                className="flex w-full flex-col rounded-lg border border-gray-300 bg-white shadow-lg"
                 key={index}
             >
                 <div className="object-cover">
-                    <img src={item.img} />
+                    <img src={item.img} className="w-full" />
                 </div>
-                <div className="flex flex-col p-4">
-                    <span className="poppins-semibold text-md">
+                <div className="flex flex-col px-4 py-6">
+                    <span className="poppins-semibold text-md line-clamp-1">
                         {item.name}
                     </span>
                     <span className="text-xs text-[#9F9F9F]">
@@ -123,9 +123,9 @@ export default function Dashboard() {
                     {renderTrackerJobs()}
                 </div>
 
-                <div className="flex w-full flex-col justify-center gap-5 bg-white p-5">
+                <div className="flex w-full flex-col justify-center gap-5 rounded-2xl bg-white p-5">
                     <span className="poppins-semibold">Kategori Populer</span>
-                    <div className="flex flex-row gap-5">
+                    <div className="flex w-full flex-row gap-5">
                         {renderPopularCategories()}
                     </div>
                 </div>
