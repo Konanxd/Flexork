@@ -87,7 +87,7 @@ export default function Dashboard() {
 
     return (
         <GuestLayout>
-            <div className="mx-5">
+            <div className="mx-5 w-full p-10">
                 <div className="flex w-full flex-row">
                     <div className="poppins-regular text-md flex flex-row items-center bg-[#9F9F9F] px-4 py-2 text-white">
                         FILTER
