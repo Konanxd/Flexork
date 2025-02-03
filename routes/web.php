@@ -31,5 +31,9 @@ require __DIR__.'/auth.php';
 // });
 
 Route::get('/profile', function (){
-    return Inertia::render('Profile');
+    return Inertia::render('Profile/Profile');
+});
+
+Route::get('/profile/edit', function (){
+    return Inertia::render('Profile/FormEdit');
 });
