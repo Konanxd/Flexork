@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -18,11 +16,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
-        'gender',
-        'phone',
+        'usertype',
         'password',
+        'foto_akun',
     ];
 
     /**
@@ -46,5 +44,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function seeker()
+    {
+        return $this->hasOne(Seeker::class, 'id_akun', 'id_akun');
+    }
+
+    public function company()
+    {
+        return $this->hasOne(Company::class, 'id_akun', 'id_akun');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'id_akun', 'id_akun');
+    }
+
+    public function applications()
+    {
+        return $this->hasManyThrough(Application::class, Seeker::class, 'id_akun', 'id_pelamar', 'id_akun', 'id_lamaran');
     }
 }
