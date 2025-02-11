@@ -10,7 +10,7 @@ export default function FormEdit() {
     return (
         <GuestLayout>
             <Head title="Edit Akun" />
-            <form className="my-5 flex w-[80%] max-w-[1000px] flex-col gap-5 rounded-2xl bg-white px-24 py-8">
+            <form className="my-5 flex w-[80%] max-w-[1000px] flex-col gap-5 rounded-2xl bg-white px-24 py-16">
                 <div className="flex flex-col gap-2.5">
                     <FormEditTitle title="Nama" />
                     <TextInputSecondary placeholder="Isi Nama Anda Disini" />
@@ -37,10 +37,10 @@ export default function FormEdit() {
                 </div>
                 <div className="flex flex-col gap-2.5">
                     <FormEditTitle title="Pengalaman Kerja" />
-                    <TextAreaPrim placeholder="Isi Tentang Pengalaman Kerja Anda Disini" />
+                    <TextAreaPrim placeholder="Isi Tentang Pengalaman Kerja Anda Disini " />
                 </div>
                 <div className="flex flex-col gap-2.5">
-                    <FormEditTitle title="Pengalaman Kerja" />
+                    <FormEditTitle title="Tanggal Lahir" />
                     <div>
                         <input
                             type="date"
@@ -50,8 +50,10 @@ export default function FormEdit() {
                         />
                     </div>
                 </div>
-                <PrimaryButton>simpan</PrimaryButton>
-                <SecondaryButton>batal</SecondaryButton>
+                <PrimaryButton className="py-3">simpan</PrimaryButton>
+                <SecondaryButton className="justify-center py-3">
+                    batal
+                </SecondaryButton>
             </form>
         </GuestLayout>
     );

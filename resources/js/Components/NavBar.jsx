@@ -2,7 +2,7 @@ import NavLink from './NavLink';
 
 const NavBar = ({ navItems = [], isAuth = false, userName = '' }) => {
     return (
-        <nav className="flex w-full flex-col border border-b-[#1673DE]">
+        <nav className="flex w-full flex-col border border-b-[#1673DE] px-20">
             <div className="m-auto flex w-full items-center justify-between py-3">
                 <img src={'../assets/logo.png'} alt="Flexork" width={160} />
                 {isAuth ? (
