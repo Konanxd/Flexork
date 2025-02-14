@@ -9,7 +9,7 @@ export default function GuestLayout({ children }) {
     return (
         <div>
             <NavBar navItems={navItems} />
-            <div className="poppins-regular flex min-h-screen flex-col items-center bg-gray-100 sm:justify-center sm:pt-0">
+            <div className="poppins-regular flex flex-col items-center bg-[#EEF1F4]">
                 {children}
             </div>
         </div>

@@ -25,7 +25,7 @@ const Details = () => {
 
                 <div className="flex flex-row">
                     <div>
-                        <SecondaryButton className="bg-[#6FACF1] tracking-normal text-white hover:bg-zinc-400">
+                        <SecondaryButton className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400">
                             LAMAR
                         </SecondaryButton>
                     </div>
