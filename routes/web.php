@@ -41,3 +41,7 @@ Route::get('/profile', function (){
 Route::get('/profile/edit', function (){
     return Inertia::render('Profile/AccountEdit');
 });
+
+Route::get('/search', function (){
+    return Inertia::render('Jobs/JobSearch');
+});
