@@ -7,7 +7,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 const Details = () => {
     return (
         <GuestLayout>
-            <div className="shadow-5xl mb-14 mt-14 flex w-full max-w-4xl flex-col gap-6 overflow-hidden rounded-2xl bg-white px-8 py-10">
+            <div className="shadow-5xl my-14 flex w-full max-w-4xl flex-col gap-6 overflow-hidden rounded-2xl bg-white px-8 py-10">
                 <div className="flex flex-col gap-4">
                     <HeadTitle className="text-2xl" title="Inter Programmer" />
                     <HeadDescription className="text-[#727272]">
@@ -25,7 +25,7 @@ const Details = () => {
 
                 <div className="flex flex-row">
                     <div>
-                        <SecondaryButton className="bg-[#6FACF1] text-white">
+                        <SecondaryButton className="bg-[#6FACF1] tracking-normal text-white hover:bg-zinc-400">
                             LAMAR
                         </SecondaryButton>
                     </div>
