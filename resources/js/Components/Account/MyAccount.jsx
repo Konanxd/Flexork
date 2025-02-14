@@ -1,8 +1,9 @@
-import FileStored from './FileStored';
-import FileUploadBtn from './FileUploadBtn';
+import { router } from '@inertiajs/react';
+import FileStored from '../FileStored';
+import FileUploadBtn from '../FileUploadBtn';
+import PrimaryButton from '../PrimaryButton';
+import UserVerified from '../UserVerified';
 import MyAccountDesc from './MyAccountDesc';
-import PrimaryButton from './PrimaryButton';
-import UserVerified from './UserVerified';
 
 const MyAccount = () => {
     return (
@@ -63,16 +64,10 @@ const MyAccount = () => {
                         </span>
                     </div>
                 </div>
-                <PrimaryButton className="flex items-center gap-2 bg-none">
-                    {/* <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        width="14"
-                        height="14"
-                        fill="currentColor"
-                    >
-                        <path d="M12.8995 6.85453L17.1421 11.0972L7.24264 20.9967H3V16.754L12.8995 6.85453ZM14.3137 5.44032L16.435 3.319C16.8256 2.92848 17.4587 2.92848 17.8492 3.319L20.6777 6.14743C21.0682 6.53795 21.0682 7.17112 20.6777 7.56164L18.5563 9.68296L14.3137 5.44032Z"></path>
-                    </svg> */}
+                <PrimaryButton
+                    className="flex items-center gap-2 bg-none"
+                    onClick={() => router.visit('/profile/edit')}
+                >
                     <span>edit</span>
                 </PrimaryButton>
             </div>
@@ -166,7 +161,7 @@ const MyAccount = () => {
                 </MyAccountDesc>
                 <MyAccountDesc
                     title="resume"
-                    className="scrollbar-thin flex w-full flex-row gap-6 overflow-x-scroll pb-3"
+                    className="flex w-full flex-row gap-6 overflow-x-scroll pb-3 scrollbar-thin"
                 >
                     <FileUploadBtn></FileUploadBtn>
                     <FileStored></FileStored>
@@ -178,7 +173,7 @@ const MyAccount = () => {
                 </MyAccountDesc>
                 <MyAccountDesc
                     title="sertifikat"
-                    className="scrollbar-thin flex w-full flex-row gap-6 overflow-x-scroll pb-3"
+                    className="flex w-full flex-row gap-6 overflow-x-scroll pb-3 scrollbar-thin"
                 >
                     <FileUploadBtn></FileUploadBtn>
                     <FileStored></FileStored>
