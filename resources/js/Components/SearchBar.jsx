@@ -91,7 +91,7 @@ export default function SearchBar({ className = '', ...props }) {
                             {jobTypes.map((job, index) => (
                                 <label
                                     key={index}
-                                    className="flex items-center gap-2 text-gray-600"
+                                    className="flex w-fit items-center gap-2 text-gray-600"
                                 >
                                     <input
                                         type="checkbox"
@@ -109,7 +109,7 @@ export default function SearchBar({ className = '', ...props }) {
                             {workDays.map((day, index) => (
                                 <label
                                     key={index}
-                                    className="flex items-center gap-2 text-gray-600"
+                                    className="flex w-fit items-center gap-2 text-gray-600"
                                 >
                                     <input
                                         type="checkbox"
@@ -122,10 +122,8 @@ export default function SearchBar({ className = '', ...props }) {
                     </div>
 
                     <div className="mt-6 grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="text-gray-600">
-                                Rentang Gaji
-                            </label>
+                        <div className="flex flex-col gap-2">
+                            <label className="">Rentang Gaji</label>
                             <div className="flex items-center gap-2">
                                 <input
                                     type="number"
@@ -140,10 +138,8 @@ export default function SearchBar({ className = '', ...props }) {
                                 />
                             </div>
                         </div>
-                        <div>
-                            <label className="text-gray-600">
-                                Rentang Waktu
-                            </label>
+                        <div className="flex flex-col gap-2">
+                            <label className="">Rentang Waktu</label>
                             <div className="flex items-center gap-2">
                                 <input
                                     type="time"
