@@ -1,3 +1,4 @@
+import SearchBar from '@/Components/SearchBar';
 import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function Dashboard() {
@@ -66,7 +67,7 @@ export default function Dashboard() {
     const renderPopularCategories = () => {
         return categoriesPopular.map((item, index) => (
             <div
-                className="flex w-full flex-col rounded-lg border border-gray-300 bg-white shadow-lg"
+                className="flex w-full flex-col border-gray-300 bg-white shadow-lg"
                 key={index}
             >
                 <div className="object-cover">
@@ -86,13 +87,18 @@ export default function Dashboard() {
 
     return (
         <GuestLayout>
-            <div className="mx-5 w-full p-10">
+            <div className="mx-5 w-full p-6">
+                <div className="w-full bg-red-600">
+                    <SearchBar className="" />
+                </div>
                 <div className="my-4 flex w-full flex-row justify-center gap-5">
                     {renderTrackerJobs()}
                 </div>
 
-                <div className="flex w-full flex-col justify-center gap-5 rounded-2xl bg-white p-5">
-                    <span className="poppins-semibold">Kategori Populer</span>
+                <div className="flex w-full flex-col justify-center gap-6 bg-white p-5 pt-6">
+                    <span className="poppins-semibold text-lg">
+                        Kategori Populer
+                    </span>
                     <div className="flex w-full flex-row gap-5">
                         {renderPopularCategories()}
                     </div>

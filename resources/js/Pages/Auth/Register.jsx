@@ -32,21 +32,21 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
-            <div className="mb-14 mt-14 w-full overflow-hidden border-2 border-slate-300 bg-white px-6 py-4 shadow-xl sm:max-w-lg sm:rounded-lg">
+        <GuestLayout className="items-center justify-center">
+            <div className="flex w-full flex-col gap-7 border-slate-300 bg-white px-6 py-7 shadow-xl sm:max-w-lg sm:rounded-lg">
                 <Head title="Daftar Pelamar" />
 
                 <FormTitle title="DAFTAR" />
 
-                <form onSubmit={submit}>
-                    <div>
+                <form onSubmit={submit} className="flex flex-col gap-6">
+                    <div className="flex flex-col gap-2">
                         <InputLabel htmlFor="name" value="Nama Lengkap" />
 
                         <TextInput
                             id="name"
                             name="name"
                             value={data.name}
-                            className="mt-1 block w-full"
+                            className="block w-full"
                             autoComplete="name"
                             placeholder="Isi nama lengkap Anda di sini"
                             isFocused={true}
@@ -57,7 +57,7 @@ export default function Register() {
                         <InputError message={errors.name} className="mt-2" />
                     </div>
 
-                    <div className="mt-4">
+                    <div className="">
                         <InputLabel htmlFor="email" value="Email" />
 
                         <TextInput
@@ -65,7 +65,7 @@ export default function Register() {
                             type="email"
                             name="email"
                             value={data.email}
-                            className="mt-1 block w-full"
+                            className="block w-full"
                             autoComplete="email"
                             placeholder="Isi email Anda di sini"
                             onChange={(e) => setData('email', e.target.value)}
@@ -75,7 +75,7 @@ export default function Register() {
                         <InputError message={errors.email} className="mt-2" />
                     </div>
 
-                    <div className="mt-4">
+                    <div className="flex flex-col gap-2">
                         <InputLabel htmlFor="gender" value="Jenis Kelamin" />
 
                         <OptionInput
@@ -90,7 +90,7 @@ export default function Register() {
                         <InputError message={errors.gender} className="mt-2" />
                     </div>
 
-                    <div className="mt-4">
+                    <div className="flex flex-col gap-2">
                         <InputLabel htmlFor="phone" value="Nomor Telepon" />
 
                         <TextInput
@@ -98,7 +98,7 @@ export default function Register() {
                             type="text"
                             name="phone"
                             value={data.phone}
-                            className="mt-1 block w-full"
+                            className="block w-full"
                             autoComplete="phone"
                             placeholder="Isi kata sandi Anda di sini"
                             onChange={(e) => setData('phone', e.target.value)}
@@ -111,7 +111,7 @@ export default function Register() {
                         />
                     </div>
 
-                    <div className="mt-4">
+                    <div className="flex flex-col gap-2">
                         <InputLabel htmlFor="password" value="Kata Sandi" />
 
                         <TextInput
@@ -119,7 +119,7 @@ export default function Register() {
                             type="password"
                             name="password"
                             value={data.password}
-                            className="mt-1 block w-full"
+                            className="block w-full"
                             autoComplete="new-password"
                             placeholder="Isi kata sandi Anda di sini"
                             onChange={(e) =>
@@ -134,7 +134,7 @@ export default function Register() {
                         />
                     </div>
 
-                    <div className="mt-4">
+                    <div className="flex flex-col gap-2">
                         <InputLabel
                             htmlFor="password_confirmation"
                             value="Konfirmasi Kata Sandi"
@@ -145,7 +145,7 @@ export default function Register() {
                             type="password"
                             name="password_confirmation"
                             value={data.password_confirmation}
-                            className="mt-1 block w-full"
+                            className="block w-full"
                             autoComplete="new-password"
                             placeholder="Isi ulang kata sandi yang sama di sini"
                             onChange={(e) =>
@@ -160,22 +160,23 @@ export default function Register() {
                         />
                     </div>
 
-                    <div className="mt-4 flex flex-col items-center justify-center text-center">
+                    <div className="flex flex-col items-center justify-center text-center">
                         <PrimaryButton
-                            className="w-full py-3"
+                            className="w-full bg-[#1673DE] py-3 text-white"
                             disabled={processing}
                         >
                             DAFTAR
                         </PrimaryButton>
-
-                        <Link
-                            href={route('login')}
-                            className="my-7 rounded-md text-sm text-[#1673DE] hover:text-[#6FACF1] focus:outline-none focus:ring-2 focus:ring-[#6FACF1] focus:ring-offset-2"
-                        >
-                            SUDAH PUNYA AKUN?
-                        </Link>
                     </div>
                 </form>
+                <div className="flex justify-center">
+                    <Link
+                        href={route('login')}
+                        className="rounded-md text-sm text-[#1673DE] hover:text-[#6FACF1] focus:outline-none focus:ring-2 focus:ring-[#6FACF1] focus:ring-offset-2"
+                    >
+                        SUDAH PUNYA AKUN?
+                    </Link>
+                </div>
             </div>
         </GuestLayout>
     );
