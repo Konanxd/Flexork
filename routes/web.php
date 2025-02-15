@@ -45,3 +45,7 @@ Route::get('/profile/edit', function (){
 Route::get('/search', function (){
     return Inertia::render('Jobs/JobSearch');
 });
+
+Route::get('/company/details', function (){
+    return Inertia::render('Company/CompanyDetails');
+});

@@ -23,7 +23,9 @@ export default function ModalReview({ onClose, pos, company, ...props }) {
                 <FiveStar onRate={(value) => console.log('Rating:', value)} />
 
                 <div className="flex w-full flex-col gap-2">
-                    <PrimaryButton>kirim</PrimaryButton>{' '}
+                    <PrimaryButton className="bg-[#1673DE] px-6 py-3 text-white hover:bg-blue-400">
+                        kirim
+                    </PrimaryButton>{' '}
                 </div>
             </div>
         </div>

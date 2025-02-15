@@ -1,28 +1,37 @@
-import PrimaryButton from './PrimaryButton';
+import PrimaryButton from '../PrimaryButton';
+import TagView from '../TagView';
+import JobCardHeader from './JobCardHeader';
 
 export default function JobCard({
     title,
     company,
     desc,
-    salary,
+    maxSalary,
+    minSalary,
     tag,
     ...props
 }) {
     return (
-        <div className="flex w-full flex-col gap-4 rounded-lg bg-white p-6">
-            <div className="flex flex-col gap-1.5">
-                <h1 className="flex flex-col gap-2 text-lg font-semibold capitalize">
-                    {title}
-                </h1>
-                <p className="text-[#9F9F9F]">{company}</p>
+        <div className="flex w-full flex-col gap-4 rounded-lg bg-white px-8 py-6">
+            <JobCardHeader title={title} company={company} />
+            <div className="flex flex-row gap-2 font-medium text-[#1673DE]">
+                <span>Rp. {minSalary}</span>
+                <span>-</span>
+                <span>Rp. {maxSalary}</span>
             </div>
-            <div className="font-medium text-[#1673DE]">Rp. {salary}</div>
-            <div className="w-fit rounded-full bg-[#44CFCB] px-4 py-2 text-white">
-                {tag}
+            <div className="flex w-full flex-row gap-2 overflow-clip">
+                <TagView
+                    className="bg-[#44CFCB] text-white"
+                    tag={tag}
+                ></TagView>
+                <TagView
+                    className="bg-[#44CFCB] text-white"
+                    tag={tag}
+                ></TagView>
             </div>
             <div className="line-clamp-2">{desc}</div>
             <div className="flex flex-row gap-3">
-                <PrimaryButton className="hover border-2 border-[#1673DE] bg-transparent px-6 text-blue-600 hover:bg-[#1673DE] hover:text-white">
+                <PrimaryButton className="hover border-2 border-[#1673DE] bg-transparent px-6 text-[#1673DE] hover:bg-[#1673DE] hover:text-white">
                     lihat
                 </PrimaryButton>
                 <svg

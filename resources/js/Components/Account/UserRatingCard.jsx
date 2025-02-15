@@ -14,7 +14,10 @@ export default function UserRatingCard({ company, position, ...props }) {
                     <span className="text-[#5B5B5B]">{position}</span>
                 </div>
             </div>
-            <PrimaryButton className="h-fit w-fit" {...props}>
+            <PrimaryButton
+                className="h-fit w-fit bg-[#1673DE] px-6 py-3 text-white hover:bg-blue-400"
+                {...props}
+            >
                 Beri Rating
             </PrimaryButton>
         </div>

@@ -1,4 +1,4 @@
-import JobCard from '@/Components/JobCard';
+import JobCard from '@/Components/JobCard/JobCard';
 import SearchBar from '@/Components/SearchBar';
 import GuestLayout from '@/Layouts/GuestLayout';
 
@@ -7,7 +7,8 @@ export default function JobSearch() {
 
     const company = ['PT. Lintas Fortuna Nusantara'];
 
-    const salary = [1000000];
+    const maxSalary = [1000000];
+    const minSalary = [500000];
 
     const tag = ['Computer'];
 
@@ -21,98 +22,8 @@ export default function JobSearch() {
                 <JobCard
                     title={job}
                     company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
-                    tag={tag}
-                    desc={desc}
-                />
-                <JobCard
-                    title={job}
-                    company={company}
-                    salary={salary}
+                    maxSalary={maxSalary}
+                    minSalary={minSalary}
                     tag={tag}
                     desc={desc}
                 />
