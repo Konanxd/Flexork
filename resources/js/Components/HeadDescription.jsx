@@ -1,7 +1,7 @@
-const HeadDescription = ({ children }) => {
+const HeadDescription = ({ children, className = '' }) => {
     return (
         <div>
-            <p className="text-md text-justify">{children}</p>
+            <p className={'text-justify text-sm ' + className}>{children}</p>
         </div>
     );
 };
