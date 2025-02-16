@@ -1,4 +1,4 @@
-import PrimaryButton from '../PrimaryButton';
+import PrimaryButton from '../../PrimaryButton';
 
 export default function SeekerRequestCard({ nama, image }) {
     return (

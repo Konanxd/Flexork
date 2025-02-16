@@ -1,5 +1,5 @@
-import PrimaryButton from '../PrimaryButton';
-import TagView from '../TagView';
+import PrimaryButton from '../../PrimaryButton';
+import TagView from '../../TagView';
 
 export default function CompanyJobCard({ title, date, tag, desc }) {
     return (

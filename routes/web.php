@@ -57,3 +57,7 @@ Route::get('/company/dashboard', function (){
 Route::get('/company/list-pelamar', function (){
     return Inertia::render('Company/SeekerList');
 });
+
+Route::get('/company/profile', function (){
+    return Inertia::render('Company/CompanyProfile');
+});

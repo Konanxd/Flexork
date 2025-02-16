@@ -1,4 +1,4 @@
-import SeekerRequestCard from '@/Components/CompanyCard/SeekerRequestCard';
+import SeekerRequestCard from '@/Components/Company/CompanyCard/SeekerRequestCard';
 import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function SeekerList({ ...props }) {

@@ -1,4 +1,4 @@
-import CompanyJobCard from '@/Components/CompanyCard/CompanyJobCard';
+import CompanyJobCard from '@/Components/Company/CompanyCard/CompanyJobCard';
 import PrimaryButton from '@/Components/PrimaryButton';
 import GuestLayout from '@/Layouts/GuestLayout';
 
