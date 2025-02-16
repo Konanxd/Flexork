@@ -1,6 +1,9 @@
-const FileUploadBtn = () => {
+const FileUploadBtn = ({ ...props }) => {
     return (
-        <div className="cursor-pointer rounded-2xl border-[3px] border-dashed border-neutral-400 p-8">
+        <button
+            className="cursor-pointer rounded-2xl border-[3px] border-dashed border-neutral-400 p-8"
+            {...props}
+        >
             <div className="w-48 text-center">
                 <h1 className="w-full text-lg font-semibold uppercase">
                     unggah file disini
@@ -9,7 +12,7 @@ const FileUploadBtn = () => {
                     ukuran file maksimal 5MB
                 </span>
             </div>
-        </div>
+        </button>
     );
 };
 

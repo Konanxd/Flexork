@@ -1,4 +1,5 @@
 import { router } from '@inertiajs/react';
+import { useState } from 'react';
 import FileStored from '../FileStored';
 import FileUploadBtn from '../FileUploadBtn';
 import PrimaryButton from '../PrimaryButton';
@@ -6,6 +7,17 @@ import UserVerified from '../UserVerified';
 import MyAccountDesc from './MyAccountDesc';
 
 const MyAccount = () => {
+    const [uploadFileOpen, setUploadFileOpen] = useState(false);
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        if (selectedFile && selectedFile.type === 'application/pdf') {
+            setFile(selectedFile);
+        } else {
+            alert('Please upload a valid PDF file.');
+        }
+    };
     return (
         <div className="h-full">
             <div className="m flex w-full flex-row items-center gap-6 rounded-t-lg bg-gray-400 p-8 sm:flex-col md:flex-row lg:flex-row">
@@ -163,7 +175,9 @@ const MyAccount = () => {
                     title="resume"
                     className="flex w-full flex-row gap-6 overflow-x-scroll pb-3 scrollbar-thin"
                 >
-                    <FileUploadBtn></FileUploadBtn>
+                    <FileUploadBtn
+                        onClick={() => setUploadFileOpen(true)}
+                    ></FileUploadBtn>
                     <FileStored></FileStored>
                     <FileStored></FileStored>
                     <FileStored></FileStored>
@@ -171,6 +185,47 @@ const MyAccount = () => {
                     <FileStored></FileStored>
                     <FileStored></FileStored>
                 </MyAccountDesc>
+
+                {uploadFileOpen && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                        <div className="flex w-96 flex-col gap-4 rounded-lg bg-white p-6 shadow-lg">
+                            <h2 className="mb-4 text-xl font-semibold">
+                                Upload File
+                            </h2>
+                            <input
+                                type="file"
+                                accept="application/pdf"
+                                onChange={handleFileChange}
+                                className="mb-4 block w-full text-sm text-gray-700"
+                            />
+                            {file && (
+                                <div className="mb-4 rounded-lg border bg-gray-100 p-2">
+                                    <p>
+                                        <strong>Name:</strong> {file.name}
+                                    </p>
+                                    <p>
+                                        <strong>Size:</strong>{' '}
+                                        {(file.size / 1024).toFixed(2)} KB
+                                    </p>
+                                </div>
+                            )}
+                            <div className="flex flex-row gap-2">
+                                <PrimaryButton
+                                    onClick={() => setUploadFileOpen(false)}
+                                    className="rounded-lg bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                                >
+                                    tutup
+                                </PrimaryButton>
+                                <PrimaryButton
+                                    onClick={() => setUploadFileOpen(false)}
+                                    className="rounded-lg bg-[#1673DE] px-4 py-2 text-white"
+                                >
+                                    kirim
+                                </PrimaryButton>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <MyAccountDesc
                     title="sertifikat"
                     className="flex w-full flex-row gap-6 overflow-x-scroll pb-3 scrollbar-thin"
