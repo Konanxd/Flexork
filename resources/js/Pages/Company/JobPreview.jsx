@@ -1,6 +1,7 @@
 import HeadDescription from '@/Components/HeadDescription';
 import HeadTitle from '@/Components/HeadTitle';
 import PrimaryButton from '@/Components/PrimaryButton';
+import ReviewToUser from '@/Components/ReviewToUser';
 import SubTitle from '@/Components/SubTitle';
 import TagView from '@/Components/TagView';
 import GuestLayout from '@/Layouts/GuestLayout';
@@ -170,7 +171,11 @@ export default function JobPreview() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <SubTitle>Review</SubTitle>
+                    <SubTitle>ulasan</SubTitle>
+                    <ReviewToUser nama={'agus'} />
+                    <ReviewToUser nama={'paman'} />
+                    <ReviewToUser nama={'agus'} />
+                    <ReviewToUser nama={'agus'} />
                 </div>
 
                 <div className="flex"></div>
