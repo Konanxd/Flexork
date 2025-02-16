@@ -4,7 +4,7 @@ import LogoutButton from '@/Components/LogoutButton';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
-import CompanyDelete from './CompanyDelete';
+import CompanyDelete from '../../Components/Company/CompanyDelete';
 
 export default function CompanyProfile() {
     const [activeComponent, setActiveComponent] = useState('CompanyAccount');

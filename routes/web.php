@@ -61,3 +61,13 @@ Route::get('/company/list-pelamar', function (){
 Route::get('/company/profile', function (){
     return Inertia::render('Company/CompanyProfile');
 });
+
+Route::get('/company/edit', function (){
+    return Inertia::render('Company/CompanyEdit');
+});
+Route::get('/company/job/preview', function (){
+    return Inertia::render('Company/JobPreview');
+});
+Route::get('/company/job/add', function (){
+    return Inertia::render('Company/AddJobsForm');
+});
