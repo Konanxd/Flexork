@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VacancyController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -13,6 +14,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/cari', [VacancyController::class, 'index'])->name('vacancy.index');
+Route::get('/lowongan/{id}', [VacancyController::class, 'details'])->name('vacancy.details');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -30,8 +34,8 @@ require __DIR__ . '/auth.php';
 
 // });
 
-Route::get('/details', function () {
-    return Inertia::render('Jobs/Details');
+Route::get('/test', function () {
+    return Inertia::render('VacancyForm');
 });
 
 Route::get('/profile', function () {

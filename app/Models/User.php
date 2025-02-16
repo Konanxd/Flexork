@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Admin;
+use App\Models\Seeker;
+use App\Models\Company;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -20,8 +23,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'gender',
         'phone',
+        'type_user',
         'password',
     ];
 
@@ -46,5 +49,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function seeker()
+    {
+        return $this->hasOne(Seeker::class);
+    }
+
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
+
+    public function user()
+    {
+        return $this->hasOne(Admin::class);
     }
 }

@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applies', function (Blueprint $table) {
-            $table->id('id_apply');
+        Schema::create('cv_s', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('id_seeker');
-            $table->unsignedBigInteger('id_vacancy');
-            $table->text('message_apply');
-            $table->enum('status_apply', ['pending', 'accepted', 'rejected']);
+            $table->string('path')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_vacancy')->references('id_vacancy')->on('vacancies');
             $table->foreign('id_seeker')->references('id_seeker')->on('seekers');
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applies');
+        Schema::dropIfExists('c_v_s');
     }
 };

@@ -1,15 +1,17 @@
 import NavBar from '@/Components/NavBar';
 
-export default function GuestLayout({ children }) {
+export default function GuestLayout({ children, className = '' }) {
     const navItems = [
-        { label: 'DAFTAR', path: 'register' },
+        { label: 'DAFTAR', path: 'register-pelamar.index' },
         { label: 'MASUK', path: 'login' },
     ];
 
     return (
         <div>
             <NavBar navItems={navItems} />
-            <div className="poppins-regular flex min-h-screen flex-col items-center bg-[#eef1f4] pt-6 sm:justify-center sm:pt-0">
+            <div
+                className={`poppins-regular flex flex-col items-center bg-[#EEF1F4] ${className}`}
+            >
                 {children}
             </div>
         </div>

@@ -13,16 +13,17 @@ return new class extends Migration
     {
         Schema::create('vacancies', function (Blueprint $table) {
             $table->id('id_vacancy');
+            $table->unsignedBigInteger('id_company');
             $table->string('title_vacancy');
             $table->text('description_vacancy');
             $table->boolean('is_active');
             $table->date('deadline_vacancy');
-            $table->text('jobdesk_vacancy');
-            $table->text('benefit_vacancy');
+            $table->json('jobdesk_vacancy');
+            $table->json('benefit_vacancy');
             $table->float('salary_vacancy');
-            $table->timestamps('created_at_vacancy');
+            $table->timestamps();
 
-            $table->foreignId('id_company')->constrained('company');
+            $table->foreign('id_company')->references('id_company')->on('companies');
         });
     }
 

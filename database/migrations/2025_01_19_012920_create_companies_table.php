@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('company', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id('id_company');
+            $table->unsignedBigInteger('id_user');
             $table->string('id_business')->unique();
             $table->string('name_company');
             $table->text('description_company');
             $table->string('email_company')->unique();
-            $table->boolean('iS_verified');
+            $table->boolean('is_verified');
             $table->timestamp('agreed_at')->nullable();
             $table->string('address_company');
             $table->float('score_company');
             $table->timestamps();
 
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreign('id_user')->references('id_user')->on('users');
         });
     }
 

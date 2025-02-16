@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('seekers', function (Blueprint $table) {
             $table->id('id_seeker');
+            $table->unsignedBigInteger('id_user');
             $table->string('name_seeker');
             $table->string('email_seeker')->unique();
             $table->date('born_date');
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->float('score_seeker');
             $table->timestamps();
 
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreign('id_user')->references('id_user')->on('users');
         });
     }
 

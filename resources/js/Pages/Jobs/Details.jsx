@@ -4,33 +4,34 @@ import SecondaryButton from '@/Components/SecondaryButton';
 import SubTitle from '@/Components/SubTitle';
 import GuestLayout from '@/Layouts/GuestLayout';
 
-const Details = () => {
+const Details = ({ vacancy }) => {
+    // const { vacancy } = usePage().props;
+    console.log(vacancy);
+    const data = vacancy[0];
     return (
         <GuestLayout>
-            <div className="shadow-5xl mb-14 mt-14 flex w-full max-w-4xl flex-col gap-6 overflow-hidden rounded-2xl bg-white px-6 py-8">
-                <HeadTitle className="text-3xl" title="Inter Programmer" />
-                <HeadDescription>
-                    Wave merupakan salah satu perusahaan tinggi swasta di kota
-                    Bandung. Terletak di pusat kota menjadikan Wave menjadi
-                    salah satu yang sangat dikenal di Indonesia. Bukan hanya
-                    prestasi di bidang massaging akan tetapi juga Wave dikenal
-                    melalui berbagai prestasi di bidang Bisnis. Dengan
-                    tagline-nya Quality is our tradition, Wave terus
-                    mengembangkan diri menjadi salah satu calon media chatting
-                    yang memeiliki kualitas setingkat pacebook.
-                </HeadDescription>
+            <div className="shadow-5xl my-14 flex w-full max-w-4xl flex-col gap-6 overflow-hidden rounded-2xl bg-white px-8 py-10">
+                <div className="flex flex-col gap-4">
+                    <HeadTitle
+                        className="text-2xl"
+                        title={data.title_vacancy}
+                    />
+                    <HeadDescription className="text-[#727272]">
+                        {data.description_vacancy}
+                    </HeadDescription>
+                </div>
 
                 <div className="flex flex-row">
                     <div>
-                        <SecondaryButton className="bg-[#6FACF1] text-white">
+                        <SecondaryButton className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400">
                             LAMAR
                         </SecondaryButton>
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-6">
                     <SubTitle>Keterangan</SubTitle>
-                    <ul className="space-y-1 px-4 text-sm text-gray-600">
+                    <ul className="space-y-3 px-4 text-sm text-gray-600">
                         <li className="flex flex-row items-center gap-2">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -93,9 +94,12 @@ const Details = () => {
                         </li>
                     </ul>
                 </div>
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-6">
                     <SubTitle>Jobdesk</SubTitle>
-                    <ul className="list-disc space-y-1 px-9 text-sm text-gray-600">
+                    <p className="px-9 text-sm text-gray-600">
+                        {data.jobdesk_vacancy}
+                    </p>
+                    {/* <ul className="list-disc space-y-3 ">
                         <li>
                             Membuat back-end website bisnis menggunakan
                             framework Next Js
@@ -105,27 +109,32 @@ const Details = () => {
                             Membuat skema relasi database menggunakan
                             PostgreSQL.
                         </li>
-                    </ul>
+                    </ul> */}
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-6">
                     <SubTitle>Benefit</SubTitle>
-                    <ul className="list-disc space-y-1 px-9 text-sm text-gray-600">
+                    <div className="px-9 text-sm text-gray-600">
+                        {data.benefit_vacancy}
+                    </div>
+                    {/* <ul className="list-disc space-y-3 px-9 text-sm text-gray-600">
                         <li>Gaji kompetitif (Rp [Nominal]/jam).</li>
                         <li>Jadwal dapat dinegosiasikan.</li>
                         <li>
                             Pelatihan dan peluang pengembangan keterampilan.
                         </li>
                         <li>Lingkungan kerja yang positif dan mendukung.</li>
-                    </ul>
+                    </ul> */}
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-6">
                     <SubTitle>
                         <div className="flex flex-row items-center gap-4">
                             <img src="assets/company.png" />
                             <div className="flex flex-col">
-                                <div className="poppins-semibold">Wave</div>
+                                <div className="poppins-semibold">
+                                    {data.company.name_company}
+                                </div>
                                 <div className="text-sm text-gray-600">
                                     IT Consultant
                                 </div>
@@ -147,7 +156,7 @@ const Details = () => {
                     </SubTitle>
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-6">
                     <SubTitle>Review</SubTitle>
                 </div>
 

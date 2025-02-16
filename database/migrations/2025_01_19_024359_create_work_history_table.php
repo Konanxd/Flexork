@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('work_history', function (Blueprint $table) {
             $table->id('id_work_history');
+            $table->unsignedBigInteger('id_seeker');
+            $table->unsignedBigInteger('id_vacancy');
+            $table->unsignedBigInteger('id_company');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
 
-            $table->foreignId('id_seeker')->constrained('seekers');
-            $table->foreignId('id_vacancy')->constrained('vacancies');
-            $table->foreignId('id_company')->constrained('company');
+            $table->foreign('id_vacancy')->references('id_vacancy')->on('vacancies');
+            $table->foreign('id_seeker')->references('id_seeker')->on('seekers');
+            $table->foreign('id_company')->references('id_company')->on('companies');
         });
     }
 
