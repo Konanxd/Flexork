@@ -1,10 +1,13 @@
 import HeadDescription from '@/Components/HeadDescription';
 import HeadTitle from '@/Components/HeadTitle';
-import SecondaryButton from '@/Components/SecondaryButton';
+import ModalSelectCV from '@/Components/ModalSelectCV';
+import PrimaryButton from '@/Components/PrimaryButton';
 import SubTitle from '@/Components/SubTitle';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { useState } from 'react';
 
 const Details = () => {
+    const [CVSelectOpen, setCVSelectOpen] = useState(false);
     return (
         <GuestLayout>
             <div className="shadow-5xl my-14 flex w-full max-w-4xl flex-col gap-6 overflow-hidden rounded-2xl bg-white px-8 py-10">
@@ -25,11 +28,18 @@ const Details = () => {
 
                 <div className="flex flex-row">
                     <div>
-                        <SecondaryButton className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400">
+                        <PrimaryButton
+                            className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
+                            onClick={() => setCVSelectOpen(true)}
+                        >
                             LAMAR
-                        </SecondaryButton>
+                        </PrimaryButton>
                     </div>
                 </div>
+
+                {CVSelectOpen && (
+                    <ModalSelectCV onClose={() => setCVSelectOpen(false)} />
+                )}
 
                 <div className="flex flex-col gap-6">
                     <SubTitle>Keterangan</SubTitle>
