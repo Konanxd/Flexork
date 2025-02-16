@@ -71,3 +71,7 @@ Route::get('/company/job/preview', function (){
 Route::get('/company/job/add', function (){
     return Inertia::render('Company/AddJobsForm');
 });
+
+Route::get('/company/job/userpreview', function (){
+    return Inertia::render('Profile/UserPreview');
+});
