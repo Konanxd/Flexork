@@ -57,3 +57,11 @@ Route::get('/search', function () {
 Route::get('/company/details', function () {
     return Inertia::render('Company/CompanyDetails');
 });
+
+Route::get('/company/dashboard', function (){
+    return Inertia::render('Company/CompanyDashboard');
+});
+
+Route::get('/company/list-pelamar', function (){
+    return Inertia::render('Company/SeekerList');
+});

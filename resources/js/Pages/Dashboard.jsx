@@ -1,3 +1,4 @@
+import JobCard from '@/Components/JobCard/JobCard';
 import SearchBar from '@/Components/SearchBar';
 import GuestLayout from '@/Layouts/GuestLayout';
 
@@ -64,10 +65,19 @@ export default function Dashboard({ auth }) {
         },
     ];
 
+    const jobData = {
+        title: 'Intern Programmer',
+        company: 'PT. Lintas Fortuna Nusantara',
+        maxSalary: 1000000,
+        minSalary: 500000,
+        tag: 'Computer',
+        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, maiores officia cumque molestiae corrupti mollitia eligendi doloremque saepe magni necessitatibus suscipit sequi adipisci blanditiis delectus unde natus, impedit quo sed.',
+    };
+
     const renderPopularCategories = () => {
         return categoriesPopular.map((item, index) => (
             <div
-                className="flex w-full flex-col border-gray-300 bg-white shadow-lg"
+                className="flex w-full flex-col overflow-hidden rounded-lg border-gray-300 bg-white shadow-md"
                 key={index}
             >
                 <div className="object-cover">
@@ -86,9 +96,9 @@ export default function Dashboard({ auth }) {
     };
 
     return (
-        <GuestLayout>
-            <div className="mx-5 w-full p-6">
-                <div className="w-full bg-red-600">
+        <GuestLayout className="h-auto">
+            <div className="mx-5 flex w-full flex-col gap-5 p-6">
+                <div className="w-full">
                     <SearchBar className="" />
                 </div>
 
@@ -100,12 +110,32 @@ export default function Dashboard({ auth }) {
                     <></>
                 )}
 
-                <div className="flex w-full flex-col justify-center gap-6 bg-white p-5 pt-6">
-                    <span className="poppins-semibold text-lg">
+                <div className="flex w-full flex-col justify-center gap-6 rounded-xl bg-white p-5 pt-6">
+                    <span className="poppins-semibold text-xl uppercase">
                         Kategori Populer
                     </span>
                     <div className="flex w-full flex-row gap-5">
                         {renderPopularCategories()}
+                    </div>
+                </div>
+
+                <div className="flex w-full flex-col justify-center gap-6 rounded-xl bg-white p-5 pt-6">
+                    <span className="poppins-semibold text-xl uppercase">
+                        Pekerjaan Terbaru
+                    </span>
+                    <div className="flex w-full flex-row gap-5">
+                        <JobCard
+                            {...jobData}
+                            className="border-2 border-[#1673DE] drop-shadow-lg"
+                        />
+                        <JobCard
+                            {...jobData}
+                            className="border-2 border-[#1673DE] drop-shadow-lg"
+                        />
+                        <JobCard
+                            {...jobData}
+                            className="border-2 border-[#1673DE] drop-shadow-lg"
+                        />
                     </div>
                 </div>
             </div>
