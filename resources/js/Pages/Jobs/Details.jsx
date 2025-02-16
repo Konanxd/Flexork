@@ -3,6 +3,7 @@ import HeadTitle from '@/Components/HeadTitle';
 import ModalSelectCV from '@/Components/ModalSelectCV';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SubTitle from '@/Components/SubTitle';
+import UserReviewCard from '@/Components/UserReviewCard';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { useState } from 'react';
 
@@ -161,7 +162,8 @@ const Details = () => {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <SubTitle>Review</SubTitle>
+                    <SubTitle>ulasan</SubTitle>
+                    <UserReviewCard nama={'agus'} date={10} />
                 </div>
 
                 <div className="flex"></div>
