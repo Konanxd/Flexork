@@ -1,6 +1,8 @@
-const FileUploadBtn = () => {
+const FileUploadBtn = ({ className = '', ...props }) => {
     return (
-        <div className="cursor-pointer rounded-2xl border-[3px] border-dashed border-neutral-400 p-8">
+        <div
+            className={`w-fit cursor-pointer rounded-2xl border-[3px] border-dashed border-neutral-400 p-8${className}`}
+        >
             <div className="w-48 text-center">
                 <h1 className="w-full text-lg font-semibold uppercase">
                     unggah file disini

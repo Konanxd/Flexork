@@ -1,4 +1,5 @@
 import ContactInput from '@/Components/ContactInput';
+import FileUploadBtn from '@/Components/FileUploadBtn';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextAreaInput from '@/Components/TextAreaInput';
 import TextInput from '@/Components/TextInput';
@@ -8,6 +9,18 @@ export default function CompanyEdit() {
     return (
         <GuestLayout>
             <form className="form m-6 flex w-full max-w-[1000px] flex-col gap-5 rounded-lg bg-white px-20 py-12">
+                <div className="flex flex-col gap-1.5 text-xl">
+                    <h2 className="px-2 font-semibold capitalize">
+                        unggah foto profile Perusahaan
+                    </h2>
+                    <FileUploadBtn className=""></FileUploadBtn>
+                </div>
+                <div className="flex flex-col gap-1.5 text-xl">
+                    <h2 className="px-2 font-semibold capitalize">
+                        unggah banner Perusahaan
+                    </h2>
+                    <FileUploadBtn className=""></FileUploadBtn>
+                </div>
                 <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold">Nama Perusahaan</h2>
                     <TextInput
