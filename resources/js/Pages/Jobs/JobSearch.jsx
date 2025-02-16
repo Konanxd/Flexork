@@ -6,17 +6,6 @@ import { usePage } from '@inertiajs/react';
 export default function JobSearch() {
     const { vacancies } = usePage().props;
 
-    const job = ['intern programmer'];
-
-    const company = ['PT. Lintas Fortuna Nusantara'];
-
-    const salary = [1000000];
-
-    const tag = ['Computer'];
-
-    const desc = [
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, maiores officia cumque molestiae corrupti mollitia eligendi doloremque saepe magni necessitatibus suscipit sequi adipisci blanditiis delectus unde natus, impedit quo sed.',
-    ];
     return (
         <GuestLayout className="flex h-full flex-col gap-6 py-6">
             <SearchBar className=""></SearchBar>

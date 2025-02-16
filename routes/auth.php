@@ -13,11 +13,15 @@ use App\Http\Controllers\SeekerController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+
     Route::get('register-pelamar', [SeekerController::class, 'create'])
         ->name('register-pelamar.index');
 
-    Route::post('register-pelamar', [RegisteredUserController::class, 'store'])
+    Route::post('register-pelamar', [RegisteredUserController::class, 'storePelamar'])
         ->name('register-pelamar.store');
+
+    Route::post('register-user-penyedia', [RegisteredUserController::class, 'storePenyedia'])
+        ->name('register-user-penyedia.store');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');

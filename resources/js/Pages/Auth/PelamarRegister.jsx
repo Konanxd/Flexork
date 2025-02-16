@@ -5,31 +5,45 @@ import OptionInput from '@/Components/OptionInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
 
 export default function PelamarRegister() {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, processing, errors, reset } = useForm({
         name: '',
-        email: '',
         gender: '',
-        phone: '',
+        email: '',
+        born_date: '',
+        phone_seeker: '',
+        address: '',
         password: '',
         password_confirmation: '',
     });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // setData({
+        //     name: data.name,
+        //     gender: data.gender,
+        //     email: data.email,
+        //     password: data.password,
+        //     password_confirmation: data.password_confirmation,
+        //     born_date: data.born_date,
+        //     address: data.address,
+        //     phone_seeker: data.phone_seeker,
+        // });
+
+        router.post(route('register-pelamar.store'), data, {
+            preserveScroll: true,
+            onFinish: () => reset('password', 'password_confirmation'),
+        });
+    };
 
     const optionItems = [
         { label: 'Pilih jenis kelamin Anda', value: '', disabled: true },
         { label: 'Laki-Laki', value: 'laki-laki', disabled: false },
         { label: 'Perempuan', value: 'perempuan', disabled: false },
     ];
-
-    const submit = (e) => {
-        e.preventDefault();
-
-        post(route('register-pelamar.store'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
-    };
 
     return (
         <GuestLayout>
@@ -38,7 +52,7 @@ export default function PelamarRegister() {
 
                 <FormTitle title="DAFTAR" />
 
-                <form onSubmit={submit}>
+                <form onSubmit={handleSubmit}>
                     <div>
                         <InputLabel htmlFor="name" value="Nama Lengkap" />
 
@@ -55,6 +69,21 @@ export default function PelamarRegister() {
                         />
 
                         <InputError message={errors.name} className="mt-2" />
+                    </div>
+
+                    <div className="mt-4">
+                        <InputLabel htmlFor="gender" value="Jenis Kelamin" />
+
+                        <OptionInput
+                            name="gender"
+                            id="gender"
+                            value={data.gender}
+                            optionItems={optionItems}
+                            onChange={(e) => setData('gender', e.target.value)}
+                            required
+                        />
+
+                        <InputError message={errors.gender} className="mt-2" />
                     </div>
 
                     <div className="mt-4">
@@ -76,39 +105,69 @@ export default function PelamarRegister() {
                     </div>
 
                     <div className="mt-4">
-                        <InputLabel htmlFor="gender" value="Jenis Kelamin" />
-
-                        <OptionInput
-                            name="gender"
-                            id="gender"
-                            value={data.gender}
-                            optionItems={optionItems}
-                            onChange={(e) => setData('gender', e.target.value)}
-                            required
-                        />
-
-                        <InputError message={errors.gender} className="mt-2" />
-                    </div>
-
-                    <div className="mt-4">
-                        <InputLabel htmlFor="phone" value="Nomor Telepon" />
+                        <InputLabel htmlFor="born_date" value="Tanggal Lahir" />
 
                         <TextInput
-                            id="phone"
-                            type="text"
-                            name="phone"
-                            value={data.phone}
+                            id="born_date"
+                            type="date"
+                            name="born_date"
+                            value={data.born_date}
                             className="mt-1 block w-full"
-                            autoComplete="phone"
-                            placeholder="Isi kata sandi Anda di sini"
-                            onChange={(e) => setData('phone', e.target.value)}
+                            autoComplete="born_date"
+                            onChange={(e) =>
+                                setData('born_date', e.target.value)
+                            }
                             required
                         />
 
                         <InputError
-                            message={errors.password}
+                            message={errors.born_date}
                             className="mt-2"
                         />
+                    </div>
+
+                    <div className="mt-4">
+                        <InputLabel
+                            htmlFor="phone_seeker"
+                            value="Nomor Telepon"
+                        />
+
+                        <TextInput
+                            id="phone_seeker"
+                            type="text"
+                            name="phone_seeker"
+                            value={data.phone_seeker}
+                            className="mt-1 block w-full"
+                            autoComplete="phone_seeker"
+                            placeholder="Isi kata sandi Anda di sini"
+                            onChange={(e) =>
+                                setData('phone_seeker', e.target.value)
+                            }
+                            required
+                        />
+
+                        <InputError
+                            message={errors.phone_seeker}
+                            className="mt-2"
+                        />
+                    </div>
+
+                    <div className="mt-4">
+                        <InputLabel htmlFor="address" value="Alamat" />
+
+                        <TextInput
+                            id="address"
+                            type="text"
+                            name="address"
+                            value={data.address}
+                            className="mt-1 block w-full"
+                            autoComplete="address"
+                            placeholder="Isi alamat Anda di sini"
+                            onChange={(e) => setData('address', e.target.value)}
+                            required
+                        />
+
+                        <InputError message={errors.address} className="mt-2" />
                     </div>
 
                     <div className="mt-4">

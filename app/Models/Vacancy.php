@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Vacancy extends Model
 {
     protected $table = "vacancies";
+    protected $primaryKey = "id_vacancy";
 
     protected $fillable = [
         'id_company',
@@ -23,6 +24,13 @@ class Vacancy extends Model
     public function company()
     {
         return $this->belongsTo(Company::class, 'id_company', 'id_company');
+    }
+
+    public function seekers()
+    {
+        return $this->belongsToMany(Seeker::class, 'applies', 'id_vacancy', 'id_seeker')
+            ->withPivot('status', 'applied_at')
+            ->withTimestamps();
     }
 
     public function tags()

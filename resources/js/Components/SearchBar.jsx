@@ -58,7 +58,7 @@ export default function SearchBar({ className = '', ...props }) {
 
     return (
         <div
-            className={'relative flex w-full max-w-4xl flex-row ' + className}
+            className={`relative flex w-full flex-row ${className}`}
             ref={filterRef}
         >
             {/* Button Filter */}

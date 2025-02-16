@@ -10,8 +10,7 @@ export default function NavLink({
         <Link
             {...props}
             className={
-                'poppins-semibold inline-flex items-center leading-5 ' +
-                className
+                'inline-flex items-center leading-5 ' + className
                 // +
                 // (active
                 //     ? 'border-indigo-400 text-gray-900 focus:border-indigo-700'

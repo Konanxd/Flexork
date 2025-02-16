@@ -1,14 +1,18 @@
 import NavLink from './NavLink';
 
-const NavBar = ({ navItems = [], isAuth = false, userName = '' }) => {
+const NavBar = ({ auth }) => {
+    const navItems = [
+        { label: 'DAFTAR', path: 'register-pelamar.index' },
+        { label: 'MASUK', path: 'login' },
+    ];
     return (
-        <nav className="flex w-full flex-col border border-b-[#1673DE]">
+        <nav className="poppins-regular flex w-full flex-col border border-b-[#1673DE]">
             <div className="m-auto flex w-full items-center justify-between py-3">
                 <img src={'../assets/logo.png'} alt="Flexork" width={160} />
-                {isAuth ? (
+                {auth?.user ? (
                     <div className="text-md text-[#1673DE]">
                         Halo, &nbsp;
-                        <span className="text-[#1673DE]">{userName}</span>
+                        <span className="text-[#1673DE]">{auth.user.name}</span>
                     </div>
                 ) : (
                     <div className="flex gap-3">
@@ -24,23 +28,22 @@ const NavBar = ({ navItems = [], isAuth = false, userName = '' }) => {
                     </div>
                 )}
             </div>
-            {isAuth ? (
-                <div className="flex w-full items-center justify-center bg-[#1673DE]">
-                    <div className="flex max-w-2xl gap-5">
-                        <NavLink className="text-slate-100" href="#">
-                            CARI LOWONGAN
-                        </NavLink>
-                        <NavLink className="text-slate-100" href="#">
-                            LIHAT PROFILE
-                        </NavLink>
-                        <NavLink className="text-slate-100" href="#">
-                            NOTIFIKASI
-                        </NavLink>
-                    </div>
+            <div className="flex w-full items-center justify-center bg-[#1673DE]">
+                <div className="flex gap-10 py-1.5 text-sm font-normal uppercase">
+                    <NavLink
+                        className="text-base font-normal text-slate-100"
+                        href="/search"
+                    >
+                        cari lowongan
+                    </NavLink>
+                    <NavLink className="text-slate-100" href="/profile">
+                        lihat profile
+                    </NavLink>
+                    <NavLink className="text-slate-100" href="#">
+                        notifikasi
+                    </NavLink>
                 </div>
-            ) : (
-                <></>
-            )}
+            </div>
         </nav>
     );
 };

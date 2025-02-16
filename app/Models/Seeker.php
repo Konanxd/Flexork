@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Seeker extends Model
 {
     protected $table = "seekers";
+    protected $primaryKey = "id_seeker";
 
     protected $fillable = [
+        "id_user",
         "name_seeker",
-        "email_seeker",
+        "gender_seeker",
         "born_date",
         "is_verified",
         "address_seeker",
@@ -21,5 +23,17 @@ class Seeker extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function vacancies()
+    {
+        return $this->belongsToMany(Vacancy::class, 'applies', 'id_seeker', 'id_vacancy')
+            ->withPivot('status', 'applied_at')
+            ->withTimestamps();
+    }
+
+    public function applies()
+    {
+        return $this->hasMany(Applies::class, 'id_seeker');
     }
 }

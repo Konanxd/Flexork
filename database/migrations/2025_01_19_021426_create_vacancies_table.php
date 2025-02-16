@@ -21,6 +21,8 @@ return new class extends Migration
             $table->json('jobdesk_vacancy');
             $table->json('benefit_vacancy');
             $table->float('salary_vacancy');
+            $table->string('workhours_vacancy');
+            $table->string('experience_vacancy');
             $table->timestamps();
 
             $table->foreign('id_company')->references('id_company')->on('companies');

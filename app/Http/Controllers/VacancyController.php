@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Seeker;
 use App\Models\Applies;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
@@ -11,6 +12,32 @@ use Illuminate\Support\Facades\Auth;
 
 class VacancyController extends Controller
 {
+    public function dashboard()
+    {
+        $user = Auth::user();
+        $seeker = Seeker::where('id_user', Auth::id())
+            ->firstOrFail();
+
+        $countPending = $seeker->applies()->where('status_apply', 'pending')->count() ?? 0;
+        $countAccepted = $seeker->applies()->where('status_apply', 'accepted')->count() ?? 0;
+        $countRejected = $seeker->applies()->where('status_apply', 'rejected')->count() ?? 0;
+
+        return Inertia::render('Dashboard', [
+            'auth' => [
+                'user' => Auth::user() ? [
+                    'id' => $user->id_user,
+                    'name' => $seeker->name_seeker,
+                    'email' => $user->email,
+                ] : null,
+            ],
+            'counter' => [
+                'pending' => $countPending,
+                'accepted' => $countAccepted,
+                'rejected' => $countRejected
+            ]
+        ]);
+    }
+
     public function index()
     {
         $vacancies = Vacancy::with(['company', 'tags'])->get();

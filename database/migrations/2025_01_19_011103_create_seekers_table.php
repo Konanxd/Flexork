@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_seeker');
             $table->unsignedBigInteger('id_user');
             $table->string('name_seeker');
-            $table->string('email_seeker')->unique();
+            $table->enum('gender_seeker', ['laki-laki', 'perempuan']);
             $table->date('born_date');
             $table->boolean('is_verified');
             $table->string('address_seeker');

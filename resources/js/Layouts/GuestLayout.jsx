@@ -1,14 +1,10 @@
 import NavBar from '@/Components/NavBar';
 
-export default function GuestLayout({ children, className = '' }) {
-    const navItems = [
-        { label: 'DAFTAR', path: 'register-pelamar.index' },
-        { label: 'MASUK', path: 'login' },
-    ];
-
+export default function GuestLayout({ auth, children, className = '' }) {
+    console.log(auth);
     return (
         <div>
-            <NavBar navItems={navItems} />
+            <NavBar auth={auth} />
             <div
                 className={`poppins-regular flex flex-col items-center bg-[#EEF1F4] ${className}`}
             >

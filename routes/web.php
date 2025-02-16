@@ -15,12 +15,11 @@ Route::get('/', function () {
     ]);
 });
 
+
+Route::get('/dashboard', [VacancyController::class, 'dashboard'])
+    ->name('dashboard');
 Route::get('/cari', [VacancyController::class, 'index'])->name('vacancy.index');
 Route::get('/lowongan/{id}', [VacancyController::class, 'details'])->name('vacancy.details');
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -34,10 +33,22 @@ require __DIR__ . '/auth.php';
 
 // });
 
-Route::get('/test', function () {
-    return Inertia::render('VacancyForm');
+Route::get('/details', function () {
+    return Inertia::render('Jobs/Details');
 });
 
 Route::get('/profile', function () {
-    return Inertia::render('Profile');
+    return Inertia::render('Profile/profile');
+});
+
+Route::get('/profile/edit', function () {
+    return Inertia::render('Profile/AccountEdit');
+});
+
+Route::get('/search', function () {
+    return Inertia::render('Jobs/JobSearch');
+});
+
+Route::get('/company/details', function () {
+    return Inertia::render('Company/CompanyDetails');
 });
