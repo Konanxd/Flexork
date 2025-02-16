@@ -3,7 +3,7 @@ import TagView from '../TagView';
 import JobCardHeader from './JobCardHeader';
 
 export default function JobCard({
-    cardStyle = '',
+    className = '',
     title,
     company,
     desc,
@@ -14,7 +14,7 @@ export default function JobCard({
 }) {
     return (
         <div
-            className={`flex w-full flex-col gap-4 rounded-lg bg-white px-8 py-6 ${cardStyle}`}
+            className={`flex w-full flex-col gap-4 rounded-lg bg-white px-8 py-6 ${className}`}
         >
             <JobCardHeader title={title} company={company} />
             <div className="flex flex-row gap-2 font-medium text-[#1673DE]">
@@ -32,9 +32,9 @@ export default function JobCard({
                     tag={tag}
                 ></TagView>
             </div>
-            <div className="line-clamp-2">{desc}</div>
+            <div className="line-clamp-2 text-sm">{desc}</div>
             <div className="flex flex-row gap-3">
-                <PrimaryButton className="hover border-2 border-[#1673DE] bg-transparent px-6 text-[#1673DE] hover:bg-[#1673DE] hover:text-white">
+                <PrimaryButton className="border-2 border-[#1673DE] bg-transparent px-6 text-[#1673DE] hover:bg-[#1673DE] hover:text-white">
                     lihat
                 </PrimaryButton>
                 <svg
