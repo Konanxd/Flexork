@@ -57,7 +57,7 @@ export default function Profile({ auth }) {
                         </button>
                     </div>
 
-                    <LogoutButton></LogoutButton>
+                    <LogoutButton />
                 </div>
 
                 <div className="scrollbar-none h-full w-full overflow-x-scroll rounded-lg bg-white">

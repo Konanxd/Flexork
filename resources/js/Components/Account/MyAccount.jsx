@@ -1,4 +1,5 @@
 import { router } from '@inertiajs/react';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import FileStored from '../FileStored';
 import FileUploadBtn from '../FileUploadBtn';
@@ -8,55 +9,30 @@ import MyAccountDesc from './MyAccountDesc';
 
 const MyAccount = ({ auth }) => {
     const [cvs, setCvs] = useState([]);
-    const [loading, setLoading] = useState(false);
+    console.log(auth);
+    console.log(cvs);
+    console.log(auth.cvs);
 
     useEffect(() => {
+        const fetchCvs = async () => {
+            try {
+                const response = await axios.get('/api/list-cv');
+                setCvs(response.data.cvs);
+            } catch (error) {
+                console.error('Failed to fetch CVs', error);
+            }
+        };
         fetchCvs();
     }, []);
-
-    const fetchCvs = async () => {
-        try {
-            const response = await axios.get('/api/list-cv');
-            setCvs(response.data.cvs);
-        } catch (error) {
-            console.error('Failed to fetch CVs');
-        }
-    };
-
-    const handleFileUpload = async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append('cv', file);
-
-        setLoading(true);
-
-        try {
-            await axios.post(route('cv.store'), formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                withCredentials: true,
-            });
-
-            fetchCvs();
-        } catch (error) {
-            alert(error.response?.data?.message || 'Upload failed!');
-        }
-
-        setLoading(false);
-    };
 
     const handleDelete = async (id) => {
         if (!confirm('Are you sure you want to delete this CV?')) return;
 
         try {
-            await axios.delete(`/delete-cv/${id}`);
-            window.location.reload();
+            await axios.delete(`/api/delete-cv/${id}`);
+            setCvs((prevCvs) => prevCvs.filter((cv) => cv.id !== id));
         } catch (error) {
-            alert('Failed to delete CV.');
+            alert('Gagal mengahpus CV.');
         }
     };
 
@@ -64,6 +40,7 @@ const MyAccount = ({ auth }) => {
         <div className="h-full">
             <div className="m flex w-full flex-row items-center gap-6 rounded-t-lg bg-gray-400 p-8 sm:flex-col md:flex-row lg:flex-row">
                 <img
+                    alt="auth.user.name"
                     src="assets/profile-example.jpg"
                     className="h-[100px] rounded-full"
                 ></img>
@@ -217,13 +194,13 @@ const MyAccount = ({ auth }) => {
                     title="resume"
                     className="scrollbar-thin flex w-full flex-row gap-6 overflow-x-scroll pb-3"
                 >
-                    <FileUploadBtn onClick={handleFileUpload} />
-                    {auth.cvs.length > 0 ? (
+                    <FileUploadBtn onUpload={() => window.location.reload()} />
+                    {cvs.length > 0 ? (
                         auth.cvs.map((cv) => (
                             <FileStored
                                 key={cv.id}
-                                filename={'My Resume.pdf'}
-                                size={'5MB'}
+                                filename={cv.original_cv_name}
+                                size={'2MB'}
                                 onDelete={() => handleDelete(cv.id)}
                                 fileUrl={`/storage/${cv.path}`}
                             />

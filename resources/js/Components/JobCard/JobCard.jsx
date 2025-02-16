@@ -1,42 +1,46 @@
+import { Link } from '@inertiajs/react';
 import PrimaryButton from '../PrimaryButton';
 import TagView from '../TagView';
 import JobCardHeader from './JobCardHeader';
 
-export default function JobCard({
-    className = '',
-    title,
-    company,
-    desc,
-    maxSalary,
-    minSalary,
-    tag,
-    ...props
-}) {
+export default function JobCard({ className = '', vacancy, ...props }) {
     return (
         <div
             className={`flex w-full flex-col gap-4 rounded-lg bg-white px-8 py-6 ${className}`}
         >
-            <JobCardHeader title={title} company={company} />
+            <JobCardHeader
+                title={vacancy.title_vacancy}
+                company={vacancy.company_vacancy}
+            />
             <div className="flex flex-row gap-2 font-medium text-[#1673DE]">
-                <span>Rp. {minSalary}</span>
-                <span>-</span>
-                <span>Rp. {maxSalary}</span>
+                <span>
+                    {vacancy.salary_vacancy.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        maximumFractionDigits: 0,
+                    })}
+                </span>
             </div>
             <div className="flex w-full flex-row gap-2 overflow-clip">
-                <TagView
-                    className="bg-[#44CFCB] text-white"
-                    tag={tag}
-                ></TagView>
-                <TagView
-                    className="bg-[#44CFCB] text-white"
-                    tag={tag}
-                ></TagView>
+                {vacancy.tags.map((tag) => (
+                    <TagView
+                        key={tag.id_tag}
+                        className="bg-[#44CFCB] text-white"
+                        tag={tag.name_tag}
+                    />
+                ))}
             </div>
-            <div className="line-clamp-2 text-sm">{desc}</div>
+            <div className="line-clamp-2 text-sm">
+                {vacancy.description_vacancy}
+            </div>
             <div className="flex flex-row gap-3">
-                <PrimaryButton className="border-2 border-[#1673DE] bg-transparent px-6 text-[#1673DE] hover:bg-[#1673DE] hover:text-white">
-                    lihat
-                </PrimaryButton>
+                <Link
+                    href={route('vacancy.details', { id: vacancy.id_vacancy })}
+                >
+                    <PrimaryButton className="border-2 border-[#1673DE] bg-transparent px-6 text-[#1673DE] hover:bg-[#1673DE] hover:text-white">
+                        lihat
+                    </PrimaryButton>
+                </Link>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

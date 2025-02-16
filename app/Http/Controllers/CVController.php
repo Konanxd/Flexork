@@ -20,16 +20,21 @@ class CVController extends Controller
         $seeker = Seeker::where('id_user', Auth::id())
             ->firstOrFail();
 
-        $filename = Str::uuid() . '.' . $request->file('cv')->getClientOriginalExtension();
-        $path = $request->file('cv')->storeAs('cvs', $filename, 'public');
+        $file = $request->file('cv');
+        $originalName = $file->getClientOriginalName();
+        $encryptedName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+        $path = $file->storeAs('public/cvs', $encryptedName);
 
         $cv = Cv::create([
             'id_seeker' => $seeker->id_user,
+            'cv_name' => $encryptedName,
+            'original_cv_name' => $originalName,
             'path' => $path
         ]);
 
         return response()->json([
-            'message' => 'CV uploaded successfully',
+            'message' => 'CV berhasil ditambahkan!',
             'cv' => $cv,
             'url' => asset("storage/$path")
         ]);
@@ -44,12 +49,12 @@ class CVController extends Controller
         return response()->json(['cvs' => $cvs]);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        $seekerId = $seeker = Seeker::where('id_user', Auth::id())
-            ->firstOrFail()
-            ->pluck('id_seeker');
-        $cv = Cv::where('id_seeker', $seekerId)->where('id', $id)->first();
+        $seeker = Seeker::where('id_user', Auth::id())
+            ->firstOrFail();
+        $cv = Cv::where('id_seeker', $seeker->id_seeker)
+            ->where('id', $id)->first();
 
         if (!$cv) {
             return response()->json(['message' => 'CV not found'], 404);

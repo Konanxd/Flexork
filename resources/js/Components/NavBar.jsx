@@ -2,7 +2,7 @@ import NavLink from './NavLink';
 
 const NavBar = ({ auth }) => {
     const navItems = [
-        { label: 'DAFTAR', path: 'register-pelamar.index' },
+        { label: 'DAFTAR', path: 'register-pelamar.create' },
         { label: 'MASUK', path: 'login' },
     ];
     return (

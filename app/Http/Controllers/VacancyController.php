@@ -17,6 +17,10 @@ class VacancyController extends Controller
         $user = Auth::user();
         $seeker = Seeker::where('id_user', Auth::id())
             ->firstOrFail();
+        $vacancies = Vacancy::with(['company', 'tags'])
+            ->latest('created_at')
+            ->take(3)
+            ->get();
 
         $countPending = $seeker->applies()->where('status_apply', 'pending')->count() ?? 0;
         $countAccepted = $seeker->applies()->where('status_apply', 'accepted')->count() ?? 0;
@@ -35,7 +39,8 @@ class VacancyController extends Controller
                     'accepted' => $countAccepted,
                     'rejected' => $countRejected
                 ]
-            ]
+            ],
+            'vacancies' => $vacancies
         ]);
     }
 
@@ -55,6 +60,11 @@ class VacancyController extends Controller
         return Inertia::render('Jobs/Details', [
             'vacancy' => $vacancy
         ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Company/JobsForm');
     }
 
     public function store(Request $request)

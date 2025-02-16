@@ -9,19 +9,23 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SeekerController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
 
     Route::get('register-pelamar', [SeekerController::class, 'create'])
-        ->name('register-pelamar.index');
+        ->name('register-pelamar.create');
 
     Route::post('register-pelamar', [RegisteredUserController::class, 'storePelamar'])
         ->name('register-pelamar.store');
 
-    Route::post('register-user-penyedia', [RegisteredUserController::class, 'storePenyedia'])
-        ->name('register-user-penyedia.store');
+    Route::get('register-penyedia', [CompanyController::class, 'create'])
+        ->name('register-penyedia.create');
+
+    Route::post('register-penyedia', [RegisteredUserController::class, 'storePenyedia'])
+        ->name('register-penyedia.store');
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');

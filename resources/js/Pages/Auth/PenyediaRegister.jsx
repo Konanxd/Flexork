@@ -1,19 +1,20 @@
 import FormTitle from '@/Components/FormTitle';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
-import OptionInput from '@/Components/OptionInput';
 import PrimaryButton from '@/Components/PrimaryButton';
+import TextAreaInput from '@/Components/TextAreaInput';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 
-export default function PelamarRegister() {
+export default function PenyediaRegister() {
     const { data, setData, processing, errors, reset } = useForm({
         name: '',
-        gender: '',
         email: '',
-        born_date: '',
-        phone_seeker: '',
+        email_company: '',
+        id_business: '',
+        description: '',
+        phone_company: '',
         address: '',
         password: '',
         password_confirmation: '',
@@ -22,28 +23,22 @@ export default function PelamarRegister() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        router.post(route('register-pelamar.store'), data, {
+        router.post('/register-penyedia', data, {
             preserveScroll: true,
             onFinish: () => reset('password', 'password_confirmation'),
         });
     };
 
-    const optionItems = [
-        { label: 'Pilih jenis kelamin Anda', value: '', disabled: true },
-        { label: 'Laki-Laki', value: 'laki-laki', disabled: false },
-        { label: 'Perempuan', value: 'perempuan', disabled: false },
-    ];
-
     return (
         <GuestLayout>
             <div className="mb-14 mt-14 w-full overflow-hidden border-2 border-slate-300 bg-white px-6 py-4 shadow-xl sm:max-w-lg sm:rounded-lg">
-                <Head title="Daftar Pelamar" />
+                <Head title="Daftar Penyedia" />
 
                 <FormTitle title="DAFTAR" />
 
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <InputLabel htmlFor="name" value="Nama Lengkap" />
+                        <InputLabel htmlFor="name" value="Nama Perusahaan" />
 
                         <TextInput
                             id="name"
@@ -51,28 +46,13 @@ export default function PelamarRegister() {
                             value={data.name}
                             className="mt-1 block w-full"
                             autoComplete="name"
-                            placeholder="Isi nama lengkap Anda di sini"
+                            placeholder="Isi nama perusahaan Anda di sini"
                             isFocused={true}
                             onChange={(e) => setData('name', e.target.value)}
                             required
                         />
 
                         <InputError message={errors.name} className="mt-2" />
-                    </div>
-
-                    <div className="mt-4">
-                        <InputLabel htmlFor="gender" value="Jenis Kelamin" />
-
-                        <OptionInput
-                            name="gender"
-                            id="gender"
-                            value={data.gender}
-                            optionItems={optionItems}
-                            onChange={(e) => setData('gender', e.target.value)}
-                            required
-                        />
-
-                        <InputError message={errors.gender} className="mt-2" />
                     </div>
 
                     <div className="mt-4">
@@ -85,7 +65,7 @@ export default function PelamarRegister() {
                             value={data.email}
                             className="mt-1 block w-full"
                             autoComplete="email"
-                            placeholder="Isi email Anda di sini"
+                            placeholder="Isi email di sini"
                             onChange={(e) => setData('email', e.target.value)}
                             required
                         />
@@ -94,49 +74,104 @@ export default function PelamarRegister() {
                     </div>
 
                     <div className="mt-4">
-                        <InputLabel htmlFor="born_date" value="Tanggal Lahir" />
+                        <InputLabel
+                            htmlFor="email_company"
+                            value="Email Bisnis"
+                        />
 
                         <TextInput
-                            id="born_date"
-                            type="date"
-                            name="born_date"
-                            value={data.born_date}
+                            id="email_company"
+                            type="email"
+                            name="email_company"
+                            value={data.email_company}
                             className="mt-1 block w-full"
-                            autoComplete="born_date"
+                            autoComplete="email_company"
+                            placeholder="Isi email bisnis di sini"
                             onChange={(e) =>
-                                setData('born_date', e.target.value)
+                                setData('email_company', e.target.value)
                             }
                             required
                         />
 
                         <InputError
-                            message={errors.born_date}
+                            message={errors.email_company}
                             className="mt-2"
                         />
                     </div>
 
                     <div className="mt-4">
                         <InputLabel
-                            htmlFor="phone_seeker"
-                            value="Nomor Telepon"
+                            htmlFor="id_business"
+                            value="Nomor Induk Berusaha"
                         />
 
                         <TextInput
-                            id="phone_seeker"
-                            type="text"
-                            name="phone_seeker"
-                            value={data.phone_seeker}
+                            id="id_business"
+                            name="id_business"
+                            value={data.id_business}
                             className="mt-1 block w-full"
-                            autoComplete="phone_seeker"
-                            placeholder="Isi kata sandi Anda di sini"
+                            placeholder="Nomor Induk Berusaha harus resmi"
+                            autoComplete="id_business"
                             onChange={(e) =>
-                                setData('phone_seeker', e.target.value)
+                                setData('id_business', e.target.value)
                             }
                             required
                         />
 
                         <InputError
-                            message={errors.phone_seeker}
+                            message={errors.id_business}
+                            className="mt-2"
+                        />
+                    </div>
+
+                    <div className="mt-4">
+                        <InputLabel
+                            htmlFor="description"
+                            value="Deskripsi Perusahaan"
+                        />
+
+                        <TextAreaInput
+                            id="description"
+                            type="text"
+                            name="description"
+                            value={data.description}
+                            className="mt-1 block w-full"
+                            placeholder="Isi deskripsi perusahaan di sini"
+                            autoComplete="description"
+                            onChange={(e) =>
+                                setData('description', e.target.value)
+                            }
+                            required
+                        />
+
+                        <InputError
+                            message={errors.description}
+                            className="mt-2"
+                        />
+                    </div>
+
+                    <div className="mt-4">
+                        <InputLabel
+                            htmlFor="phone_company"
+                            value="Nomor Telepon"
+                        />
+
+                        <TextInput
+                            id="phone_company"
+                            type="text"
+                            name="phone_company"
+                            value={data.phone_company}
+                            className="mt-1 block w-full"
+                            autoComplete="phone_company"
+                            placeholder="Isi nomor telepon perusahaan di sini"
+                            onChange={(e) =>
+                                setData('phone_company', e.target.value)
+                            }
+                            required
+                        />
+
+                        <InputError
+                            message={errors.phone_company}
                             className="mt-2"
                         />
                     </div>

@@ -3,14 +3,18 @@ import HeadTitle from '@/Components/HeadTitle';
 import SecondaryButton from '@/Components/SecondaryButton';
 import SubTitle from '@/Components/SubTitle';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { useState } from 'react';
 
 const Details = ({ vacancy }) => {
-    // const { vacancy } = usePage().props;
+    const [applied, setApplied] = useState(false);
     console.log(vacancy);
     let data;
     if (vacancy != undefined) {
         data = vacancy[0];
     }
+
+    const handleApply = () => {};
+
     return (
         <GuestLayout>
             {vacancy != undefined ? (
@@ -27,7 +31,10 @@ const Details = ({ vacancy }) => {
 
                     <div className="flex flex-row">
                         <div>
-                            <SecondaryButton className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400">
+                            <SecondaryButton
+                                onClick={handleApply}
+                                className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
+                            >
                                 LAMAR
                             </SecondaryButton>
                         </div>

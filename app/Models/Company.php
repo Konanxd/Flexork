@@ -9,12 +9,13 @@ class Company extends Model
     protected $table = "companies";
 
     protected $fillable = [
-        "id_company",
+        "id_user",
         "id_business",
         "name_company",
         "description_company",
         "email_company",
         "is_verified",
+        'agreed_at',
         "address_company",
         "score_company"
     ];

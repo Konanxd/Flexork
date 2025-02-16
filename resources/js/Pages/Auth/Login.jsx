@@ -110,7 +110,7 @@ export default function Login({ status, canResetPassword }) {
                 </form>
                 <div className="flex justify-center">
                     <Link
-                        href={route('register')}
+                        href={route('register-pelamar.create')}
                         className="rounded-md text-sm uppercase text-[#1673DE] hover:text-[#6FACF1] focus:outline-none focus:ring-2 focus:ring-[#6FACF1] focus:ring-offset-2"
                     >
                         belum punya akun ?

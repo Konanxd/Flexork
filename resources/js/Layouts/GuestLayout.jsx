@@ -3,7 +3,7 @@ import { usePage } from '@inertiajs/react';
 
 export default function GuestLayout({ children, className = '' }) {
     const { auth } = usePage().props;
-    console.log(auth);
+    // console.log(auth);
     return (
         <div>
             <NavBar auth={auth} />

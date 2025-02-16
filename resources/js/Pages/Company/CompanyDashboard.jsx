@@ -1,8 +1,9 @@
 import CompanyJobCard from '@/Components/CompanyCard/CompanyJobCard';
 import PrimaryButton from '@/Components/PrimaryButton';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { router } from '@inertiajs/react';
 
-export default function CompanyDashboard() {
+export default function CompanyDashboard({ auth }) {
     const jobs = [
         {
             title: 'Intern Programmer',
@@ -36,13 +37,25 @@ export default function CompanyDashboard() {
         },
     ];
 
+    let vacancies = auth.vacancies;
+
+    const handleClick = (e) => {
+        e.preventDefault();
+
+        // router.get(route('vacancy.create'));
+        router.post(route('logout'));
+    };
+
     return (
         <GuestLayout className="h-auto gap-6 p-6">
             <div className="flex w-full flex-row items-center justify-between rounded-lg bg-white px-4 py-4 uppercase">
                 <span className="ml-2 text-lg font-semibold">
                     daftar lowongan
                 </span>
-                <PrimaryButton className="flex flex-row gap-2 bg-[#1673DE] text-white">
+                <PrimaryButton
+                    onClick={handleClick}
+                    className="flex flex-row gap-2 bg-[#1673DE] text-white"
+                >
                     <span>tambah lowongan</span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -57,8 +70,8 @@ export default function CompanyDashboard() {
             </div>
 
             <div className="grid w-full grid-cols-2 gap-4">
-                {jobs.map((job, index) => (
-                    <CompanyJobCard key={index} {...job} />
+                {vacancies.map((vacancy, index) => (
+                    <CompanyJobCard key={index} vacancy={vacancy} />
                 ))}
             </div>
         </GuestLayout>

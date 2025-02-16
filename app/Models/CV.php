@@ -10,6 +10,8 @@ class CV extends Model
 
     protected $fillable = [
         'id_seeker',
+        'cv_name',
+        'original_cv_name',
         'path'
     ];
 }

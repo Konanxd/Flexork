@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRef, useState } from 'react';
 
-const FileUploadBtn = ({ onUpload }) => {
+const FileUploadBtn = ({ onUpload = () => {} }) => {
     const fileInputRef = useRef(null);
     const [uploading, setUploading] = useState(false);
 
@@ -9,8 +9,8 @@ const FileUploadBtn = ({ onUpload }) => {
         const file = event.target.files[0];
         if (!file) return;
 
-        if (file.size > 5 * 1024 * 1024) {
-            alert('File size exceeds 5MB limit.');
+        if (file.size > 2 * 1024 * 1024) {
+            alert('File melebihi batas ukuran 2MB.');
             return;
         }
 
@@ -41,16 +41,14 @@ const FileUploadBtn = ({ onUpload }) => {
             onClick={() => fileInputRef.current.click()}
             className="cursor-pointer rounded-2xl border-[3px] border-dashed border-neutral-400 p-8"
         >
-            <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <input
-                    type="file"
-                    name="cv"
-                    accept=".pdf"
-                    className="hidden"
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                />
-            </form>
+            <input
+                type="file"
+                name="cv"
+                accept=".pdf"
+                className="hidden"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+            />
             <div className="w-48 text-center">
                 <h1 className="w-full text-lg font-semibold uppercase">
                     {uploading ? 'Mengunggah...' : 'Unggah file disini'}

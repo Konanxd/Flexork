@@ -1,7 +1,10 @@
 import SeekerRequestCard from '@/Components/CompanyCard/SeekerRequestCard';
 import GuestLayout from '@/Layouts/GuestLayout';
 
-export default function SeekerList({ ...props }) {
+export default function SeekerList({ vacancy, appliers }) {
+    console.log(vacancy);
+    console.log(appliers);
+
     const title = 'Intern Programmer';
     const date = '12/12/2025';
     const seekers = [
@@ -16,9 +19,11 @@ export default function SeekerList({ ...props }) {
         <GuestLayout className="p-6">
             <div className="flex w-full flex-col gap-6 rounded-xl bg-white p-6">
                 <div className="flex flex-col gap-1">
-                    <h1 className="text-xl font-semibold">{title}</h1>
+                    <h1 className="text-xl font-semibold">
+                        {vacancy.title_vacancy}
+                    </h1>
                     <span className="text-sm capitalize text-zinc-500">
-                        berakhir pada {date}
+                        berakhir pada {vacancy.deadline_vacancy}
                     </span>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -26,13 +31,16 @@ export default function SeekerList({ ...props }) {
                         daftar pelamar
                     </h2>
                     <div className="flex w-full flex-col gap-3 rounded-lg bg-zinc-100 p-3">
-                        {seekers.map((seeker, index) => (
-                            <SeekerRequestCard
-                                key={index}
-                                nama={seeker.nama}
-                                image={seeker.image}
-                            />
-                        ))}
+                        {appliers.length > 0 ? (
+                            appliers.map((seeker, index) => (
+                                <SeekerRequestCard
+                                    key={index}
+                                    nama={seeker.name_seeker}
+                                />
+                            ))
+                        ) : (
+                            <h1>Belum ada yang melamar lowongan ini.</h1>
+                        )}
                     </div>
                 </div>
             </div>

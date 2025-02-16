@@ -2,7 +2,7 @@ import JobCard from '@/Components/JobCard/JobCard';
 import SearchBar from '@/Components/SearchBar';
 import GuestLayout from '@/Layouts/GuestLayout';
 
-export default function Dashboard({ auth }) {
+export default function Dashboard({ auth, vacancies }) {
     const trackerJobs = [
         { status: 'Lowongan Dilamar', color: '#9F9F9F' },
         { status: 'Diterima', color: '#44CFCB' },
@@ -124,18 +124,13 @@ export default function Dashboard({ auth }) {
                         Pekerjaan Terbaru
                     </span>
                     <div className="flex w-full flex-row gap-5">
-                        <JobCard
-                            {...jobData}
-                            className="border-2 border-[#1673DE] drop-shadow-lg"
-                        />
-                        <JobCard
-                            {...jobData}
-                            className="border-2 border-[#1673DE] drop-shadow-lg"
-                        />
-                        <JobCard
-                            {...jobData}
-                            className="border-2 border-[#1673DE] drop-shadow-lg"
-                        />
+                        {vacancies.map((vacancy) => (
+                            <JobCard
+                                key={vacancy.id_vacancy}
+                                vacancy={vacancy}
+                                className="border-2 border-[#1673DE] drop-shadow-lg"
+                            />
+                        ))}
                     </div>
                 </div>
             </div>

@@ -2,35 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Applies;
 use App\Models\Company;
+use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
-    public function index() {}
-
-    public function store(Request $request)
+    public function index()
     {
-        $request->validate([
-            'id_business' => 'required|string|unique:user',
-            'name_company' => 'required|string',
-            'email_company' => 'required|email|unique:user',
-            'decription_company' => 'required|text',
-            'is_verified' => 'required|boolean',
-            'agreed_at' => 'date',
-            'address_company' => 'required|string',
-            'score_company' => 'required|double'
-        ]);
+        $user = Auth::user();
+        $company = Company::where('id_user', Auth::id())
+            ->firstOrFail();
+        $vacancies = Vacancy::with(['company', 'tags'])
+            ->where('id_company', $company->id_company)
+            ->get();
 
-
-        Company::create([
-            'id_business' => $request->id_business,
-            'name_company' => $request->name_company,
-            'email_company' => $request->email_company,
-            'description_company' => $request->description_company,
-            'is_verified' => '0',
-            'address_company' => $request->address_company,
-            'score_company' => 10.0
+        return Inertia::render('Company/CompanyDashboard', [
+            'auth' => [
+                'user' => Auth::user() ? [
+                    'id' => $user->id_user,
+                    'name' => $company->name_company,
+                    'email' => $user->email,
+                ] : null,
+                'vacancies' => $vacancies ?? []
+            ]
         ]);
+    }
+
+    public function details($id)
+    {
+        $vacancy = Vacancy::with('company')
+            ->where('id_vacancy', $id)
+            ->firstOrFail();
+
+        $appliers = Applies::with('seeker')
+            ->where('id_vacancy', $id)
+            ->get();
+
+        return Inertia::render('Company/SeekerList', [
+            'vacancy' => $vacancy,
+            'appliers' => $appliers
+        ]);
+    }
+
+    public function create()
+    {
+        return Inertia::render('Auth/PenyediaRegister');
     }
 }
