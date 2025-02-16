@@ -1,10 +1,11 @@
 <?php
 
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CVController;
+use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacancyController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -25,6 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::post('/api/upload-cv', [CVController::class, 'store'])->name('cv.store');
+    Route::get('/api/list-cv', [CvController::class, 'list'])->name('cv.list');
+    Route::delete('/api/delete-cv{cvId}', [CVController::class, 'destroy'])->name('cv.destroy');;
 });
 
 require __DIR__ . '/auth.php';
@@ -37,9 +42,9 @@ Route::get('/details', function () {
     return Inertia::render('Jobs/Details');
 });
 
-Route::get('/profile', function () {
-    return Inertia::render('Profile/profile');
-});
+// Route::get('/profile', function () {
+//     return Inertia::render('Profile/profile');
+// });
 
 Route::get('/profile/edit', function () {
     return Inertia::render('Profile/AccountEdit');

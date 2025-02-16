@@ -2,23 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
+use App\Models\CV;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Seeker;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+    public function index()
+    {
+        $user = Auth::user();
+        $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
+
+        return Inertia::render('Profile/Profile', [
+            'auth' => [
+                'user' => Auth::user() ? [
+                    'id' => $user->id_user,
+                    'name' => $seeker->name_seeker,
+                    'email' => $user->email,
+                ] : null,
+
+            ]
+        ]);
+    }
+
     public function edit(Request $request): Response
     {
-        return Inertia::render('Profile/Edit', [
+        $user = Auth::user();
+        $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
+        $cvs = CV::where('id_seeker', $seeker->id)->get();
+
+        return Inertia::render('Profile/Profile', [
+            'auth' => [
+                'user' => Auth::user() ? [
+                    'id' => $user->id_user,
+                    'name' => $seeker->name_seeker,
+                    'email' => $user->email,
+                ] : null,
+                'cvs' => $cvs
+            ],
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);

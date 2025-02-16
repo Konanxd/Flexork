@@ -1,11 +1,65 @@
 import { router } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import FileStored from '../FileStored';
 import FileUploadBtn from '../FileUploadBtn';
 import PrimaryButton from '../PrimaryButton';
 import UserVerified from '../UserVerified';
 import MyAccountDesc from './MyAccountDesc';
 
-const MyAccount = () => {
+const MyAccount = ({ auth }) => {
+    const [cvs, setCvs] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        fetchCvs();
+    }, []);
+
+    const fetchCvs = async () => {
+        try {
+            const response = await axios.get('/api/list-cv');
+            setCvs(response.data.cvs);
+        } catch (error) {
+            console.error('Failed to fetch CVs');
+        }
+    };
+
+    const handleFileUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('cv', file);
+
+        setLoading(true);
+
+        try {
+            await axios.post(route('cv.store'), formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                withCredentials: true,
+            });
+
+            fetchCvs();
+        } catch (error) {
+            alert(error.response?.data?.message || 'Upload failed!');
+        }
+
+        setLoading(false);
+    };
+
+    const handleDelete = async (id) => {
+        if (!confirm('Are you sure you want to delete this CV?')) return;
+
+        try {
+            await axios.delete(`/delete-cv/${id}`);
+            window.location.reload();
+        } catch (error) {
+            alert('Failed to delete CV.');
+        }
+    };
+
     return (
         <div className="h-full">
             <div className="m flex w-full flex-row items-center gap-6 rounded-t-lg bg-gray-400 p-8 sm:flex-col md:flex-row lg:flex-row">
@@ -161,19 +215,26 @@ const MyAccount = () => {
                 </MyAccountDesc>
                 <MyAccountDesc
                     title="resume"
-                    className="flex w-full flex-row gap-6 overflow-x-scroll pb-3 scrollbar-thin"
+                    className="scrollbar-thin flex w-full flex-row gap-6 overflow-x-scroll pb-3"
                 >
-                    <FileUploadBtn></FileUploadBtn>
-                    <FileStored></FileStored>
-                    <FileStored></FileStored>
-                    <FileStored></FileStored>
-                    <FileStored></FileStored>
-                    <FileStored></FileStored>
-                    <FileStored></FileStored>
+                    <FileUploadBtn onClick={handleFileUpload} />
+                    {auth.cvs.length > 0 ? (
+                        auth.cvs.map((cv) => (
+                            <FileStored
+                                key={cv.id}
+                                filename={'My Resume.pdf'}
+                                size={'5MB'}
+                                onDelete={() => handleDelete(cv.id)}
+                                fileUrl={`/storage/${cv.path}`}
+                            />
+                        ))
+                    ) : (
+                        <></>
+                    )}
                 </MyAccountDesc>
                 <MyAccountDesc
                     title="sertifikat"
-                    className="flex w-full flex-row gap-6 overflow-x-scroll pb-3 scrollbar-thin"
+                    className="scrollbar-thin flex w-full flex-row gap-6 overflow-x-scroll pb-3"
                 >
                     <FileUploadBtn></FileUploadBtn>
                     <FileStored></FileStored>

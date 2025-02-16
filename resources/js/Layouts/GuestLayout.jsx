@@ -1,6 +1,8 @@
 import NavBar from '@/Components/NavBar';
+import { usePage } from '@inertiajs/react';
 
-export default function GuestLayout({ auth, children, className = '' }) {
+export default function GuestLayout({ children, className = '' }) {
+    const { auth } = usePage().props;
     console.log(auth);
     return (
         <div>

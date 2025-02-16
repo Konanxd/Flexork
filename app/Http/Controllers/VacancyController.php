@@ -29,11 +29,12 @@ class VacancyController extends Controller
                     'name' => $seeker->name_seeker,
                     'email' => $user->email,
                 ] : null,
-            ],
-            'counter' => [
-                'pending' => $countPending,
-                'accepted' => $countAccepted,
-                'rejected' => $countRejected
+                'counter' => [
+                    'total' => $countPending + $countAccepted + $countRejected,
+                    'pending' => $countPending,
+                    'accepted' => $countAccepted,
+                    'rejected' => $countRejected
+                ]
             ]
         ]);
     }

@@ -1,7 +1,7 @@
 import SearchBar from '@/Components/SearchBar';
 import GuestLayout from '@/Layouts/GuestLayout';
 
-export default function Dashboard() {
+export default function Dashboard({ auth }) {
     const trackerJobs = [
         { status: 'Lowongan Dilamar', color: '#9F9F9F' },
         { status: 'Diterima', color: '#44CFCB' },
@@ -33,12 +33,12 @@ export default function Dashboard() {
                     <span className="poppins-semibold">{item.status}</span>
                     <span className="text-xs text-[#9F9F9F]">
                         {index === 0
-                            ? '10 Lowongan'
+                            ? `${auth.counter.total} Lowongan`
                             : index === 1
-                              ? '2 Lowongan'
+                              ? `${auth.counter.accepted} Lowongan`
                               : index === 2
-                                ? '12 Lowongan'
-                                : '1 Lowongan'}
+                                ? `${auth.counter.rejected} Lowongan`
+                                : `${auth.counter.pending} Lowongan`}
                     </span>
                 </div>
             </div>
@@ -91,9 +91,14 @@ export default function Dashboard() {
                 <div className="w-full bg-red-600">
                     <SearchBar className="" />
                 </div>
-                <div className="my-4 flex w-full flex-row justify-center gap-5">
-                    {renderTrackerJobs()}
-                </div>
+
+                {auth != null ? (
+                    <div className="my-4 flex w-full flex-row justify-center gap-5">
+                        {renderTrackerJobs()}
+                    </div>
+                ) : (
+                    <></>
+                )}
 
                 <div className="flex w-full flex-col justify-center gap-6 bg-white p-5 pt-6">
                     <span className="poppins-semibold text-lg">
