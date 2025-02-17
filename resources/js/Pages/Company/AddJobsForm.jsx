@@ -4,12 +4,37 @@ import TextAreaInput from '@/Components/TextAreaInput';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { router } from '@inertiajs/react';
+import { useState } from 'react';
 
 export default function AddJobsForm() {
+    const [formData, setFormData] = useState({
+        judul: '',
+        deskripsi: '',
+        tanggalMulai: '',
+        tanggalSelesai: '',
+        lokasi: '',
+        tags: '',
+        jamKerjaMulai: '',
+        jamKerjaSelesai: '',
+        pendidikanMin: '',
+        pendidikanMax: '',
+        pengalaman: '',
+        gaji: '',
+        jobdesk: '',
+        benefit: '',
+    });
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Form Data:', formData);
+    };
     return (
         <GuestLayout className="h-auto">
             <form
-                action=""
+                onSubmit={handleSubmit}
                 className="form m-6 flex w-full max-w-[1000px] flex-col gap-5 rounded-lg bg-white px-20 py-12"
             >
                 <div className="flex flex-col gap-1.5 text-xl">
@@ -17,6 +42,9 @@ export default function AddJobsForm() {
                         Judul Lowongan
                     </h2>
                     <TextInput
+                        name="judul"
+                        value={formData.judul}
+                        onChange={handleChange}
                         className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         placeholder="silahkan Isi Nama Perusahaan"
                     />
@@ -27,6 +55,9 @@ export default function AddJobsForm() {
                     </h2>
                     <TextAreaInput
                         rows="5"
+                        name="deskripsi"
+                        value={formData.deskripsi}
+                        onChange={handleChange}
                         className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         placeholder="silahkan Isi Nama Perusahaan"
                     />
@@ -38,14 +69,18 @@ export default function AddJobsForm() {
                     <div className="flex flex-row items-center gap-3">
                         <input
                             type="date"
-                            name=""
+                            name="tanggalMulai"
+                            value={formData.tanggalMulai}
+                            onChange={handleChange}
                             id=""
                             className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         />
                         <span>-</span>
                         <input
                             type="date"
-                            name=""
+                            name="tanggalSelesai"
+                            value={formData.tanggalSelesai}
+                            onChange={handleChange}
                             id=""
                             className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         />
@@ -71,6 +106,9 @@ export default function AddJobsForm() {
                             </div>
                             <TextAreaInput
                                 rows="5"
+                                name="lokasi"
+                                value={formData.lokasi}
+                                onChange={handleChange}
                                 className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                                 placeholder="silahkan Isi Nama Perusahaan"
                             />
@@ -110,14 +148,18 @@ export default function AddJobsForm() {
                             <div className="flex w-full flex-row items-center gap-2">
                                 <input
                                     type="time"
-                                    name=""
+                                    name="jamKerjaMulai"
+                                    value={formData.jamKerjaMulai}
+                                    onChange={handleChange}
                                     id=""
                                     className="w-full rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                                 />
                                 <span>-</span>
                                 <input
                                     type="time"
-                                    name=""
+                                    name="jamKerjaSelesai"
+                                    value={formData.jamKerjaSelesai}
+                                    onChange={handleChange}
                                     id=""
                                     className="w-full rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                                 />
@@ -138,29 +180,37 @@ export default function AddJobsForm() {
                             </div>
                             <div className="flex flex-row items-center gap-3">
                                 <select
-                                    name=""
+                                    name="pendidikanMin"
+                                    value={formData.pendidikanMin}
+                                    onChange={handleChange}
                                     id=""
                                     className="w-fit border-2 border-[#C4C4C4] text-[#5B5B5B]"
                                 >
-                                    <option value="">tidak ada batasan</option>
-                                    <option value="">SMP</option>
-                                    <option value="">SMA</option>
-                                    <option value="">S1</option>
-                                    <option value="">S2</option>
-                                    <option value="">S3</option>
+                                    <option value="unlimit">
+                                        tidak ada batasan
+                                    </option>
+                                    <option value="smp">SMP</option>
+                                    <option value="sma">SMA</option>
+                                    <option value="s1">S1</option>
+                                    <option value="s2">S2</option>
+                                    <option value="s3">S3</option>
                                 </select>
                                 <span>-</span>
                                 <select
-                                    name=""
+                                    name="pendidikanMax"
+                                    value={formData.pendidikanMax}
+                                    onChange={handleChange}
                                     id=""
                                     className="w-fit border-2 border-[#C4C4C4] text-[#5B5B5B]"
                                 >
-                                    <option value="">tidak ada batasan</option>
-                                    <option value="">SMP</option>
-                                    <option value="">SMA</option>
-                                    <option value="">S1</option>
-                                    <option value="">S2</option>
-                                    <option value="">S3</option>
+                                    <option value="unlimit">
+                                        tidak ada batasan
+                                    </option>
+                                    <option value="smp">SMP</option>
+                                    <option value="sma">SMA</option>
+                                    <option value="s1">S1</option>
+                                    <option value="s2">S2</option>
+                                    <option value="s3">S3</option>
                                 </select>
                             </div>
                         </div>
@@ -178,6 +228,9 @@ export default function AddJobsForm() {
                                 <span>pengalaman kerja</span>
                             </div>
                             <TextInput
+                                name="pengalaman"
+                                value={formData.pengalaman}
+                                onChange={handleChange}
                                 className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                                 placeholder="silahkan Isi Nama Perusahaan"
                             />
@@ -196,6 +249,10 @@ export default function AddJobsForm() {
                                 <span>jumlah gaji</span>
                             </div>
                             <TextInput
+                                type="number"
+                                name="gaji"
+                                value={formData.gaji}
+                                onChange={handleChange}
                                 className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                                 placeholder="silahkan Isi Nama Perusahaan"
                             />
@@ -206,6 +263,9 @@ export default function AddJobsForm() {
                             Jobdesk
                         </h2>
                         <TextAreaInput
+                            name="jobdesk"
+                            value={formData.jobdesk}
+                            onChange={handleChange}
                             rows="5"
                             className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                             placeholder="silahkan Isi Nama Perusahaan"
@@ -217,13 +277,19 @@ export default function AddJobsForm() {
                         </h2>
                         <TextAreaInput
                             rows="5"
+                            name="benefit"
+                            value={formData.benefit}
+                            onChange={handleChange}
                             className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                             placeholder="silahkan Isi Nama Perusahaan"
                         />
                     </div>
                 </div>
                 <div className="flex flex-col gap-2">
-                    <PrimaryButton className="w-full bg-[#1673DE] py-4 text-lg font-semibold uppercase text-white focus:ring-transparent">
+                    <PrimaryButton
+                        type="submit"
+                        className="w-full bg-[#1673DE] py-4 text-lg font-semibold uppercase text-white focus:ring-transparent"
+                    >
                         simpan
                     </PrimaryButton>
                     <SecondaryButton

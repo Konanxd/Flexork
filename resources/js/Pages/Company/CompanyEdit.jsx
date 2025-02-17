@@ -10,20 +10,43 @@ import { useState } from 'react';
 export default function CompanyEdit() {
     const [profileImage, setProfileImage] = useState(null);
     const [bannerImage, setBannerImage] = useState(null);
+    const [formData, setFormData] = useState({
+        namaPerusahaan: '',
+        tentangPerusahaan: '',
+        bidangPerusahaan: '',
+        alamat: '',
+        email: '',
+        website: '',
+        instagram: '',
+    });
 
-    const handleImageChange = (event, setImage) => {
-        const file = event.target.files[0];
+    const handleImageChange = (e, setImage) => {
+        const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImage(reader.result);
-            };
-            reader.readAsDataURL(file);
+            setImage(URL.createObjectURL(file));
         }
     };
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Data Form:', formData);
+        console.log('Profile Image:', profileImage);
+        console.log('Banner Image:', bannerImage);
+    };
+
     return (
         <GuestLayout className="h-auto">
-            <form className="form m-6 flex w-full max-w-[1000px] flex-col gap-5 rounded-lg bg-white px-20 py-12">
+            <form
+                onSubmit={handleSubmit}
+                className="form m-6 flex w-full max-w-[1000px] flex-col gap-5 rounded-lg bg-white px-20 py-12"
+            >
                 <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold capitalize">
                         unggah foto profile Perusahaan
@@ -52,6 +75,7 @@ export default function CompanyEdit() {
                         </span>
                     </label>
                 </div>
+
                 <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold capitalize">
                         unggah banner Perusahaan
@@ -80,42 +104,63 @@ export default function CompanyEdit() {
                         </span>
                     </label>
                 </div>
+
                 <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold">Nama Perusahaan</h2>
                     <TextInput
+                        name="namaPerusahaan"
+                        value={formData.namaPerusahaan}
+                        onChange={handleChange}
                         className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
-                        placeholder="silahkan Isi Nama Perusahaan"
+                        placeholder="Silahkan isi nama perusahaan"
                     />
                 </div>
+
                 <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold">Tentang Perusahaan</h2>
                     <TextAreaInput
+                        name="tentangPerusahaan"
+                        value={formData.tentangPerusahaan}
+                        onChange={handleChange}
                         className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         rows="5"
-                        placeholder="silahkan Isi Tentang Saya Perusahaan"
+                        placeholder="Silahkan isi tentang perusahaan"
                     />
                 </div>
+
                 <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold">Bidang Perusahaan</h2>
                     <TextAreaInput
+                        name="bidangPerusahaan"
+                        value={formData.bidangPerusahaan}
+                        onChange={handleChange}
                         className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         rows="5"
-                        placeholder="silahkan Isi Pengalaman Kerja Perusahaan"
+                        placeholder="Silahkan isi bidang perusahaan"
                     />
                 </div>
+
                 <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold">Alamat</h2>
                     <TextAreaInput
+                        name="alamat"
+                        value={formData.alamat}
+                        onChange={handleChange}
                         className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         rows="5"
-                        placeholder="silahkan Isi Alamat Perusahaan"
+                        placeholder="Silahkan isi alamat perusahaan"
                     />
                 </div>
 
                 <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold">kontak</h2>
                     <div className="flex flex-col gap-4">
-                        <ContactInput></ContactInput>
+                        <ContactInput
+                            email={formData.email}
+                            website={formData.website}
+                            instagram={formData.instagram}
+                            handleChange={handleChange}
+                        ></ContactInput>
                     </div>
                 </div>
                 <div className="flex flex-col gap-3">
