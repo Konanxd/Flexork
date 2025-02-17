@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('work_history', function (Blueprint $table) {
+        Schema::create('work_histories', function (Blueprint $table) {
             $table->id('id_work_history');
             $table->unsignedBigInteger('id_seeker');
             $table->unsignedBigInteger('id_vacancy');
-            $table->unsignedBigInteger('id_company');
             $table->date('start_date');
             $table->date('end_date');
             $table->timestamps();
 
             $table->foreign('id_vacancy')->references('id_vacancy')->on('vacancies');
             $table->foreign('id_seeker')->references('id_seeker')->on('seekers');
-            $table->foreign('id_company')->references('id_company')->on('companies');
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('work_history');
+        Schema::dropIfExists('work_histories');
     }
 };

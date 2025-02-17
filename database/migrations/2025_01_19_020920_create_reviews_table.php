@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id('id_review');
             $table->unsignedBigInteger('id_user');
-            $table->unsignedBigInteger('id_company');
+            $table->unsignedBigInteger('id_work_history');
             $table->float('score_review');
             $table->text('text_review');
             $table->timestamps();
 
             $table->foreign('id_user')->references('id_user')->on('users');
-            $table->foreign('id_company')->references('id_company')->on('companies');
+            $table->foreign('id_work_history')->references('id_work_history')->on('work_histories');
         });
     }
 
