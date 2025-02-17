@@ -1,19 +1,38 @@
 import SeekerRequestCard from '@/Components/CompanyCard/SeekerRequestCard';
 import GuestLayout from '@/Layouts/GuestLayout';
+import axios from 'axios';
+import { useState } from 'react';
 
 export default function SeekerList({ vacancy, appliers }) {
-    console.log(vacancy);
     console.log(appliers);
+    // Store the list of seekers in state
+    const [seekerList, setSeekerList] = useState(appliers);
 
-    const title = 'Intern Programmer';
-    const date = '12/12/2025';
-    const seekers = [
-        { nama: 'Ahmad Rizki', image: 'https://picsum.photos/100?random=1' },
-        { nama: 'Bella Sari', image: 'https://picsum.photos/100?random=2' },
-        { nama: 'Cahyo Pratama', image: 'https://picsum.photos/100?random=3' },
-        { nama: 'Dewi Lestari', image: 'https://picsum.photos/100?random=4' },
-        { nama: 'Eko Saputra', image: 'https://picsum.photos/100?random=5' },
-    ];
+    // Handle accept action
+    const acceptHandler = async (id_apply) => {
+        try {
+            await axios.put(`/api/applies/${id_apply}/accept`);
+            // Remove seeker from the list
+            setSeekerList(
+                seekerList.filter((apply) => apply.id_apply !== id_apply),
+            );
+        } catch (error) {
+            console.error('Error accepting:', error);
+        }
+    };
+
+    // Handle reject action
+    const rejectHandler = async (id_apply) => {
+        try {
+            await axios.put(`/api/applies/${id_apply}/reject`);
+            // Remove seeker from the list
+            setSeekerList(
+                seekerList.filter((apply) => apply.id_apply !== id_apply),
+            );
+        } catch (error) {
+            console.error('Error rejecting:', error);
+        }
+    };
 
     return (
         <GuestLayout className="p-6">
@@ -31,11 +50,18 @@ export default function SeekerList({ vacancy, appliers }) {
                         daftar pelamar
                     </h2>
                     <div className="flex w-full flex-col gap-3 rounded-lg bg-zinc-100 p-3">
-                        {appliers.length > 0 ? (
-                            appliers.map((seeker, index) => (
+                        {seekerList.length > 0 ? (
+                            seekerList.map((apply) => (
                                 <SeekerRequestCard
-                                    key={index}
-                                    nama={seeker.name_seeker}
+                                    key={apply.id_apply}
+                                    nama={apply.cv.seeker.name_seeker}
+                                    onCheck={`${apply.cv.cv_url}`}
+                                    onAccept={() =>
+                                        acceptHandler(apply.id_apply)
+                                    }
+                                    onReject={() =>
+                                        rejectHandler(apply.id_apply)
+                                    }
                                 />
                             ))
                         ) : (

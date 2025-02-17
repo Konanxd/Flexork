@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import NavLink from './NavLink';
 
 const NavBar = ({ auth }) => {
@@ -8,7 +9,9 @@ const NavBar = ({ auth }) => {
     return (
         <nav className="poppins-regular flex w-full flex-col border border-b-[#1673DE]">
             <div className="m-auto flex w-full items-center justify-between py-3">
-                <img src={'../assets/logo.png'} alt="Flexork" width={160} />
+                <Link href={route('dashboard')}>
+                    <img src={'../assets/logo.png'} alt="Flexork" width={160} />
+                </Link>
                 {auth?.user ? (
                     <div className="text-md text-[#1673DE]">
                         Halo, &nbsp;
@@ -32,7 +35,7 @@ const NavBar = ({ auth }) => {
                 <div className="flex gap-10 py-1.5 text-sm font-normal uppercase">
                     <NavLink
                         className="text-base font-normal text-slate-100"
-                        href="/search"
+                        href="/cari"
                     >
                         cari lowongan
                     </NavLink>

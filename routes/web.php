@@ -19,7 +19,6 @@ use App\Http\Controllers\VacancyController;
 // });
 
 
-Route::get('/lowongan/{id}', [VacancyController::class, 'details'])->name('vacancy.details');
 
 Route::middleware('auth')->get('/dashboard', function () {
     if (Auth::user()->type_user === 'pelamar') {
@@ -30,20 +29,30 @@ Route::middleware('auth')->get('/dashboard', function () {
     abort(403); // Just in case an unknown role is detected
 })->name('dashboard');
 
+Route::get('/dashboard/pelamar', [VacancyController::class, 'dashboard'])
+    ->name('dashboard.pelamar');
+Route::get('/cari', [VacancyController::class, 'index'])->name('vacancy.index');
+Route::get('/lowongan/{id}', [VacancyController::class, 'details'])->name('vacancy.details');
+
 
 
 Route::middleware(['auth', 'seeker'])->group(function () {
     Route::get('/dashboard/pelamar', [VacancyController::class, 'dashboard'])
         ->name('dashboard.pelamar');
-    Route::get('/cari', [VacancyController::class, 'index'])->name('vacancy.index');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/api/search', [VacancyController::class, 'search'])->name('vacancy.search');
 
     Route::post('/api/upload-cv', [CVController::class, 'store'])->name('cv.store');
     Route::get('/api/list-cv', [CvController::class, 'list'])->name('cv.list');
     Route::delete('/api/delete-cv/{cvId}', [CVController::class, 'destroy'])->name('cv.destroy');;
+    Route::post('/api/apply', [VacancyController::class, 'apply'])->name('vacancy.apply');
+    Route::get('/api/apply-status/{id}', [VacancyController::class, 'status'])->name('vacancy.status');
+    Route::delete('/api/cancel/{id}', [VacancyController::class, 'cancel'])->name('vacancy.cancel');
 });
 
 Route::middleware(['auth', 'company'])->group(function () {
@@ -53,7 +62,13 @@ Route::middleware(['auth', 'company'])->group(function () {
         ->name('penyedia.details');
     Route::get('/buka-lowongan', [VacancyController::class, 'create'])
         ->name('vacancy.create');
+
+    Route::put('/api/applies/{id}/accept', [CompanyController::class, 'accept'])->name('applies.accept');
+    Route::put('/api/applies/{id}/reject', [CompanyController::class, 'reject'])->name('applies.reject');
+
+    Route::get('/cv/{id}', [CVController::class, 'show'])->name('cv.show');
 });
+
 
 require __DIR__ . '/auth.php';
 
@@ -62,9 +77,9 @@ Route::get('/details', function () {
     return Inertia::render('Jobs/Details');
 });
 
-Route::get('/profile/edit', function () {
-    return Inertia::render('Profile/AccountEdit');
-});
+// Route::get('/profile/edit', function () {
+//     return Inertia::render('Profile/AccountEdit');
+// });
 
 Route::get('/search', function () {
     return Inertia::render('Jobs/JobSearch');

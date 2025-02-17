@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cv_s', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_cv');
             $table->unsignedBigInteger('id_seeker');
+            $table->string('cv_name')->nullable();
+            $table->string('original_cv_name')->nullable();
             $table->string('path')->nullable();
             $table->timestamps();
 

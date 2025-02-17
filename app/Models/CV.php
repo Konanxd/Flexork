@@ -14,4 +14,9 @@ class CV extends Model
         'original_cv_name',
         'path'
     ];
+
+    public function seeker()
+    {
+        return $this->belongsTo(Seeker::class, 'id_seeker');
+    }
 }

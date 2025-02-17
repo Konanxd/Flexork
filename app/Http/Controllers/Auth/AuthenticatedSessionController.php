@@ -38,10 +38,10 @@ class AuthenticatedSessionController extends Controller
         switch ($user->type_user) {
             case 'admin':
                 return redirect()->intended(route('admin.dashboard', absolute: false));
-            case 'company':
-                return redirect()->intended(route('company.dashboard', absolute: false));
-            case 'seeker':
-                return redirect()->intended(route('seeker.dashboard', absolute: false));
+            case 'penyedia':
+                return redirect()->intended(route('dashboard.penyedia', absolute: false));
+            case 'pelamar':
+                return redirect()->intended(route('dashboard.pelamar', absolute: false));
             default:
                 return redirect()->intended(route('dashboard', absolute: false));
         }
@@ -58,6 +58,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/dashboard');
     }
 }

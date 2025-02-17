@@ -1,19 +1,52 @@
+import ApplyButton from '@/Components/ApplyButton';
 import HeadDescription from '@/Components/HeadDescription';
 import HeadTitle from '@/Components/HeadTitle';
-import SecondaryButton from '@/Components/SecondaryButton';
+import ModalSelectCV from '@/Components/ModalSelectCV';
 import SubTitle from '@/Components/SubTitle';
 import GuestLayout from '@/Layouts/GuestLayout';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const Details = ({ vacancy }) => {
+const Details = ({ vacancy, cvs, status: initialStatus }) => {
+    const [applicationStatus, setApplicationStatus] = useState(
+        initialStatus ?? null,
+    );
     const [applied, setApplied] = useState(false);
-    console.log(vacancy);
-    let data;
-    if (vacancy != undefined) {
-        data = vacancy[0];
-    }
+    const [CVSelectOpen, setCVSelectOpen] = useState(false);
 
-    const handleApply = () => {};
+    const data = vacancy && vacancy.length > 0 ? vacancy[0] : null;
+
+    console.log(applicationStatus);
+
+    useEffect(() => {
+        if (data) {
+            axios
+                .get(`/api/apply-status/${data.id_vacancy}`)
+                .then((response) => {
+                    setApplied(response.data.applied);
+                    setApplicationStatus(response.data.status);
+                })
+                .catch((error) => console.error(error));
+        }
+    }, [data]);
+
+    const handleCancel = () => {
+        axios.delete(`/api/cancel/${data.id_vacancy}`).catch((error) => {
+            console.error(error);
+            setApplicationStatus('pending');
+            setApplied(true);
+        });
+
+        setApplicationStatus(null);
+        setApplied(false);
+        console.log(applicationStatus);
+        console.log(data.id_vacancy);
+    };
+
+    const handleClick = () => {
+        setCVSelectOpen(true);
+    };
+
+    if (!data) return <p>Loading...</p>;
 
     return (
         <GuestLayout>
@@ -31,14 +64,30 @@ const Details = ({ vacancy }) => {
 
                     <div className="flex flex-row">
                         <div>
-                            <SecondaryButton
-                                onClick={handleApply}
-                                className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
-                            >
-                                LAMAR
-                            </SecondaryButton>
+                            {applicationStatus == 'pending' ? (
+                                <ApplyButton
+                                    className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
+                                    onClick={handleCancel}
+                                    status={applicationStatus}
+                                />
+                            ) : (
+                                <ApplyButton
+                                    className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
+                                    onClick={() => setCVSelectOpen(true)}
+                                    status={applicationStatus}
+                                />
+                            )}
                         </div>
                     </div>
+
+                    {CVSelectOpen && (
+                        <ModalSelectCV
+                            cvs={cvs}
+                            vacancyId={data.id_vacancy}
+                            onSuccess={() => setApplicationStatus('pending')}
+                            onClose={() => setCVSelectOpen(false)}
+                        />
+                    )}
 
                     <div className="flex flex-col gap-6">
                         <SubTitle>Keterangan</SubTitle>
@@ -134,6 +183,7 @@ const Details = ({ vacancy }) => {
                                     <div className="flex flex-row gap-2 py-2">
                                         {[...Array(5)].map((_, i) => (
                                             <svg
+                                                key={i}
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 24 24"
                                                 width="18"

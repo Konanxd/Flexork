@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('born_date');
             $table->boolean('is_verified');
             $table->string('address_seeker');
-            $table->string('phone_seeker');
+            $table->string('phone_seeker')->unique();
             $table->float('score_seeker');
             $table->timestamps();
 

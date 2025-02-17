@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CV;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Seeker;
 use App\Models\Applies;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class VacancyController extends Controller
@@ -52,13 +54,42 @@ class VacancyController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        $query = Vacancy::with(['company', 'tags']);
+
+        if ($request->filled('keyword')) {
+            $query->where('title_vacancy', 'LIKE', '%' . $request->keyword . '%')
+                ->orWhereHas('company', function ($q) use ($request) {
+                    $q->where('name_company', 'LIKE', '%' . $request->keyword . '%');
+                });
+        }
+
+        if ($request->filled('jobTypes')) {
+            $query->whereHas('tags', function ($q) use ($request) {
+                $q->whereIn('tags.name_tag', $request->jobTypes);
+            });
+        }
+
+        $vacancies = $query->get();
+
+        return response()->json([
+            'vacancies' => $vacancies
+        ]);
+    }
+
+
     public function details($id)
     {
+        $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
         $vacancy = Vacancy::with('company', 'tags')
             ->where('id_vacancy', $id)
             ->get();
+        $cvs = CV::where('id_seeker', $seeker->id_seeker)->get();
+
         return Inertia::render('Jobs/Details', [
-            'vacancy' => $vacancy
+            'vacancy' => $vacancy,
+            'cvs' => $cvs
         ]);
     }
 
@@ -95,23 +126,50 @@ class VacancyController extends Controller
         return to_route('vacancy.details', $request->id_vacancy);
     }
 
-    public function apply(Request $request, Vacancy $vacancy)
+    public function apply(Request $request)
     {
         $request->validate([
-            'id_seeker' => 'required|exists:seekers,id_seeker',
-            'id_vacancy' => 'required|exists:vacancies,id_vacancy',
-            'message_apply' => 'required|string'
+            'id_cv' => 'required|integer',
+            'id_vacancy' => 'required|integer',
         ]);
-
-        $userId = Auth::user()->id;
-        $user = User::find($userId);
 
         Applies::create([
-            'id_seeker' => $user->seeker->id,
-            'id_vacancy' => $vacancy->id,
-            'message_apply' => 'required|string'
+            'id_cv' => $request->id_cv,
+            'id_seeker' => Auth::id(),
+            'id_vacancy' => $request->id_vacancy,
+            'status' => 'pending'
         ]);
 
-        return to_route('vacancy.details', $request->id_vacancy);
+        return response()->json([
+            'message' => 'Application submitted successfully.'
+        ]);
+    }
+
+    public function cancel($id)
+    {
+        $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
+        $applies = Applies::where('id_seeker', $seeker->id_user)
+            ->where('id_vacancy', $id)
+            ->firstOrFail();
+
+        // dd($applies);
+
+        $applies->delete();
+
+        return response()->json([
+            'message' => 'Lamaran berhasil dibatalkan.'
+        ]);
+    }
+
+    public function status($id)
+    {
+        $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
+        $applies = Applies::where('id_seeker', $seeker->id_user)
+            ->where('id_vacancy', $id)
+            ->firstOrFail();
+
+        return response()->json([
+            'status' => $applies->status_apply
+        ]);
     }
 }

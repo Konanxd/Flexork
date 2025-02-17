@@ -1,5 +1,4 @@
 import JobCard from '@/Components/JobCard/JobCard';
-import SearchBar from '@/Components/SearchBar';
 import GuestLayout from '@/Layouts/GuestLayout';
 
 export default function Dashboard({ auth, vacancies }) {
@@ -81,7 +80,7 @@ export default function Dashboard({ auth, vacancies }) {
                 key={index}
             >
                 <div className="object-cover">
-                    <img src={item.img} className="w-full" />
+                    <img src={`/${item.img}`} className="w-full" />
                 </div>
                 <div className="flex flex-col px-4 py-6">
                     <span className="poppins-semibold text-md line-clamp-1">
@@ -98,10 +97,6 @@ export default function Dashboard({ auth, vacancies }) {
     return (
         <GuestLayout className="h-auto">
             <div className="mx-5 flex w-full flex-col gap-5 p-6">
-                <div className="w-full">
-                    <SearchBar className="" />
-                </div>
-
                 {auth != null ? (
                     <div className="my-4 flex w-full flex-row justify-center gap-5">
                         {renderTrackerJobs()}
