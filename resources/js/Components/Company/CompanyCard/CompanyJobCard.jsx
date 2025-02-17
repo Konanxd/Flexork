@@ -1,23 +1,35 @@
+import { router } from '@inertiajs/react';
 import PrimaryButton from '../../PrimaryButton';
 import TagView from '../../TagView';
 
-export default function CompanyJobCard({ title, date, tag, desc }) {
+export default function CompanyJobCard({ title, date, tag, desc, ...props }) {
     return (
-        <div className="flex w-full flex-col gap-4 rounded-lg bg-white p-6">
-            <div className="flex flex-col gap-1">
-                <h1 className="text-lg font-semibold uppercase">{title}</h1>
-                <span className="text-zinc-500">berakhir pada {date}</span>
+        <div
+            className="flex w-full flex-col gap-4 rounded-lg bg-white p-6"
+            {...props}
+        >
+            <div
+                className="flex cursor-pointer flex-col gap-4"
+                onClick={() => router.visit('/company/job/preview')}
+            >
+                <div className="flex flex-col gap-1">
+                    <h1 className="text-lg font-semibold uppercase">{title}</h1>
+                    <span className="text-zinc-500">berakhir pada {date}</span>
+                </div>
+                <div className="">
+                    <TagView
+                        tag={tag}
+                        className="border-2 border-red-400 text-red-400"
+                    />
+                </div>
+                <div className="rounded-md bg-zinc-100 p-3">
+                    <p className="line-clamp-5 text-zinc-600">{desc}</p>
+                </div>
             </div>
-            <div className="">
-                <TagView
-                    tag={tag}
-                    className="border-2 border-red-400 text-red-400"
-                />
-            </div>
-            <div className="rounded-md bg-zinc-100 p-3">
-                <p className="line-clamp-5 text-zinc-600">{desc}</p>
-            </div>
-            <PrimaryButton className="flex flex-row gap-3 bg-zinc-400 py-3 text-white hover:bg-zinc-300">
+            <PrimaryButton
+                className="flex flex-row gap-3 bg-zinc-400 py-3 text-white hover:bg-zinc-300"
+                onClick={() => router.visit('/company/list-pelamar')}
+            >
                 <span>lihat daftar pelamar</span>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

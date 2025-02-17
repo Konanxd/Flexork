@@ -1,9 +1,13 @@
+import { router } from '@inertiajs/react';
 import PrimaryButton from '../../PrimaryButton';
 
 export default function SeekerRequestCard({ nama, image }) {
     return (
         <div className="flex w-full flex-row items-center justify-between gap-3 rounded-md bg-white p-4">
-            <div className="flex flex-row items-center gap-3">
+            <div
+                className="flex cursor-pointer flex-row items-center gap-3"
+                onClick={() => router.visit('/company/job/userpreview')}
+            >
                 <img
                     src={image}
                     alt=""

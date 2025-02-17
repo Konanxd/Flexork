@@ -1,7 +1,9 @@
 import PrimaryButton from '@/Components/PrimaryButton';
+import SecondaryButton from '@/Components/SecondaryButton';
 import TextAreaInput from '@/Components/TextAreaInput';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { router } from '@inertiajs/react';
 
 export default function AddJobsForm() {
     return (
@@ -224,9 +226,12 @@ export default function AddJobsForm() {
                     <PrimaryButton className="w-full bg-[#1673DE] py-4 text-lg font-semibold uppercase text-white focus:ring-transparent">
                         simpan
                     </PrimaryButton>
-                    <PrimaryButton className="w-full bg-zinc-400 py-4 text-lg font-semibold uppercase text-white hover:bg-zinc-300 focus:ring-transparent">
+                    <SecondaryButton
+                        className="w-full bg-zinc-400 py-4 text-lg font-semibold uppercase text-white hover:bg-zinc-300 focus:ring-transparent"
+                        onClick={() => router.visit('/company/dashboard')}
+                    >
                         batal
-                    </PrimaryButton>
+                    </SecondaryButton>
                 </div>
             </form>
         </GuestLayout>

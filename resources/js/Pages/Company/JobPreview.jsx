@@ -1,10 +1,12 @@
 import HeadDescription from '@/Components/HeadDescription';
 import HeadTitle from '@/Components/HeadTitle';
+import BackIcon from '@/Components/Icon/BackIcon';
 import PrimaryButton from '@/Components/PrimaryButton';
 import ReviewToUser from '@/Components/ReviewToUser';
 import SubTitle from '@/Components/SubTitle';
 import TagView from '@/Components/TagView';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { router } from '@inertiajs/react';
 
 export default function JobPreview() {
     return (
@@ -12,10 +14,18 @@ export default function JobPreview() {
             <div className="shadow-5xl my-14 flex w-full max-w-4xl flex-col gap-6 rounded-2xl bg-white px-8 py-10">
                 <div className="flex flex-col gap-4">
                     <div className="flex flex-row items-center justify-between">
-                        <HeadTitle
-                            className="text-2xl"
-                            title="Inter Programmer"
-                        />
+                        <div className="flex flex-row items-center">
+                            <BackIcon
+                                className="relative mx-4"
+                                onClick={() =>
+                                    router.visit('/company/dashboard')
+                                }
+                            />
+                            <HeadTitle
+                                className="text-2xl"
+                                title="Inter Programmer"
+                            />
+                        </div>
                         <PrimaryButton className="h-fit w-fit rounded-md bg-zinc-400 px-1.5 py-1.5">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

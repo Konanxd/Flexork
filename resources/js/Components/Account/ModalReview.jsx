@@ -1,4 +1,4 @@
-import CloseIcon from '../CloseIcon';
+import CloseIcon from '../Icon/CloseIcon';
 import PrimaryButton from '../PrimaryButton';
 import FiveStar from './FiveStar';
 

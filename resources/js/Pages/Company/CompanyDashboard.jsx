@@ -1,6 +1,7 @@
 import CompanyJobCard from '@/Components/Company/CompanyCard/CompanyJobCard';
 import PrimaryButton from '@/Components/PrimaryButton';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { router } from '@inertiajs/react';
 
 export default function CompanyDashboard() {
     const jobs = [
@@ -42,7 +43,10 @@ export default function CompanyDashboard() {
                 <span className="ml-2 text-lg font-semibold">
                     daftar lowongan
                 </span>
-                <PrimaryButton className="flex flex-row gap-2 bg-[#1673DE] text-white">
+                <PrimaryButton
+                    className="flex flex-row gap-2 bg-[#1673DE] text-white"
+                    onClick={() => router.visit('/company/job/add')}
+                >
                     <span>tambah lowongan</span>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

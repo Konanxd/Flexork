@@ -1,8 +1,10 @@
 import ContactInput from '@/Components/ContactInput';
 import PrimaryButton from '@/Components/PrimaryButton';
+import SecondaryButton from '@/Components/SecondaryButton';
 import TextAreaInput from '@/Components/TextAreaInput';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function CompanyEdit() {
@@ -120,9 +122,12 @@ export default function CompanyEdit() {
                     <PrimaryButton className="w-full bg-[#1673DE] py-4 text-lg font-semibold uppercase text-white focus:ring-transparent">
                         simpan
                     </PrimaryButton>
-                    <PrimaryButton className="bg-9F9F9F w-full bg-[#9F9F9F] py-4 text-lg font-semibold uppercase tracking-normal text-white hover:bg-zinc-300 focus:ring-transparent">
+                    <SecondaryButton
+                        className="bg-9F9F9F w-full bg-[#9F9F9F] py-4 text-lg font-semibold uppercase tracking-normal text-white hover:bg-zinc-300 focus:ring-transparent"
+                        onClick={() => router.visit('/company/profile')}
+                    >
                         batal
-                    </PrimaryButton>
+                    </SecondaryButton>
                 </div>
             </form>
         </GuestLayout>

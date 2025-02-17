@@ -54,7 +54,7 @@ export default function CompanyAccount() {
                 </div>
                 <PrimaryButton
                     className="flex items-center gap-2 bg-[#1673DE] px-6 py-3 text-white hover:bg-blue-400"
-                    onClick={() => router.visit('/profile/edit')}
+                    onClick={() => router.visit('/company/edit')}
                 >
                     <span>edit</span>
                 </PrimaryButton>
