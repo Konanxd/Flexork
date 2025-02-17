@@ -26,7 +26,7 @@ Route::middleware('auth')->get('/dashboard', function () {
     } elseif (Auth::user()->type_user === 'penyedia') {
         return redirect()->route('dashboard.penyedia');
     }
-    abort(403); // Just in case an unknown role is detected
+    abort(403);
 })->name('dashboard');
 
 Route::get('/dashboard/pelamar', [VacancyController::class, 'dashboard'])
@@ -62,6 +62,10 @@ Route::middleware(['auth', 'company'])->group(function () {
         ->name('penyedia.details');
     Route::get('/buka-lowongan', [VacancyController::class, 'create'])
         ->name('vacancy.create');
+    Route::post('/buka-lowongan', [VacancyController::class, 'store'])
+        ->name('vacancy.store');
+    Route::get('/edit-lowongan/{id}', [VacancyController::class, 'edit'])
+        ->name('vacancy.edit');
 
     Route::put('/api/applies/{id}/accept', [CompanyController::class, 'accept'])->name('applies.accept');
     Route::put('/api/applies/{id}/reject', [CompanyController::class, 'reject'])->name('applies.reject');
@@ -95,4 +99,22 @@ Route::get('/company/dashboard', function () {
 
 Route::get('/company/list-pelamar', function () {
     return Inertia::render('Company/SeekerList');
+});
+
+Route::get('/company/profile', function () {
+    return Inertia::render('Company/CompanyProfile');
+});
+
+Route::get('/company/edit', function () {
+    return Inertia::render('Company/CompanyEdit');
+});
+Route::get('/company/job/preview', function () {
+    return Inertia::render('Company/JobPreview');
+});
+Route::get('/company/job/add', function () {
+    return Inertia::render('Company/AddJobsForm');
+});
+
+Route::get('/company/job/userpreview', function () {
+    return Inertia::render('Profile/UserPreview');
 });

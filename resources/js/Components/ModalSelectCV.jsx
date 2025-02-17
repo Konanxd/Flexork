@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
-import CloseIcon from './CloseIcon';
+import CloseIcon from './Icon/CloseIcon';
 import PrimaryButton from './PrimaryButton';
-
 export default function ModalSelectCV({ onClose, cvs, vacancyId, onSuccess }) {
     const [selectedCV, setSelectedCV] = useState(
         cvs.length > 0 ? cvs[0].id_cv : '',

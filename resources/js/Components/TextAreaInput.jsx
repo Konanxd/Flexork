@@ -20,7 +20,7 @@ export default forwardRef(function TextAreaInput(
         <textarea
             {...props}
             type={type}
-            className={`rounded-md border-transparent bg-gray-100 placeholder-slate-400 shadow-sm placeholder:text-xs focus:border-gray-400 focus:ring-gray-400 ${className}`}
+            className={`rounded-md bg-gray-100 placeholder-slate-400 shadow-sm placeholder:text-xs focus:border-gray-400 focus:ring-gray-400 ${className}`}
             ref={localRef}
         />
     );

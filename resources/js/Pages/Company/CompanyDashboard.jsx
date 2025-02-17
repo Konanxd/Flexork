@@ -1,4 +1,4 @@
-import CompanyJobCard from '@/Components/CompanyCard/CompanyJobCard';
+import CompanyJobCard from '@/Components/Company/CompanyCard/CompanyJobCard';
 import PrimaryButton from '@/Components/PrimaryButton';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { router } from '@inertiajs/react';
@@ -42,8 +42,8 @@ export default function CompanyDashboard({ auth }) {
     const handleClick = (e) => {
         e.preventDefault();
 
-        // router.get(route('vacancy.create'));
-        router.post(route('logout'));
+        router.get(route('vacancy.create'));
+        // router.post(route('logout'));
     };
 
     return (

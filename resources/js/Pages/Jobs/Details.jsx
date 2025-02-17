@@ -4,9 +4,10 @@ import HeadTitle from '@/Components/HeadTitle';
 import ModalSelectCV from '@/Components/ModalSelectCV';
 import SubTitle from '@/Components/SubTitle';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { router } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 
-const Details = ({ vacancy, cvs, status: initialStatus }) => {
+const Details = ({ auth, vacancy, cvs, status: initialStatus }) => {
     const [applicationStatus, setApplicationStatus] = useState(
         initialStatus ?? null,
     );
@@ -15,7 +16,7 @@ const Details = ({ vacancy, cvs, status: initialStatus }) => {
 
     const data = vacancy && vacancy.length > 0 ? vacancy[0] : null;
 
-    console.log(applicationStatus);
+    console.log(auth);
 
     useEffect(() => {
         if (data) {
@@ -46,6 +47,10 @@ const Details = ({ vacancy, cvs, status: initialStatus }) => {
         setCVSelectOpen(true);
     };
 
+    const handleEdit = (e) => {
+        router.get('/edit-lowongan/', { id: data.id_vacancy });
+    };
+
     if (!data) return <p>Loading...</p>;
 
     return (
@@ -64,18 +69,29 @@ const Details = ({ vacancy, cvs, status: initialStatus }) => {
 
                     <div className="flex flex-row">
                         <div>
-                            {applicationStatus == 'pending' ? (
-                                <ApplyButton
-                                    className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
-                                    onClick={handleCancel}
-                                    status={applicationStatus}
-                                />
+                            {auth.type === 'pelamar' ? (
+                                // If user is 'pelamar', show 'Lamar' button
+                                applicationStatus === 'pending' ? (
+                                    <ApplyButton
+                                        className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
+                                        onClick={handleCancel}
+                                        status={applicationStatus}
+                                    />
+                                ) : (
+                                    <ApplyButton
+                                        className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
+                                        onClick={() => setCVSelectOpen(true)}
+                                        status={applicationStatus}
+                                    />
+                                )
                             ) : (
-                                <ApplyButton
-                                    className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
-                                    onClick={() => setCVSelectOpen(true)}
-                                    status={applicationStatus}
-                                />
+                                // If user is 'penyedia', show 'Edit' button
+                                <button
+                                    onClick={handleEdit}
+                                    className="inline-flex items-center justify-center rounded-md bg-[#1673DE] px-4 py-2 font-medium uppercase tracking-normal text-white hover:bg-zinc-400"
+                                >
+                                    Edit
+                                </button>
                             )}
                         </div>
                     </div>

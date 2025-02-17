@@ -1,5 +1,7 @@
-import SeekerRequestCard from '@/Components/CompanyCard/SeekerRequestCard';
+import SeekerRequestCard from '@/Components/Company/CompanyCard/SeekerRequestCard';
+import BackIcon from '@/Components/Icon/BackIcon';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { router } from '@inertiajs/react';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -35,15 +37,21 @@ export default function SeekerList({ vacancy, appliers }) {
     };
 
     return (
-        <GuestLayout className="p-6">
+        <GuestLayout className="h-auto p-6">
             <div className="flex w-full flex-col gap-6 rounded-xl bg-white p-6">
-                <div className="flex flex-col gap-1">
-                    <h1 className="text-xl font-semibold">
-                        {vacancy.title_vacancy}
-                    </h1>
-                    <span className="text-sm capitalize text-zinc-500">
-                        berakhir pada {vacancy.deadline_vacancy}
-                    </span>
+                <div className="flex flex-row items-center">
+                    <BackIcon
+                        className="relative mx-4"
+                        onClick={() => router.visit('/company/dashboard')}
+                    />
+                    <div className="flex flex-col gap-1">
+                        <h1 className="text-xl font-semibold">
+                            {vacancy.title_vacancy}
+                        </h1>
+                        <span className="text-sm capitalize text-zinc-500">
+                            berakhir pada {vacancy.deadline_vacancy}
+                        </span>
+                    </div>
                 </div>
                 <div className="flex flex-col gap-2">
                     <h2 className="ml-2 text-lg font-semibold capitalize">

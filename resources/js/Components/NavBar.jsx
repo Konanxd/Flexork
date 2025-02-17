@@ -42,9 +42,6 @@ const NavBar = ({ auth }) => {
                     <NavLink className="text-slate-100" href="/profile">
                         lihat profile
                     </NavLink>
-                    <NavLink className="text-slate-100" href="#">
-                        notifikasi
-                    </NavLink>
                 </div>
             </div>
         </nav>

@@ -7,10 +7,13 @@ use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Seeker;
 use App\Models\Applies;
+use App\Models\Company;
 use App\Models\Vacancy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 
 class VacancyController extends Controller
 {
@@ -78,52 +81,81 @@ class VacancyController extends Controller
         ]);
     }
 
-
     public function details($id)
     {
-        $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
+        if (Auth::user()->type_user === 'pelamar') {
+            $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
+            $cvs = CV::where('id_seeker', $seeker->id_seeker)->get();
+        }
+
         $vacancy = Vacancy::with('company', 'tags')
             ->where('id_vacancy', $id)
             ->get();
-        $cvs = CV::where('id_seeker', $seeker->id_seeker)->get();
+
+        if (Auth::user()->type_user === 'pelamar' && $vacancy->company->id_user != Auth::id()) {
+            return back()->with('message', 'Akses ditolak');
+        }
 
         return Inertia::render('Jobs/Details', [
             'vacancy' => $vacancy,
-            'cvs' => $cvs
+            'auth' => [Auth::user()],
+            'cvs' => Auth::user()->type_user === 'pelamar' ? $cvs : null
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Company/JobsForm');
+        return Inertia::render('Company/AddJobsForm');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'id_company' => 'required|exists:companies,id_company',
-            'title_vacancy' => 'required|string',
-            'description_vacancy' => 'required|string',
-            'deadline_vacancy' => 'required|date',
-            'jobdesk_vacancy' => 'required|string',
-            'benefit_vacancy' => 'required|string',
-            'salary_vacancy' => 'required|double',
-        ]);
+        try {
+            $request->validate([
+                'title_vacancy' => 'required|string',
+                'description_vacancy' => 'required|string',
+                'workhours_vacancy' => 'required|string',
+                'experience_vacancy' => 'required|string',
+                'deadline_vacancy' => 'required|date',
+                'jobdesk_vacancy' => 'required|json',
+                'benefit_vacancy' => 'required|json',
+                'salary_vacancy' => 'required|integer',
+            ]);
+        } catch (ValidationException $e) {
+            dd($e->errors());
+        }
 
-        $userId = Auth::user()->id;
-        $user = User::find($userId);
+        $userId = Auth::id();
+        $company = Company::where('id_user', $userId)->firstOrFail();
 
-        Vacancy::create([
-            'id_company' => $user->company->id,
+        // dd($request->all());
+
+        $vacancy = Vacancy::create([
+            'id_company' => $company->id_company,
             'title_vacancy' => $request->title_vacancy,
             'description_vacancy' => $request->description_vacancy,
+            'workhours_vacancy' => $request->workhours_vacancy,
+            'experience_vacancy' => $request->experience_vacancy,
             'deadline_vacancy' => $request->deadline_vacancy,
             'jobdesk_vacancy' => $request->jobdesk_vacancy,
             'benefit_vacancy' => $request->benefit_vacancy,
             'salary_vacancy' => $request->salary_vacancy,
+            'is_active' => '1'
         ]);
 
-        return to_route('vacancy.details', $request->id_vacancy);
+        return redirect(route('vacancy.details', ['id' => $vacancy->id_vacancy]));
+    }
+
+    public function edit($id)
+    {
+        $vacancy = Vacancy::with('company', 'tags')
+            ->where('id_vacancy', $id)
+            ->firstOrFail();
+
+        return Inertia::render('Company/EditJobsForm', [
+            'id' => $vacancy->id_vacancy,
+            'vacancy' => $vacancy
+        ]);
     }
 
     public function apply(Request $request)

@@ -1,4 +1,4 @@
-import CloseIcon from '../CloseIcon';
+import CloseIcon from '../Icon/CloseIcon';
 import PrimaryButton from '../PrimaryButton';
 import FiveStar from './FiveStar';
 
@@ -17,7 +17,7 @@ export default function ModalReview({ onClose, pos, company, ...props }) {
                     className="left-3 top-3 cursor-pointer"
                 ></CloseIcon>
                 <div className="flex flex-col items-center justify-center gap-2">
-                    <h1 className="text-xl font-bold">{pos}</h1>
+                    <h1 className="text-xl font-bold capitalize">{pos}</h1>
                     <p className="text-center text-gray-600">{company}</p>
                 </div>
                 <FiveStar onRate={(value) => console.log('Rating:', value)} />
