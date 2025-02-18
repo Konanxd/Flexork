@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id('id_review');
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_work');
+            $table->enum('target_review', ['pelamar', 'penyedia']);
             $table->float('score_review');
             $table->text('text_review');
-            $table->timestamps('created_at_review');
+            $table->timestamps();
 
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_company')->references('id_company')->on('company');
+            $table->foreign('id_user')->references('id_user')->on('users');
+            $table->foreign('id_work')->references('id_work')->on('work_histories');
         });
     }
 
