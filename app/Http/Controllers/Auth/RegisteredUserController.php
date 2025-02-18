@@ -77,7 +77,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed', Rules\Password::defaults()],
             'email_company' => 'required|string|lowercase|email|max:255|unique:companies',
             'id_business' => 'required|string|unique:companies',
-            'description' => 'required|string', // <-- Typo here
+            'description' => 'required|string',
             'address' => 'required|string',
         ]);
 

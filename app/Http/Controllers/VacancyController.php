@@ -50,6 +50,9 @@ class VacancyController extends Controller
     {
         $vacancies = Vacancy::with(['company', 'tags'])->get();
         return Inertia::render('Jobs/JobSearch', [
+            'auth' => [
+                'user' => Auth::user() ?? null
+            ],
             'vacancies' => $vacancies
         ]);
     }
@@ -122,7 +125,9 @@ class VacancyController extends Controller
 
         return Inertia::render('Jobs/Details', [
             'vacancy' => $vacancy,
-            'auth' => Auth::user() ?? null,
+            'auth' => [
+                'user' => Auth::user() ?? null
+            ],
             'works' => $works,
             'reviews' => $reviews,
             'cvs' => Auth::user()->type_user === 'pelamar' ? $cvs : null
@@ -131,7 +136,11 @@ class VacancyController extends Controller
 
     public function create()
     {
-        return Inertia::render('Company/AddJobsForm');
+        return Inertia::render('Company/AddJobsForm', [
+            'auth' => [
+                'user' => Auth::user() ?? null
+            ],
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -184,6 +193,9 @@ class VacancyController extends Controller
             ->firstOrFail();
 
         return Inertia::render('Company/EditJobsForm', [
+            'auth' => [
+                'user' => Auth::user() ?? null
+            ],
             'vacancy' => $vacancy
         ]);
     }

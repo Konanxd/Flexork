@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Applies;
 use App\Models\Company;
 use App\Models\Vacancy;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class CompanyController extends Controller
 {
@@ -65,6 +69,9 @@ class CompanyController extends Controller
             });
 
         return Inertia::render('Company/SeekerList', [
+            'auth' => [
+                'user' => Auth::user() ?? null
+            ],
             'vacancy' => $vacancy,
             'appliers' => $appliers
         ]);
@@ -80,8 +87,53 @@ class CompanyController extends Controller
         $company = Company::where('id_user', Auth::id())->firstOrFail();
 
         return Inertia::render('Company/CompanyEdit', [
+            'auth' => [
+                'user' => Auth::user() ?? null
+            ],
             'company' => $company
         ]);
+    }
+
+    public function update(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'email_company' => 'required|string|lowercase|email|max:255|unique:companies',
+            'description' => 'required|string',
+            'address' => 'required|string',
+            'photo' => 'file|mimes:pdf|max:2048'
+        ]);
+
+        $user = Auth::user();
+
+        $company = Company::where('id_user', Auth::id())->firstOrFail();
+
+        $company->update([
+            'name_company' => $request->name,
+            'email_company' => $request->email_company,
+            'description_company' => $request->description,
+            'address_company' => $request->address,
+        ]);
+
+        if ($request->photo != null) {
+            $file = $request->file('photo');
+            $encryptedName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+            $storagePath = storage_path("app/public/photo/{$user->id_user}");
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath, 0775, true);
+            }
+
+            $file->storeAs("public/photo/{$user->id_user}", $encryptedName);
+
+            chmod($storagePath, 0775);
+
+            $company->update(['photo_path' => "public/photo/{$user->id_user}/$encryptedName"]);
+        }
+
+        return Redirect::route('penyedia.profile');
     }
 
     public function accept($id_apply)
