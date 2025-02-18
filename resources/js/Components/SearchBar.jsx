@@ -1,7 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import TextInput from './TextInput';
 
-export default function SearchBar({ className = '', ...props }) {
+export default function SearchBar({
+    className = '',
+    filters,
+    updateFilters,
+    onClick,
+}) {
+    const [searchText, setSearchText] = useState(filters.keyword || '');
+    const [selectedJobTypes, setSelectedJobTypes] = useState(
+        filters.jobTypes || '',
+    );
     const [FilterOpen, SetFilterOpen] = useState(false);
     const filterRef = useRef(null);
 
@@ -28,17 +37,21 @@ export default function SearchBar({ className = '', ...props }) {
         'Entertainment',
     ];
 
-    const workDays = [
-        'Senin',
-        'Selasa',
-        'Rabu',
-        'Kamis',
-        'Jumat',
-        'Sabtu',
-        'Minggu',
-    ];
+    const handleSearchChange = (e) => {
+        setSearchText(e.target.value);
+        updateFilters({ ...filters, keyword: e.target.value });
+    };
 
-    // Handle click outside
+    // Handle job type selection
+    const handleJobTypeChange = (jobType) => {
+        const updatedJobTypes = selectedJobTypes.includes(jobType)
+            ? selectedJobTypes.filter((type) => type !== jobType)
+            : [...selectedJobTypes, jobType];
+
+        setSelectedJobTypes(updatedJobTypes);
+        updateFilters({ ...filters, jobTypes: updatedJobTypes });
+    };
+
     useEffect(() => {
         function handleClickOutside(event) {
             if (
@@ -58,7 +71,7 @@ export default function SearchBar({ className = '', ...props }) {
 
     return (
         <div
-            className={`relative flex w-full flex-row ${className}`}
+            className={`relative flex w-full max-w-[1400px] flex-row px-10 ${className}`}
             ref={filterRef}
         >
             {/* Button Filter */}
@@ -96,61 +109,14 @@ export default function SearchBar({ className = '', ...props }) {
                                     <input
                                         type="checkbox"
                                         className="rounded border-gray-400"
+                                        checked={selectedJobTypes.includes(job)}
+                                        onChange={() =>
+                                            handleJobTypeChange(job)
+                                        }
                                     />
                                     {job}
                                 </label>
                             ))}
-                        </div>
-                    </div>
-
-                    <div className="mt-6 flex flex-col gap-4">
-                        <h1 className="text-xl font-semibold">Hari Kerja</h1>
-                        <div className="grid grid-cols-4 gap-2">
-                            {workDays.map((day, index) => (
-                                <label
-                                    key={index}
-                                    className="flex w-fit items-center gap-2 text-gray-600"
-                                >
-                                    <input
-                                        type="checkbox"
-                                        className="rounded border-gray-400"
-                                    />
-                                    {day}
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-
-                    <div className="mt-6 grid grid-cols-2 gap-4">
-                        <div className="flex flex-col gap-2">
-                            <label className="">Rentang Gaji</label>
-                            <div className="flex items-center gap-2">
-                                <input
-                                    type="number"
-                                    placeholder="Gaji Min."
-                                    className="w-full border p-2 text-gray-600"
-                                />
-                                <span>-</span>
-                                <input
-                                    type="number"
-                                    placeholder="Gaji Max."
-                                    className="w-full border p-2 text-gray-600"
-                                />
-                            </div>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <label className="">Rentang Waktu</label>
-                            <div className="flex items-center gap-2">
-                                <input
-                                    type="time"
-                                    className="w-full border p-2 text-gray-600"
-                                />
-                                <span>-</span>
-                                <input
-                                    type="time"
-                                    className="w-full border p-2 text-gray-600"
-                                />
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -160,10 +126,14 @@ export default function SearchBar({ className = '', ...props }) {
             <TextInput
                 className="w-full rounded-none border-transparent bg-white drop-shadow-none"
                 placeholder="Saya Mencari Lowongan Kerja....."
+                onChange={handleSearchChange}
             />
 
             {/* Search Button */}
-            <button className="flex flex-row items-center gap-2 bg-[#9F9F9F] px-6 py-2 uppercase text-white">
+            <button
+                onClick={onClick}
+                className="flex flex-row items-center gap-2 bg-[#9F9F9F] px-6 py-2 uppercase text-white"
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"

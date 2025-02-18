@@ -7,13 +7,13 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function Profile() {
+export default function Profile({ auth }) {
     const [activeComponent, setActiveComponent] = useState('MyAccount');
 
     const renderComponent = () => {
         switch (activeComponent) {
             case 'MyAccount':
-                return <MyAccount />;
+                return <MyAccount auth={auth} />;
             case 'WorkHistory':
                 return <WorkHistory />;
             case 'UserPolicy':
@@ -57,10 +57,10 @@ export default function Profile() {
                         </button>
                     </div>
 
-                    <LogoutButton></LogoutButton>
+                    <LogoutButton />
                 </div>
 
-                <div className="h-full w-full overflow-x-scroll rounded-lg bg-white scrollbar-none">
+                <div className="scrollbar-none h-full w-full overflow-x-scroll rounded-lg bg-white">
                     {renderComponent()}
                 </div>
             </div>

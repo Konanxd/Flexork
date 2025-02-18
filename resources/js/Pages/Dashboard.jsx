@@ -1,8 +1,7 @@
 import JobCard from '@/Components/JobCard/JobCard';
-import SearchBar from '@/Components/SearchBar';
 import GuestLayout from '@/Layouts/GuestLayout';
 
-export default function Dashboard() {
+export default function Dashboard({ auth, vacancies }) {
     const trackerJobs = [
         { status: 'Lowongan Dilamar', color: '#9F9F9F' },
         { status: 'Diterima', color: '#44CFCB' },
@@ -34,12 +33,12 @@ export default function Dashboard() {
                     <span className="poppins-semibold">{item.status}</span>
                     <span className="text-xs text-[#9F9F9F]">
                         {index === 0
-                            ? '10 Lowongan'
+                            ? `${auth.counter.total} Lowongan`
                             : index === 1
-                              ? '2 Lowongan'
+                              ? `${auth.counter.accepted} Lowongan`
                               : index === 2
-                                ? '12 Lowongan'
-                                : '1 Lowongan'}
+                                ? `${auth.counter.rejected} Lowongan`
+                                : `${auth.counter.pending} Lowongan`}
                     </span>
                 </div>
             </div>
@@ -81,7 +80,7 @@ export default function Dashboard() {
                 key={index}
             >
                 <div className="object-cover">
-                    <img src={item.img} className="w-full" />
+                    <img src={`/${item.img}`} className="w-full" />
                 </div>
                 <div className="flex flex-col px-4 py-6">
                     <span className="poppins-semibold text-md line-clamp-1">
@@ -98,12 +97,13 @@ export default function Dashboard() {
     return (
         <GuestLayout className="h-auto">
             <div className="mx-5 flex w-full flex-col gap-5 p-6">
-                <div className="w-full">
-                    <SearchBar className="" />
-                </div>
-                <div className="flex w-full flex-row justify-center gap-5">
-                    {renderTrackerJobs()}
-                </div>
+                {auth != null ? (
+                    <div className="my-4 flex w-full flex-row justify-center gap-5">
+                        {renderTrackerJobs()}
+                    </div>
+                ) : (
+                    <></>
+                )}
 
                 <div className="flex w-full flex-col justify-center gap-6 rounded-xl bg-white p-5 pt-6">
                     <span className="poppins-semibold text-xl uppercase">
@@ -118,19 +118,14 @@ export default function Dashboard() {
                     <span className="poppins-semibold text-xl uppercase">
                         Pekerjaan Terbaru
                     </span>
-                    <div className="flex w-full flex-row gap-5">
-                        <JobCard
-                            {...jobData}
-                            className="border-2 border-[#1673DE] drop-shadow-lg"
-                        />
-                        <JobCard
-                            {...jobData}
-                            className="border-2 border-[#1673DE] drop-shadow-lg"
-                        />
-                        <JobCard
-                            {...jobData}
-                            className="border-2 border-[#1673DE] drop-shadow-lg"
-                        />
+                    <div className="flex w-full flex-col gap-5 xl:flex-row">
+                        {vacancies.map((vacancy) => (
+                            <JobCard
+                                key={vacancy.id_vacancy}
+                                vacancy={vacancy}
+                                className="border-2 border-[#1673DE] drop-shadow-lg"
+                            />
+                        ))}
                     </div>
                 </div>
             </div>

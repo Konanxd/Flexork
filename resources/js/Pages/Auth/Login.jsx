@@ -23,8 +23,8 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <GuestLayout className="justify-center">
-            <div className="flex w-full flex-col gap-14 border-slate-300 bg-white px-6 py-14 shadow-xl sm:max-w-lg sm:rounded-lg">
+        <GuestLayout className="flex h-screen items-center justify-center">
+            <div className="flex w-full flex-col gap-10 border-slate-300 bg-white px-6 py-14 shadow-xl sm:max-w-lg sm:rounded-lg">
                 <Head title="Masuk Pelamar" />
 
                 <FormTitle title="MASUK" />
@@ -35,70 +35,82 @@ export default function Login({ status, canResetPassword }) {
                     </div>
                 )}
 
-                <form onSubmit={submit} className="flex flex-col gap-6">
-                    <div className="flex flex-col gap-2">
-                        <InputLabel htmlFor="email" value="Email" />
-
-                        <TextInput
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={data.email}
-                            className="block w-full border-none"
-                            autoComplete="email"
-                            isFocused={true}
-                            onChange={(e) => setData('email', e.target.value)}
-                        />
-
-                        <InputError message={errors.email} className="mt-2" />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
+                <form onSubmit={submit} className="flex flex-col gap-10">
+                    <div className="flex flex-col gap-3">
                         <div className="flex flex-col gap-2">
-                            <InputLabel htmlFor="password" value="Kata Sandi" />
+                            <InputLabel htmlFor="email" value="Email" />
 
                             <TextInput
-                                id="password"
-                                type="password"
-                                name="password"
-                                value={data.password}
+                                id="email"
+                                type="email"
+                                name="email"
+                                value={data.email}
                                 className="block w-full border-none"
-                                autoComplete="current-password"
+                                autoComplete="email"
+                                isFocused={true}
                                 onChange={(e) =>
-                                    setData('password', e.target.value)
+                                    setData('email', e.target.value)
                                 }
                             />
 
                             <InputError
-                                message={errors.password}
+                                message={errors.email}
                                 className="mt-2"
                             />
                         </div>
 
-                        <div className="flex flex-row justify-between">
-                            <label className="flex items-center gap-2">
-                                <Checkbox
-                                    name="remember"
-                                    checked={data.remember}
+                        <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-2">
+                                <InputLabel
+                                    htmlFor="password"
+                                    value="Kata Sandi"
+                                />
+
+                                <TextInput
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    value={data.password}
+                                    className="block w-full border-none"
+                                    autoComplete="current-password"
                                     onChange={(e) =>
-                                        setData('remember', e.target.checked)
+                                        setData('password', e.target.value)
                                     }
                                 />
-                                <span className="text-sm text-gray-600">
-                                    Ingat saya
-                                </span>
-                            </label>
-                            {canResetPassword && (
-                                <Link
-                                    href={route('password.request')}
-                                    className="rounded-md text-sm capitalize text-[#1673DE] hover:text-[#6FACF1] focus:outline-none focus:ring-2 focus:ring-[#6FACF1] focus:ring-offset-2"
-                                >
-                                    lupa kata sandi ?
-                                </Link>
-                            )}
+
+                                <InputError
+                                    message={errors.password}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            <div className="flex flex-row justify-between">
+                                <label className="flex items-center gap-2">
+                                    <Checkbox
+                                        name="remember"
+                                        checked={data.remember}
+                                        onChange={(e) =>
+                                            setData(
+                                                'remember',
+                                                e.target.checked,
+                                            )
+                                        }
+                                    />
+                                    <span className="text-sm text-gray-600">
+                                        Ingat saya
+                                    </span>
+                                </label>
+                                {canResetPassword && (
+                                    <Link
+                                        href={route('password.request')}
+                                        className="rounded-md text-sm capitalize text-[#1673DE] hover:text-[#6FACF1] focus:outline-none focus:ring-2 focus:ring-[#6FACF1] focus:ring-offset-2"
+                                    >
+                                        lupa kata sandi ?
+                                    </Link>
+                                )}
+                            </div>
                         </div>
                     </div>
-
                     <div className="flex flex-col items-center justify-center text-center">
                         <PrimaryButton
                             className="w-full bg-[#1673DE] py-3 text-white"
@@ -110,7 +122,7 @@ export default function Login({ status, canResetPassword }) {
                 </form>
                 <div className="flex justify-center">
                     <Link
-                        href={route('register')}
+                        href={route('register-pelamar.create')}
                         className="rounded-md text-sm uppercase text-[#1673DE] hover:text-[#6FACF1] focus:outline-none focus:ring-2 focus:ring-[#6FACF1] focus:ring-offset-2"
                     >
                         belum punya akun ?

@@ -9,10 +9,7 @@ export default function SecondaryButton({
         <button
             {...props}
             type={type}
-            className={
-                `inline-flex items-center justify-center rounded-md border border-gray-300 px-4 py-2 text-sm font-semibold uppercase text-gray-700 shadow-sm transition duration-150 ease-in-out focus:outline-none disabled:opacity-25 ` +
-                className
-            }
+            className={`inline-flex items-center justify-center rounded-md px-4 py-2 font-medium uppercase transition duration-150 ease-in-out hover:bg-zinc-400 ${className}`}
             disabled={disabled}
         >
             {children}

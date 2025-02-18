@@ -1,6 +1,11 @@
+import { router } from '@inertiajs/react';
+
 export default function LogoutButton() {
     return (
-        <button className="flex flex-row gap-4 rounded-lg bg-red-500 px-5 py-3 text-white hover:bg-red-400">
+        <button
+            onClick={() => router.post(route('logout'))}
+            className="flex flex-row gap-4 rounded-lg bg-red-500 px-5 py-3 text-white hover:bg-red-400"
+        >
             <span className="font-semibold uppercase">keluar</span>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
