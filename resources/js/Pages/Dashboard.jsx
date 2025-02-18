@@ -95,7 +95,7 @@ export default function Dashboard({ auth, vacancies }) {
     };
 
     return (
-        <GuestLayout className="h-auto">
+        <GuestLayout className="h-full">
             <div className="mx-5 flex w-full flex-col gap-5 p-6">
                 {auth != null ? (
                     <div className="my-4 flex w-full flex-row justify-center gap-5">

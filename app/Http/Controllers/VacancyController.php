@@ -34,11 +34,7 @@ class VacancyController extends Controller
 
         return Inertia::render('Dashboard', [
             'auth' => [
-                'user' => Auth::user() ? [
-                    'id' => $user->id_user,
-                    'name' => $seeker->name_seeker,
-                    'email' => $user->email,
-                ] : null,
+                'user' => Auth::user() ??  null,
                 'counter' => [
                     'total' => $countPending + $countAccepted + $countRejected,
                     'pending' => $countPending,

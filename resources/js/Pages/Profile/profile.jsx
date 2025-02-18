@@ -60,7 +60,7 @@ export default function Profile({ auth }) {
                     <LogoutButton />
                 </div>
 
-                <div className="scrollbar-none h-full w-full overflow-x-scroll rounded-lg bg-white">
+                <div className="h-full w-full overflow-x-scroll rounded-lg bg-white scrollbar-none">
                     {renderComponent()}
                 </div>
             </div>

@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import NavLink from './NavLink';
 
 const NavBar = ({ auth }) => {
+    console.log(auth);
     return (
         <nav className="poppins-regular flex w-full flex-col border border-b-[#1673DE]">
             <div className="m-auto flex w-full items-center justify-between px-6 py-3">
@@ -10,7 +11,7 @@ const NavBar = ({ auth }) => {
                 </Link>
                 {auth?.user ? (
                     <div className="text-md flex flex-row gap-1 text-[#1673DE]">
-                        Halo,
+                        Halo,{' '}
                         <span className="text-[#1673DE]">{auth.user.name}</span>
                     </div>
                 ) : (
@@ -43,17 +44,42 @@ const NavBar = ({ auth }) => {
                 )}
             </div>
             <div className="flex w-full items-center justify-center bg-[#1673DE]">
-                <div className="flex gap-10 py-1.5 text-sm font-medium uppercase text-white">
-                    <NavLink href="/dashboard" className="hover:text-white/70">
-                        dashboard
-                    </NavLink>
-                    <NavLink href="/cari" className="hover:text-white/70">
-                        cari lowongan
-                    </NavLink>
-                    <NavLink href="/profile" className="hover:text-white/70">
-                        lihat profile
-                    </NavLink>
-                </div>
+                {auth?.user?.type_user === 'pelamar' && (
+                    <div className="flex gap-10 py-1.5 text-sm font-medium uppercase text-white">
+                        <NavLink
+                            href="/dashboard"
+                            className="hover:text-white/70"
+                        >
+                            dashboard
+                        </NavLink>
+
+                        <NavLink href="/cari" className="hover:text-white/70">
+                            cari lowongan
+                        </NavLink>
+                        <NavLink
+                            href="/profile"
+                            className="hover:text-white/70"
+                        >
+                            lihat profile
+                        </NavLink>
+                    </div>
+                )}
+                {auth?.user?.type_user === 'Penyedia' && (
+                    <div className="flex gap-10 py-1.5 text-sm font-medium uppercase text-white">
+                        <NavLink
+                            href="/dashboard/penyedia"
+                            className="hover:text-white/70"
+                        >
+                            dashboard
+                        </NavLink>
+                        <NavLink
+                            href="/profile/penyedia"
+                            className="hover:text-white/70"
+                        >
+                            lihat profile
+                        </NavLink>
+                    </div>
+                )}
             </div>
         </nav>
     );

@@ -114,7 +114,7 @@ Route::get('/company/list-pelamar', function () {
     return Inertia::render('Company/SeekerList');
 });
 
-Route::get('/company/profile', function () {
+Route::get('/profile/penyedia', function () {
     return Inertia::render('Company/CompanyProfile');
 });
 
