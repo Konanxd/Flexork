@@ -13,14 +13,15 @@ class Review extends Model
 
     protected $fillable = [
         'id_user',
-        'id_work_history',
+        'id_work',
+        'target_review',
         'score_review',
         'text_review'
     ];
 
     public function work_history()
     {
-        return $this->belongsTo(WorkHistory::class, 'id_work_history', 'id_work_history');
+        return $this->belongsTo(WorkHistory::class, 'id_work', 'id_work');
     }
 
     public function user()

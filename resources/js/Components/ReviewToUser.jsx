@@ -2,7 +2,14 @@ import { useState } from 'react';
 import ModalReview from './Account/ModalReview';
 import PrimaryButton from './PrimaryButton';
 
-export default function ReviewToUser({ nama, date }) {
+export default function ReviewToUser({
+    nama,
+    work,
+    user,
+    onReviewSuccess,
+    isReviewed,
+}) {
+    if (isReviewed) return null;
     const [reviewOpen, setReviewOpen] = useState(false);
 
     return (
@@ -26,7 +33,13 @@ export default function ReviewToUser({ nama, date }) {
                 </PrimaryButton>
             </div>
             {reviewOpen && (
-                <ModalReview pos={nama} onClose={() => setReviewOpen(false)} />
+                <ModalReview
+                    pos={nama}
+                    work={work}
+                    user={user}
+                    onReviewSuccess={onReviewSuccess}
+                    onClose={() => setReviewOpen(false)}
+                />
             )}
         </div>
     );

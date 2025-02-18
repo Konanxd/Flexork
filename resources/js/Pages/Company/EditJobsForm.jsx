@@ -9,63 +9,87 @@ import { useEffect, useState } from 'react';
 
 export default function EditJobsForm({ vacancy }) {
     const [formData, setFormData] = useState({
+        id_vacancy: vacancy.id_vacancy,
         title_vacancy: vacancy.title_vacancy || '',
         description_vacancy: vacancy.description_vacancy || '',
         deadline_vacancy: vacancy.deadline_vacancy || '',
         location_vacancy: vacancy.location_vacancy || '',
-        jamKerjaMulai: vacancy.jamKerjaMulai || '',
-        jamKerjaSelesai: vacancy.jamKerjaSelesai || '',
+        jamKerjaMulai: '',
+        jamKerjaSelesai: '',
         workhours_vacancy: vacancy.workhours_vacancy || '',
         experience_vacancy: vacancy.experience_vacancy || '',
         salary_vacancy: vacancy.salary_vacancy || '',
-        jobdesk_vacancy: vacancy.jobdesk_vacancy || [],
-        benefit_vacancy: vacancy.benefit_vacancy || [],
+        jobdesk_vacancy: JSON.parse(vacancy.jobdesk_vacancy) || [],
+        benefit_vacancy: JSON.parse(vacancy.benefit_vacancy) || [],
     });
+
+    const [startHour, setStartHour] = useState('');
+    const [endHour, setEndHour] = useState('');
 
     console.log(vacancy);
 
+    console.log(formData);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
 
-    useEffect(() => {
-        setFormData((prevData) => ({
-            ...prevData,
-            workhours: `${prevData.jamKerjaMulai} -- ${prevData.jamKerjaSelesai}`,
-        }));
-    }, [formData.jamKerjaMulai, formData.jamKerjaSelesai]);
+        setFormData((prevData) => {
+            const newData = {
+                ...prevData,
+                [name]: value,
+            };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        router.post('/buka-lowongan', {
-            title: formData.title,
-            description: formData.description,
-            deadline: formData.deadline,
-            location: formData.location,
-            working_hours: formData.working_hours,
-            experience_required: formData.experience_required,
-            salary: formData.salary,
-            jobdesk_vacancy: JSON.stringify(formData.jobdesk_vacancy),
-            benefit_vacancy: JSON.stringify(formData.benefit_vacancy),
+            if (name === 'jamKerjaMulai' || name === 'jamKerjaSelesai') {
+                const newStartHour =
+                    name === 'jamKerjaMulai' ? value : newData.jamKerjaMulai;
+                const newEndHour =
+                    name === 'jamKerjaSelesai'
+                        ? value
+                        : newData.jamKerjaSelesai;
+
+                if (newStartHour && newEndHour) {
+                    newData.workhours_vacancy = `${newStartHour} -- ${newEndHour}`;
+                }
+            }
+
+            return newData;
         });
     };
 
-    const handleJobdeskChange = (index, e) => {
-        const newJobdesk = [...formData.jobdesk_vacancy];
-        newJobdesk[index] = e.target.value;
+    useEffect(() => {
+        if (vacancy.workhours_vacancy) {
+            const [start, end] = vacancy.workhours_vacancy.split(' -- ');
+            setStartHour(start);
+            setEndHour(end);
+            setFormData((prevData) => ({
+                ...prevData,
+                jamKerjaMulai: start,
+                jamKerjaSelesai: end,
+            }));
+        }
+    }, [vacancy.workhours_vacancy]);
+
+    // useEffect(() => {
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         workhours_vacancy: `${prevData.jamKerjaMulai} -- ${prevData.jamKerjaSelesai}`,
+    //     }));
+    // }, [formData.jamKerjaMulai, formData.jamKerjaSelesai]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        router.put(`/edit-lowongan/${vacancy.id_vacancy}`, formData);
+    };
+
+    const handleJobdeskChange = (newJobdesk) => {
         setFormData((prevData) => ({
             ...prevData,
             jobdesk_vacancy: newJobdesk,
         }));
+        console.log(vacancy);
     };
 
-    const handleBenefitChange = (index, e) => {
-        const newBenefit = [...formData.benefit_vacancy];
-        newBenefit[index] = e.target.value;
+    const handleBenefitChange = (newBenefit) => {
         setFormData((prevData) => ({
             ...prevData,
             benefit_vacancy: newBenefit,

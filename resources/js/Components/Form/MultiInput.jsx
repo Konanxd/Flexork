@@ -1,5 +1,6 @@
 const MultiInput = ({ label, values = [], onChange }) => {
-    // Handle input change
+    console.log(values);
+
     const handleChange = (index, value) => {
         const newValues = [...values];
         newValues[index] = value;

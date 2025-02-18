@@ -1,12 +1,14 @@
 <?php
 
 use Inertia\Inertia;
+use App\Models\Review;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CVController;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\VacancyController;
 
 // Route::get('/', function () {
@@ -66,11 +68,22 @@ Route::middleware(['auth', 'company'])->group(function () {
         ->name('vacancy.store');
     Route::get('/edit-lowongan/{id}', [VacancyController::class, 'edit'])
         ->name('vacancy.edit');
+    Route::put('/edit-lowongan/{id}', [VacancyController::class, 'update'])
+        ->name('vacancy.update');
 
     Route::put('/api/applies/{id}/accept', [CompanyController::class, 'accept'])->name('applies.accept');
     Route::put('/api/applies/{id}/reject', [CompanyController::class, 'reject'])->name('applies.reject');
 
     Route::get('/cv/{id}', [CVController::class, 'show'])->name('cv.show');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/api/reviews/{id}', [ReviewsController::class, 'read'])
+        ->name('review.read');
+    Route::get('/api/reviews/check/{id}', [ReviewsController::class, 'check'])
+        ->name('review.check');
+    Route::post('/api/reviews/{id}', [ReviewsController::class, 'store'])
+        ->name('review.store');
 });
 
 

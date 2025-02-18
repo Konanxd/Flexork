@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Model;
 
 class WorkHistory extends Model
 {
-    protected $table = 'work_histories';
-    protected $primaryKey = 'id_work_history';
+    protected $table = 'work_history';
+    protected $primaryKey = 'id_work';
 
     protected $fillable = [
         'id_seeker',
@@ -24,5 +25,10 @@ class WorkHistory extends Model
     public function vacancy()
     {
         return $this->belongsTo(Vacancy::class, 'id_vacancy', 'id_vacancy');
+    }
+
+    public function review()
+    {
+        return $this->hasOne(Review::class, 'id_work', 'id_work');
     }
 }

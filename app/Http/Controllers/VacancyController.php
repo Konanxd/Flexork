@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CV;
 use App\Models\User;
 use Inertia\Inertia;
+use App\Models\Review;
 use App\Models\Seeker;
 use App\Models\Applies;
 use App\Models\Company;
@@ -83,22 +84,51 @@ class VacancyController extends Controller
 
     public function details($id)
     {
+        $vacancy = Vacancy::with('company', 'tags')
+            ->where('id_vacancy', $id)
+            ->firstOrFail();
+
+        // dd(Vacancy::with('company', 'tags')->get());
+
+        $works = DB::table('work_history')
+            ->join('seekers', 'seekers.id_seeker', '=', 'work_history.id_seeker')
+            ->where('id_vacancy', '=', $id)
+            ->whereNotIn(
+                'work_history.id_work',
+                function ($query) {
+                    $query->select('id_work')
+                        ->from('reviews');
+                }
+            )
+            ->get();
+
+        $reviews = DB::table('reviews')
+            ->join('work_history', 'work_history.id_work', 'reviews.id_work')
+            ->join('users', 'users.id_user', 'reviews.id_user')
+            ->where('id_vacancy', '=', $id)
+            ->get();
+
+
         if (Auth::user()->type_user === 'pelamar') {
             $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
             $cvs = CV::where('id_seeker', $seeker->id_seeker)->get();
         }
 
-        $vacancy = Vacancy::with('company', 'tags')
-            ->where('id_vacancy', $id)
-            ->get();
+        if (Auth::user()->type_user === 'penyedia') {
+            $company = Company::with('user')
+                ->where('id_user', Auth::id())
+                ->firstOrFail();
 
-        if (Auth::user()->type_user === 'pelamar' && $vacancy->company->id_user != Auth::id()) {
-            return back()->with('message', 'Akses ditolak');
+            if ($vacancy->company->id_company != $company->id_company) {
+                return back()->with('message', 'Akses ditolak');
+            }
         }
 
         return Inertia::render('Jobs/Details', [
             'vacancy' => $vacancy,
-            'auth' => [Auth::user()],
+            'auth' => Auth::user(),
+            'works' => $works,
+            'reviews' => $reviews,
             'cvs' => Auth::user()->type_user === 'pelamar' ? $cvs : null
         ]);
     }
@@ -153,9 +183,44 @@ class VacancyController extends Controller
             ->firstOrFail();
 
         return Inertia::render('Company/EditJobsForm', [
-            'id' => $vacancy->id_vacancy,
             'vacancy' => $vacancy
         ]);
+    }
+
+    public function update(Request $request): RedirectResponse
+    {
+        try {
+            $validated = $request->validate([
+                'title_vacancy' => 'required|string',
+                'description_vacancy' => 'required|string',
+                'workhours_vacancy' => 'required|string',
+                'experience_vacancy' => 'required|string',
+                'deadline_vacancy' => 'required|date',
+                'jobdesk_vacancy' => 'required',
+                'benefit_vacancy' => 'required',
+                'salary_vacancy' => 'required|integer',
+            ]);
+        } catch (ValidationException $e) {
+            dd($e->errors());
+        }
+
+        $vacancy = Vacancy::where('id_vacancy', $request->id_vacancy)->firstOrFail();
+
+        // Update the vacancy fields with the validated data
+        $vacancy->title_vacancy = $validated['title_vacancy'];
+        $vacancy->description_vacancy = $validated['description_vacancy'];
+        $vacancy->workhours_vacancy = $validated['workhours_vacancy'];
+        $vacancy->experience_vacancy = $validated['experience_vacancy'];
+        $vacancy->deadline_vacancy = $validated['deadline_vacancy'];
+        $vacancy->jobdesk_vacancy = json_encode($validated['jobdesk_vacancy']); // Store as JSON
+        $vacancy->benefit_vacancy = json_encode($validated['benefit_vacancy']); // Store as JSON
+        $vacancy->salary_vacancy = $validated['salary_vacancy'];
+
+        // Save the updated vacancy
+        $vacancy->save();
+
+        // Redirect with a success message
+        return redirect(route('vacancy.details', ['id' => $vacancy->id_vacancy]));
     }
 
     public function apply(Request $request)
