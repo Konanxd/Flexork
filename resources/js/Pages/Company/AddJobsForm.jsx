@@ -43,7 +43,10 @@ export default function AddJobsForm({ auth, tags }) {
     }, [selectedJobTypes]);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData((prevData) => ({
+            ...prevData,
+            [e.target.name]: e.target.value,
+        }));
     };
 
     const handleSubmit = (e) => {
@@ -192,7 +195,7 @@ export default function AddJobsForm({ auth, tags }) {
                                     name="minhour"
                                     value={formData.minhour}
                                     onChange={handleChange}
-                                    id=""
+                                    id="minhour"
                                     className="w-full rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                                 />
                                 <span>-</span>
@@ -201,7 +204,7 @@ export default function AddJobsForm({ auth, tags }) {
                                     name="maxhour"
                                     value={formData.maxhour}
                                     onChange={handleChange}
-                                    id=""
+                                    id="maxhour"
                                     className="w-full rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                                 />
                             </div>

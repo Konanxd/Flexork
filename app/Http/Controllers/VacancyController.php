@@ -148,12 +148,13 @@ class VacancyController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        // dd($request);
         try {
             $request->validate([
                 'title_vacancy' => 'required|string',
                 'description_vacancy' => 'required|string',
-                'minhours' => 'required|string',
-                'maxhours' => 'required|string',
+                'minhour' => 'required',
+                'maxhour' => 'required',
                 'location_vacancy' => 'required|string',
                 'experience_vacancy' => 'required|string',
                 'deadline_vacancy' => 'required|date',
@@ -174,7 +175,8 @@ class VacancyController extends Controller
             'id_company' => $company->id_company,
             'title_vacancy' => $request->title_vacancy,
             'description_vacancy' => $request->description_vacancy,
-            'workhours_vacancy' => $request->workhours_vacancy,
+            'minhour' => $request->minhour,
+            'maxhour' => $request->maxhour,
             'location_vacancy' => $request->experience_vacancy,
             'experience_vacancy' => $request->experience_vacancy,
             'deadline_vacancy' => $request->deadline_vacancy,
@@ -210,7 +212,8 @@ class VacancyController extends Controller
             $validated = $request->validate([
                 'title_vacancy' => 'required|string',
                 'description_vacancy' => 'required|string',
-                'workhours_vacancy' => 'required|string',
+                'minhour' => 'required',
+                'maxhour' => 'required',
                 'location_vacancy' => 'required|string',
                 'experience_vacancy' => 'required|string',
                 'deadline_vacancy' => 'required|date',
@@ -228,7 +231,8 @@ class VacancyController extends Controller
         // Update the vacancy fields with the validated data
         $vacancy->title_vacancy = $validated['title_vacancy'];
         $vacancy->description_vacancy = $validated['description_vacancy'];
-        $vacancy->workhours_vacancy = $validated['workhours_vacancy'];
+        $vacancy->minhour = $validated['minhour'];
+        $vacancy->maxhour = $validated['maxhour'];
         $vacancy->location_vacancy = $validated['location_vacancy'];
         $vacancy->experience_vacancy = $validated['experience_vacancy'];
         $vacancy->deadline_vacancy = $validated['deadline_vacancy'];
@@ -284,10 +288,13 @@ class VacancyController extends Controller
         $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
         $applies = Applies::where('id_seeker', $seeker->id_user)
             ->where('id_vacancy', $id)
-            ->firstOrFail();
+            ->first();
 
         return response()->json([
-            'status' => $applies->status_apply
+            'vacancy' => [
+                'applied' => $applies ? true : false,
+                'status' => $applies ? $applies->status_apply : null
+            ]
         ]);
     }
 }

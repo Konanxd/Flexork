@@ -39,8 +39,17 @@ const FileUploadBtn = ({ onUpload = () => {}, className = '' }) => {
     return (
         <div
             className={`w-fit cursor-pointer rounded-2xl border-[3px] border-dashed border-neutral-400 p-8 ${className}`}
+            onClick={() => fileInputRef.current.click()}
         >
             <div className="w-48 text-center">
+                <input
+                    type="file"
+                    name="cv"
+                    accept=".pdf"
+                    className="hidden"
+                    ref={fileInputRef}
+                    onChange={(e) => handleFileChange(e)}
+                />
                 <h1 className="w-full text-lg font-semibold uppercase">
                     {uploading ? 'Mengunggah...' : 'Unggah file disini'}
                 </h1>

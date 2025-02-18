@@ -15,12 +15,15 @@ class Vacancy extends Model
         'title_vacancy',
         'description_vacancy',
         'is_active',
+        'location_vacancy',
         'deadline_vacancy',
-        'workhours_vacancy',
+        'minhour',
+        'maxhour',
         'experience_vacancy',
         'jobdesk_vacancy',
         'benefit_vacancy',
-        'salary_vacancy'
+        'minsalary',
+        'maxsalary'
     ];
 
     public function company()

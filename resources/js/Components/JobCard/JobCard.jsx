@@ -14,7 +14,15 @@ export default function JobCard({ className = '', vacancy, ...props }) {
             />
             <div className="flex flex-row gap-2 font-medium text-[#1673DE]">
                 <span>
-                    {vacancy.salary_vacancy.toLocaleString('id-ID', {
+                    {vacancy.minsalary.toLocaleString('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        maximumFractionDigits: 0,
+                    })}
+                </span>
+                -
+                <span>
+                    {vacancy.maxsalary.toLocaleString('id-ID', {
                         style: 'currency',
                         currency: 'IDR',
                         maximumFractionDigits: 0,

@@ -41,6 +41,20 @@ const Details = ({
     };
 
     useEffect(() => {
+        if (vacancy && auth.user?.type_user === 'pelamar') {
+            axios
+                .get(`/api/apply-status/${vacancy.id_vacancy}`)
+                .then((response) => {
+                    if (response.data.vacancy) {
+                        setApplied(response.data.vacancy.applied);
+                        setApplicationStatus(response.data.vacancy.status);
+                    }
+                })
+                .catch((error) => console.error(error));
+        }
+    }, [vacancy, auth.user]);
+
+    useEffect(() => {
         if (reviewedWorkId) {
             axios
                 .get(`/api/reviews/check/${reviewedWorkId}`)
@@ -59,18 +73,6 @@ const Details = ({
     const handleReviewSuccess = (workId) => {
         setReviewedWorkId(workId);
     };
-
-    useEffect(() => {
-        if (vacancy && auth.type_user === 'pelamar') {
-            axios
-                .get(`/api/apply-status/${vacancy.id_vacancy}`)
-                .then((response) => {
-                    setApplied(response.vacancy.applied);
-                    setApplicationStatus(response.vacancy.status);
-                })
-                .catch((error) => console.error(error));
-        }
-    }, [vacancy]);
 
     const handleCancel = () => {
         axios.delete(`/api/cancel/${vacancy.id_vacancy}`).catch((error) => {
@@ -114,7 +116,7 @@ const Details = ({
                                     title={vacancy.title_vacancy}
                                 />
                             </div>
-                            {auth.type_user == 'penyedia' ? (
+                            {auth.user.type_user == 'penyedia' ? (
                                 <PrimaryButton
                                     onClick={handleEdit}
                                     className="h-fit w-fit rounded-md bg-zinc-400 px-1.5 py-1.5"
@@ -145,7 +147,7 @@ const Details = ({
                                 {vacancy.is_active ? 'dibuka' : 'ditutup'}
                             </div>
                             {vacancy.is_active &&
-                            auth.type_user === 'penyedia' ? (
+                            auth.user.type_user === 'penyedia' ? (
                                 <PrimaryButton className="text-red-500 hover:bg-transparent hover:text-red-300">
                                     berhentikan
                                 </PrimaryButton>
@@ -157,7 +159,7 @@ const Details = ({
 
                     <div className="flex flex-row">
                         <div>
-                            {auth.type_user === 'pelamar' ? (
+                            {auth.user.type_user === 'pelamar' ? (
                                 applicationStatus === 'pending' ? (
                                     <ApplyButton
                                         className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
@@ -299,7 +301,7 @@ const Details = ({
                         </ul>
                     </div>
 
-                    {auth.type_user == 'pelamar' ? (
+                    {auth.user.type_user == 'pelamar' ? (
                         <div className="flex flex-col gap-6">
                             <SubTitle>
                                 <div className="flex flex-row items-center gap-4">
@@ -333,7 +335,7 @@ const Details = ({
                         ''
                     )}
 
-                    {auth.type_user == 'penyedia' && (
+                    {auth.user.type_user == 'penyedia' && (
                         <div className="flex flex-col gap-6">
                             <SubTitle>Ulasan</SubTitle>
                             {works.length > 0 ? (

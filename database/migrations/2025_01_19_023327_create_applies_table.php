@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_seeker');
             $table->unsignedBigInteger('id_cv');
             $table->unsignedBigInteger('id_vacancy');
-            $table->text('message_apply');
             $table->enum('status_apply', ['pending', 'accepted', 'rejected']);
             $table->timestamps();
 

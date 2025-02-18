@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import NavLink from './NavLink';
 
 const NavBar = ({ auth }) => {
+    console.log(auth);
     const navItems = [
         { label: 'DAFTAR', path: 'register-pelamar.create' },
         { label: 'MASUK', path: 'login' },
@@ -39,12 +40,18 @@ const NavBar = ({ auth }) => {
                     >
                         cari lowongan
                     </NavLink>
-                    <NavLink
-                        className="text-slate-100"
-                        href={route('profile.index')}
-                    >
-                        lihat profile
-                    </NavLink>
+                    {auth?.user && (
+                        <NavLink
+                            className="text-slate-100"
+                            href={route(
+                                auth.user.type_user == 'penyedia'
+                                    ? 'penyedia.profile'
+                                    : 'profile.index',
+                            )}
+                        >
+                            lihat profile
+                        </NavLink>
+                    )}
                 </div>
             </div>
         </nav>

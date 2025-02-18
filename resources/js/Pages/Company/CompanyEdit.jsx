@@ -8,7 +8,6 @@ import { useState } from 'react';
 
 export default function CompanyEdit({ auth, company }) {
     const [profileImage, setProfileImage] = useState(null);
-    const [bannerImage, setBannerImage] = useState(null);
     const [formData, setFormData] = useState({
         name_company: company.name_company || '',
         email: auth.user.email || '',
@@ -140,7 +139,7 @@ export default function CompanyEdit({ auth, company }) {
                     </PrimaryButton>
                     <SecondaryButton
                         className="bg-9F9F9F w-full bg-[#9F9F9F] py-4 text-lg font-semibold uppercase tracking-normal text-white hover:bg-zinc-300 focus:ring-transparent"
-                        onClick={() => router.visit('/company/profile')}
+                        onClick={() => router.get('/profile')}
                     >
                         batal
                     </SecondaryButton>

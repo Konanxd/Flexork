@@ -45,54 +45,54 @@ export default function Dashboard({ auth, vacancies }) {
         ));
     };
 
-    const categoriesPopular = [
-        {
-            name: 'Intern Programmer',
-            total: 1200,
-            img: 'assets/programmer.png',
-        },
-        { name: 'Desain Grafis', total: 1200, img: 'assets/designer.png' },
-        {
-            name: 'Penulis dan Penerjemah',
-            total: 1200,
-            img: 'assets/writer.png',
-        },
-        {
-            name: 'Pemasaran dan Periklanan',
-            total: 1200,
-            img: 'assets/marketing.png',
-        },
-    ];
+    // const categoriesPopular = [
+    //     {
+    //         name: 'Intern Programmer',
+    //         total: 1200,
+    //         img: 'assets/programmer.png',
+    //     },
+    //     { name: 'Desain Grafis', total: 1200, img: 'assets/designer.png' },
+    //     {
+    //         name: 'Penulis dan Penerjemah',
+    //         total: 1200,
+    //         img: 'assets/writer.png',
+    //     },
+    //     {
+    //         name: 'Pemasaran dan Periklanan',
+    //         total: 1200,
+    //         img: 'assets/marketing.png',
+    //     },
+    // ];
 
-    const jobData = {
-        title: 'Intern Programmer',
-        company: 'PT. Lintas Fortuna Nusantara',
-        maxSalary: 1000000,
-        minSalary: 500000,
-        tag: 'Computer',
-        desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, maiores officia cumque molestiae corrupti mollitia eligendi doloremque saepe magni necessitatibus suscipit sequi adipisci blanditiis delectus unde natus, impedit quo sed.',
-    };
+    // const jobData = {
+    //     title: 'Intern Programmer',
+    //     company: 'PT. Lintas Fortuna Nusantara',
+    //     maxSalary: 1000000,
+    //     minSalary: 500000,
+    //     tag: 'Computer',
+    //     desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, maiores officia cumque molestiae corrupti mollitia eligendi doloremque saepe magni necessitatibus suscipit sequi adipisci blanditiis delectus unde natus, impedit quo sed.',
+    // };
 
-    const renderPopularCategories = () => {
-        return categoriesPopular.map((item, index) => (
-            <div
-                className="flex w-full flex-col overflow-hidden rounded-lg border-gray-300 bg-white shadow-md"
-                key={index}
-            >
-                <div className="object-cover">
-                    <img src={`/${item.img}`} className="w-full" />
-                </div>
-                <div className="flex flex-col px-4 py-6">
-                    <span className="poppins-semibold text-md line-clamp-1">
-                        {item.name}
-                    </span>
-                    <span className="text-xs text-[#9F9F9F]">
-                        {item.total} Lowongan
-                    </span>
-                </div>
-            </div>
-        ));
-    };
+    // const renderPopularCategories = () => {
+    //     return categoriesPopular.map((item, index) => (
+    //         <div
+    //             className="flex w-full flex-col overflow-hidden rounded-lg border-gray-300 bg-white shadow-md"
+    //             key={index}
+    //         >
+    //             <div className="object-cover">
+    //                 <img src={`/${item.img}`} className="w-full" />
+    //             </div>
+    //             <div className="flex flex-col px-4 py-6">
+    //                 <span className="poppins-semibold text-md line-clamp-1">
+    //                     {item.name}
+    //                 </span>
+    //                 <span className="text-xs text-[#9F9F9F]">
+    //                     {item.total} Lowongan
+    //                 </span>
+    //             </div>
+    //         </div>
+    //     ));
+    // };
 
     return (
         <GuestLayout className="h-auto">
@@ -104,7 +104,7 @@ export default function Dashboard({ auth, vacancies }) {
                 ) : (
                     <></>
                 )}
-
+                {/*
                 <div className="flex w-full flex-col justify-center gap-6 rounded-xl bg-white p-5 pt-6">
                     <span className="poppins-semibold text-xl uppercase">
                         Kategori Populer
@@ -112,7 +112,7 @@ export default function Dashboard({ auth, vacancies }) {
                     <div className="flex w-full flex-row gap-5">
                         {renderPopularCategories()}
                     </div>
-                </div>
+                </div> */}
 
                 <div className="flex w-full flex-col justify-center gap-6 rounded-xl bg-white p-5 pt-6">
                     <span className="poppins-semibold text-xl uppercase">
