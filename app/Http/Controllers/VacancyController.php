@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CV;
+use App\Models\Tag;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Review;
@@ -136,10 +137,12 @@ class VacancyController extends Controller
 
     public function create()
     {
+        $tags = Tag::all();
         return Inertia::render('Company/AddJobsForm', [
             'auth' => [
                 'user' => Auth::user() ?? null
             ],
+            'tags' => $tags
         ]);
     }
 
@@ -158,6 +161,7 @@ class VacancyController extends Controller
                 'benefit_vacancy' => 'required|json',
                 'minsalary' => 'required|integer',
                 'maxsalary' => 'required|integer',
+                'tags' => 'required|array',
             ]);
         } catch (ValidationException $e) {
             dd($e->errors());
@@ -165,8 +169,6 @@ class VacancyController extends Controller
 
         $userId = Auth::id();
         $company = Company::where('id_user', $userId)->firstOrFail();
-
-        // dd($request->all());
 
         $vacancy = Vacancy::create([
             'id_company' => $company->id_company,
@@ -182,6 +184,8 @@ class VacancyController extends Controller
             'maxsalary' => $request->maxsalary,
             'is_active' => '1'
         ]);
+
+        $vacancy->tags()->sync($request->tags);
 
         return redirect(route('vacancy.details', ['id' => $vacancy->id_vacancy]));
     }

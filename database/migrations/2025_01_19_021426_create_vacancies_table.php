@@ -19,7 +19,7 @@ return new class extends Migration
             $table->boolean('is_active');
             $table->string('minhour');
             $table->string('maxhour');
-            $table->location('location_vacancy');
+            $table->string('location_vacancy');
             $table->date('deadline_vacancy');
             $table->json('jobdesk_vacancy');
             $table->json('benefit_vacancy');

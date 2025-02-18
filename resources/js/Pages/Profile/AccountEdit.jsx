@@ -1,6 +1,5 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
-import SocialMediaInput from '@/Components/SocialMediaInput';
 import TextAreaInput from '@/Components/TextAreaInput';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
@@ -11,9 +10,9 @@ export default function AccountEdit({ auth }) {
         name: auth.user.name,
         gender: auth.seeker.gender_seeker,
         email: auth.user.email,
-        born_date: auth.user.born_date,
-        phone_seeker: auth.user.phone_seeker,
-        address: auth.user.address_seeker,
+        born_date: auth.seeker.born_date,
+        phone_seeker: auth.seeker.phone_seeker,
+        address: auth.seeker.address_seeker,
     });
 
     const handleSubmit = (e) => {

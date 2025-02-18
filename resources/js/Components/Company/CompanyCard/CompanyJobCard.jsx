@@ -8,7 +8,7 @@ export default function CompanyJobCard({ vacancy, ...props }) {
     const handleClick = (e) => {
         e.preventDefault();
 
-        router.get(route('penyedia.details', { id: vacancy.id_vacancy }));
+        router.get(`/dashboard/penyedia/${vacancy.id_vacancy}`);
     };
     return (
         <div

@@ -101,7 +101,7 @@ const MyAccount = ({ auth }) => {
                 </div>
                 <PrimaryButton
                     className="flex items-center gap-2 bg-[#1673DE] px-6 py-3 text-white hover:bg-blue-400"
-                    onClick={() => router.visit('/profile/edit')}
+                    onClick={() => router.get('/profil/edit')}
                 >
                     <span>edit</span>
                 </PrimaryButton>
@@ -197,7 +197,7 @@ const MyAccount = ({ auth }) => {
                 </MyAccountDesc>
                 <MyAccountDesc
                     title="resume"
-                    className="scrollbar-thin flex w-full flex-row gap-6 overflow-x-scroll pb-3"
+                    className="flex w-full flex-row gap-6 overflow-x-scroll pb-3 scrollbar-thin"
                 >
                     <FileUploadBtn onUpload={() => window.location.reload()} />
                     {cvs.length > 0 ? (

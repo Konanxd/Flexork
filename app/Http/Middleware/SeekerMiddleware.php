@@ -16,10 +16,10 @@ class SeekerMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() && Auth::user()->type_user === 'pelamar') {
-            abort(403, 'Akses ditolak');
+        if (Auth::check() && Auth::user()->type_user === 'pelamar') {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect('/')->with('error', 'Unauthorized');
     }
 }

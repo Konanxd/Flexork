@@ -4,39 +4,6 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { router } from '@inertiajs/react';
 
 export default function CompanyDashboard({ auth }) {
-    const jobs = [
-        {
-            title: 'Intern Programmer',
-            date: '1/12/2024',
-            tag: 'Computer',
-            desc: 'Sebagai Intern Programmer, Anda akan bekerja sama dengan tim pengembang dalam membangun dan mengoptimalkan aplikasi web maupun mobile. Anda akan terlibat dalam proses debugging, penulisan kode yang efisien, serta pengujian fitur baru. Kandidat yang ideal memiliki dasar pemrograman yang kuat, pemahaman tentang algoritma dan struktur data, serta mampu bekerja dalam tim dengan baik.',
-        },
-        {
-            title: 'UI/UX Designer',
-            date: '5/12/2024',
-            tag: 'Design',
-            desc: 'Sebagai UI/UX Designer, Anda bertanggung jawab dalam merancang pengalaman pengguna yang menarik dan fungsional untuk produk digital perusahaan. Anda akan bekerja dengan tim pengembang dan produk untuk membuat wireframe, mockup, serta prototipe interaktif yang memastikan kenyamanan pengguna. Memiliki pemahaman yang baik tentang prinsip desain, tools seperti Figma atau Adobe XD, serta pengetahuan dasar HTML/CSS menjadi nilai tambah.',
-        },
-        {
-            title: 'Marketing Specialist',
-            date: '10/12/2024',
-            tag: 'Marketing',
-            desc: 'Sebagai Marketing Specialist, Anda akan mengembangkan strategi pemasaran digital, mengelola kampanye iklan, serta menganalisis kinerja pemasaran menggunakan berbagai alat analitik. Anda akan bertanggung jawab dalam meningkatkan brand awareness serta menarik lebih banyak pelanggan melalui berbagai platform seperti media sosial, SEO, dan email marketing. Kandidat ideal harus memiliki kreativitas tinggi, pemahaman tentang digital marketing, serta kemampuan komunikasi yang baik.',
-        },
-        {
-            title: 'Data Analyst',
-            date: '15/12/2024',
-            tag: 'Data',
-            desc: 'Sebagai Data Analyst, Anda akan mengumpulkan, mengolah, dan menganalisis data untuk membantu pengambilan keputusan bisnis. Anda akan bekerja dengan berbagai sumber data, menggunakan alat analitik seperti Python, SQL, dan Tableau untuk menemukan pola dan tren yang relevan. Kandidat yang ideal memiliki pemahaman statistik yang kuat, kemampuan berpikir analitis, serta pengalaman dalam memvisualisasikan data agar mudah dipahami oleh tim bisnis.',
-        },
-        {
-            title: 'Customer Support',
-            date: '20/12/2024',
-            tag: 'Support',
-            desc: 'Sebagai Customer Support, Anda akan menjadi penghubung antara pelanggan dan perusahaan dengan memberikan layanan bantuan terbaik. Anda akan menangani pertanyaan, keluhan, serta memberikan solusi atas permasalahan pelanggan melalui berbagai kanal komunikasi seperti email, chat, atau telepon. Kandidat yang ideal memiliki kemampuan komunikasi yang baik, empati tinggi, serta mampu menyelesaikan masalah dengan cepat dan efektif.',
-        },
-    ];
-
     let vacancies = auth.vacancies;
 
     const handleClick = (e) => {

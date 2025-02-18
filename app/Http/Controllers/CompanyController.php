@@ -96,25 +96,31 @@ class CompanyController extends Controller
 
     public function update(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
-            'email_company' => 'required|string|lowercase|email|max:255|unique:companies',
-            'description' => 'required|string',
-            'address' => 'required|string',
-            'photo' => 'file|mimes:pdf|max:2048'
+        $validated = $request->validate([
+            'name_company' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255',
+            'email_company' => 'required|string|lowercase|email|max:255',
+            'description_company' => 'required|string',
+            'address_company' => 'required|string',
+            'photo' => 'image|max:5120'
         ]);
 
-        $user = Auth::user();
+        $user = User::find(Auth::id());
 
-        $company = Company::where('id_user', Auth::id())->firstOrFail();
-
-        $company->update([
-            'name_company' => $request->name,
-            'email_company' => $request->email_company,
-            'description_company' => $request->description,
-            'address_company' => $request->address,
+        $user->update([
+            'name' => $request->name_company,
+            'email' => $request->email
         ]);
+
+        $company = Company::where('id_user', $user->id_user)->firstOrFail();
+
+        if ($company->email_company != $validated['email_company']) {
+            $company->email_company = $validated['email_company'];
+        }
+
+        $company->name_company = $validated['name_company'];
+        $company->description_company = $validated['description_company'];
+        $company->address_company = $validated['address_company'];
 
         if ($request->photo != null) {
             $file = $request->file('photo');
@@ -130,8 +136,10 @@ class CompanyController extends Controller
 
             chmod($storagePath, 0775);
 
-            $company->update(['photo_path' => "public/photo/{$user->id_user}/$encryptedName"]);
+            $company->photo_path = "public/photo/{$user->id_user}/$encryptedName";
         }
+
+        $company->save();
 
         return Redirect::route('penyedia.profile');
     }

@@ -19,7 +19,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        // $user = Auth::user();
+        $user = Auth::user();
         $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
         $cvs = CV::where('id_seeker', $seeker->id_seeker)->get();
 

@@ -39,7 +39,10 @@ const NavBar = ({ auth }) => {
                     >
                         cari lowongan
                     </NavLink>
-                    <NavLink className="text-slate-100" href="/profile">
+                    <NavLink
+                        className="text-slate-100"
+                        href={route('profile.index')}
+                    >
                         lihat profile
                     </NavLink>
                 </div>

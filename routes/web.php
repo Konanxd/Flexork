@@ -44,10 +44,10 @@ Route::middleware(['auth', 'seeker'])->group(function () {
     Route::get('/dashboard/pelamar', [VacancyController::class, 'dashboard'])
         ->name('dashboard.pelamar');
 
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profil', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profil/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profil', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profil', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/api/search', [VacancyController::class, 'search'])->name('vacancy.search');
 
@@ -62,13 +62,15 @@ Route::middleware(['auth', 'seeker'])->group(function () {
 Route::middleware(['auth', 'company'])->group(function () {
     Route::get('/dashboard/penyedia', [CompanyController::class, 'index'])
         ->name('dashboard.penyedia');
-    Route::get('/dashboard/penyedia/{id}/daftar_pelamar', [CompanyController::class, 'details'])
+    Route::get('/dashboard/penyedia/{id}', [CompanyController::class, 'details'])
         ->name('penyedia.details');
 
-    Route::get('/profil', [CompanyController::class, 'profile'])
+    Route::get('/profile', [CompanyController::class, 'profile'])
         ->name('penyedia.profile');
-    Route::get('/profil/edit', [CompanyController::class, 'edit'])
+    Route::get('/profile/edit', [CompanyController::class, 'edit'])
         ->name('penyedia.edit');
+    Route::put('/profile/edit', [CompanyController::class, 'update'])
+        ->name('penyedia.update');
 
     Route::get('/buka-lowongan', [VacancyController::class, 'create'])
         ->name('vacancy.create');

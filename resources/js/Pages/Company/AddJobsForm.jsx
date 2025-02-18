@@ -5,9 +5,9 @@ import TextAreaInput from '@/Components/TextAreaInput';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { router } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function AddJobsForm() {
+export default function AddJobsForm({ auth, tags }) {
     const [formData, setFormData] = useState({
         title_vacancy: '',
         description_vacancy: '',
@@ -20,7 +20,27 @@ export default function AddJobsForm() {
         maxsalary: '',
         jobdesk_vacancy: [],
         benefit_vacancy: [],
+        tags: [],
     });
+
+    console.log(formData);
+
+    const [selectedJobTypes, setSelectedJobTypes] = useState([]);
+
+    const handleJobTypeChange = (jobType) => {
+        const tag = tags.find((tag) => tag.name_tag === jobType);
+        if (!tag) return;
+
+        setSelectedJobTypes((prevSelected) =>
+            prevSelected.includes(tag.id_tag)
+                ? prevSelected.filter((id_tag) => id_tag !== tag.id_tag)
+                : [...prevSelected, tag.id_tag],
+        );
+    };
+
+    useEffect(() => {
+        setFormData((prevData) => ({ ...prevData, tags: selectedJobTypes }));
+    }, [selectedJobTypes]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -116,7 +136,7 @@ export default function AddJobsForm() {
                                 placeholder="silahkan Isi Nama Perusahaan"
                             />
                         </div>
-                        {/* <div className="flex flex-col gap-2 px-6">
+                        <div className="flex flex-col gap-2 px-6">
                             <div className="flex flex-row items-center gap-2 text-sm capitalize text-[#5B5B5B]">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -129,12 +149,30 @@ export default function AddJobsForm() {
                                 </svg>
                                 <span>Tags</span>
                             </div>
-                            <TextAreaInput
-                                rows="5"
-                                className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
-                                placeholder="silahkan Isi Nama Perusahaan"
-                            />
-                        </div> */}
+                            <div className="grid grid-cols-4 gap-2">
+                                {tags.map((tag, index) => (
+                                    <label
+                                        key={index}
+                                        className="flex w-fit items-center gap-2 text-gray-600"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            className="rounded border-gray-400"
+                                            value={tag.id_tag}
+                                            checked={selectedJobTypes.includes(
+                                                tag.id_tag,
+                                            )}
+                                            onChange={() =>
+                                                handleJobTypeChange(
+                                                    tag.name_tag,
+                                                )
+                                            }
+                                        />
+                                        {tag.name_tag}
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
                         <div className="flex flex-col gap-2 px-6">
                             <div className="flex flex-row items-center gap-2 text-sm capitalize text-[#5B5B5B]">
                                 <svg

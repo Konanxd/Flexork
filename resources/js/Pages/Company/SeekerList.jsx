@@ -5,7 +5,7 @@ import { router } from '@inertiajs/react';
 import axios from 'axios';
 import { useState } from 'react';
 
-export default function SeekerList({ vacancy, appliers }) {
+export default function SeekerList({ auth, vacancy, appliers }) {
     console.log(appliers);
     // Store the list of seekers in state
     const [seekerList, setSeekerList] = useState(appliers);
@@ -42,7 +42,7 @@ export default function SeekerList({ vacancy, appliers }) {
                 <div className="flex flex-row items-center">
                     <BackIcon
                         className="relative mx-4"
-                        onClick={() => router.visit('/company/dashboard')}
+                        onClick={() => router.get('/dashboard')}
                     />
                     <div className="flex flex-col gap-1">
                         <h1 className="text-xl font-semibold">

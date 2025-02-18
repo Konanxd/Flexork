@@ -1,4 +1,3 @@
-import ContactInput from '@/Components/ContactInput';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import TextAreaInput from '@/Components/TextAreaInput';
@@ -7,23 +6,26 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function CompanyEdit() {
+export default function CompanyEdit({ auth, company }) {
     const [profileImage, setProfileImage] = useState(null);
     const [bannerImage, setBannerImage] = useState(null);
     const [formData, setFormData] = useState({
-        namaPerusahaan: '',
-        tentangPerusahaan: '',
-        bidangPerusahaan: '',
-        alamat: '',
-        email: '',
-        website: '',
-        instagram: '',
+        name_company: company.name_company || '',
+        email: auth.user.email || '',
+        email_company: company.email_company || '',
+        description_company: company.description_company || '',
+        address_company: company.address_company || '',
+        photo: null,
     });
 
     const handleImageChange = (e, setImage) => {
         const file = e.target.files[0];
         if (file) {
             setImage(URL.createObjectURL(file));
+            setFormData({
+                ...formData,
+                [e.target.name]: setImage,
+            });
         }
     };
 
@@ -36,9 +38,7 @@ export default function CompanyEdit() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Data Form:', formData);
-        console.log('Profile Image:', profileImage);
-        console.log('Banner Image:', bannerImage);
+        router.put('/profile/edit', formData);
     };
 
     return (
@@ -60,6 +60,7 @@ export default function CompanyEdit() {
                     )}
                     <label className="flex h-32 w-64 cursor-pointer flex-col items-center justify-center rounded-xl border-[3px] border-dashed border-gray-400 hover:border-gray-600">
                         <input
+                            name="photo"
                             type="file"
                             accept="image/*"
                             className="hidden"
@@ -77,39 +78,32 @@ export default function CompanyEdit() {
                 </div>
 
                 <div className="flex flex-col gap-1.5 text-xl">
-                    <h2 className="px-2 font-semibold capitalize">
-                        unggah banner Perusahaan
-                    </h2>
-                    {bannerImage && (
-                        <img
-                            src={bannerImage}
-                            alt="Banner Preview"
-                            className="mt-2 w-full max-w-[600px] rounded-lg border object-cover"
-                        />
-                    )}
-                    <label className="flex h-32 w-64 cursor-pointer flex-col items-center justify-center rounded-xl border-[3px] border-dashed border-gray-400 hover:border-gray-600">
-                        <input
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={(e) =>
-                                handleImageChange(e, setBannerImage)
-                            }
-                        />
-                        <span className="text-center font-semibold text-gray-700">
-                            UNGGAH FILE DISINI
-                        </span>
-                        <span className="text-sm text-gray-500">
-                            ukuran file maksimal 5MB
-                        </span>
-                    </label>
+                    <h2 className="px-2 font-semibold">Nama Perusahaan</h2>
+                    <TextInput
+                        name="name_company"
+                        value={formData.name_company}
+                        onChange={handleChange}
+                        className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
+                        placeholder="Silahkan isi nama perusahaan"
+                    />
                 </div>
 
                 <div className="flex flex-col gap-1.5 text-xl">
-                    <h2 className="px-2 font-semibold">Nama Perusahaan</h2>
+                    <h2 className="px-2 font-semibold">Email Akun</h2>
                     <TextInput
-                        name="namaPerusahaan"
-                        value={formData.namaPerusahaan}
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
+                        placeholder="Silahkan isi nama perusahaan"
+                    />
+                </div>
+
+                <div className="flex flex-col gap-1.5 text-xl">
+                    <h2 className="px-2 font-semibold">Email Perusahaan</h2>
+                    <TextInput
+                        name="email_company"
+                        value={formData.email_company}
                         onChange={handleChange}
                         className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         placeholder="Silahkan isi nama perusahaan"
@@ -119,8 +113,8 @@ export default function CompanyEdit() {
                 <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold">Tentang Perusahaan</h2>
                     <TextAreaInput
-                        name="tentangPerusahaan"
-                        value={formData.tentangPerusahaan}
+                        name="description_company"
+                        value={formData.description_company}
                         onChange={handleChange}
                         className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         rows="5"
@@ -129,40 +123,17 @@ export default function CompanyEdit() {
                 </div>
 
                 <div className="flex flex-col gap-1.5 text-xl">
-                    <h2 className="px-2 font-semibold">Bidang Perusahaan</h2>
-                    <TextAreaInput
-                        name="bidangPerusahaan"
-                        value={formData.bidangPerusahaan}
-                        onChange={handleChange}
-                        className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
-                        rows="5"
-                        placeholder="Silahkan isi bidang perusahaan"
-                    />
-                </div>
-
-                <div className="flex flex-col gap-1.5 text-xl">
                     <h2 className="px-2 font-semibold">Alamat</h2>
                     <TextAreaInput
-                        name="alamat"
-                        value={formData.alamat}
+                        name="address_company"
+                        value={formData.address_company}
                         onChange={handleChange}
                         className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
                         rows="5"
-                        placeholder="Silahkan isi alamat perusahaan"
+                        placeholder="Silahkan isi address_company perusahaan"
                     />
                 </div>
 
-                <div className="flex flex-col gap-1.5 text-xl">
-                    <h2 className="px-2 font-semibold">kontak</h2>
-                    <div className="flex flex-col gap-4">
-                        <ContactInput
-                            email={formData.email}
-                            website={formData.website}
-                            instagram={formData.instagram}
-                            handleChange={handleChange}
-                        ></ContactInput>
-                    </div>
-                </div>
                 <div className="flex flex-col gap-3">
                     <PrimaryButton className="w-full bg-[#1673DE] py-4 text-lg font-semibold uppercase text-white focus:ring-transparent">
                         simpan

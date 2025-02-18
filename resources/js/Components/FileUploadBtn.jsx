@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useRef, useState } from 'react';
 
-const FileUploadBtn = ({ onUpload = () => {} }) => {
+const FileUploadBtn = ({ onUpload = () => {}, className = '' }) => {
     const fileInputRef = useRef(null);
     const [uploading, setUploading] = useState(false);
 
@@ -38,7 +38,7 @@ const FileUploadBtn = ({ onUpload = () => {} }) => {
 
     return (
         <div
-            className={`w-fit cursor-pointer rounded-2xl border-[3px] border-dashed border-neutral-400 p-8${className}`}
+            className={`w-fit cursor-pointer rounded-2xl border-[3px] border-dashed border-neutral-400 p-8 ${className}`}
         >
             <div className="w-48 text-center">
                 <h1 className="w-full text-lg font-semibold uppercase">
