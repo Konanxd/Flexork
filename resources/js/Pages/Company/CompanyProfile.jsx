@@ -6,13 +6,13 @@ import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 import CompanyDelete from '../../Components/Company/CompanyDelete';
 
-export default function CompanyProfile() {
+export default function CompanyProfile({ auth, company }) {
     const [activeComponent, setActiveComponent] = useState('CompanyAccount');
 
     const renderComponent = () => {
         switch (activeComponent) {
             case 'CompanyAccount':
-                return <CompanyAccount />;
+                return <CompanyAccount auth={auth} company={company} />;
             case 'CompanyPolicy':
                 return <CompanyPolicy />;
             case 'DeleteAccount':

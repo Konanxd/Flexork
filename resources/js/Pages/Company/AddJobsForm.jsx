@@ -5,7 +5,7 @@ import TextAreaInput from '@/Components/TextAreaInput';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { router } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function AddJobsForm() {
     const [formData, setFormData] = useState({
@@ -13,11 +13,11 @@ export default function AddJobsForm() {
         description_vacancy: '',
         deadline_vacancy: '',
         location_vacancy: '',
-        jamKerjaMulai: '',
-        jamKerjaSelesai: '',
-        workhours_vacancy: '',
+        minhour: '',
+        maxhour: '',
         experience_vacancy: '',
-        salary_vacancy: '',
+        minsalary: '',
+        maxsalary: '',
         jobdesk_vacancy: [],
         benefit_vacancy: [],
     });
@@ -25,13 +25,6 @@ export default function AddJobsForm() {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
-
-    useEffect(() => {
-        setFormData((prevData) => ({
-            ...prevData,
-            workhours_vacancy: `${prevData.jamKerjaMulai} -- ${prevData.jamKerjaSelesai}`,
-        }));
-    }, [formData.jamKerjaMulai, formData.jamKerjaSelesai]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -158,8 +151,8 @@ export default function AddJobsForm() {
                             <div className="flex w-full flex-row items-center gap-2">
                                 <input
                                     type="time"
-                                    name="jamKerjaMulai"
-                                    value={formData.jamKerjaMulai}
+                                    name="minhour"
+                                    value={formData.minhour}
                                     onChange={handleChange}
                                     id=""
                                     className="w-full rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
@@ -167,8 +160,8 @@ export default function AddJobsForm() {
                                 <span>-</span>
                                 <input
                                     type="time"
-                                    name="jamKerjaSelesai"
-                                    value={formData.jamKerjaSelesai}
+                                    name="maxhour"
+                                    value={formData.maxhour}
                                     onChange={handleChange}
                                     id=""
                                     className="w-full rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
@@ -210,14 +203,25 @@ export default function AddJobsForm() {
                                 </svg>
                                 <span>jumlah gaji</span>
                             </div>
-                            <TextInput
-                                type="number"
-                                name="salary_vacancy"
-                                value={formData.salary_vacancy}
-                                onChange={handleChange}
-                                className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
-                                placeholder="silahkan Isi Nama Perusahaan"
-                            />
+                            <div className="flex w-full flex-row items-center gap-2">
+                                <TextInput
+                                    type="number"
+                                    name="minsalary"
+                                    value={formData.minsalary}
+                                    onChange={handleChange}
+                                    className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
+                                    placeholder="silahkan Isi Nama Perusahaan"
+                                />
+                                <span>-</span>
+                                <TextInput
+                                    type="number"
+                                    name="maxsalary"
+                                    value={formData.maxsalary}
+                                    onChange={handleChange}
+                                    className="rounded-none border-2 border-[#C4C4C4] bg-white text-[#5B5B5B] placeholder-[#C4C4C4] placeholder:text-base"
+                                    placeholder="silahkan Isi Nama Perusahaan"
+                                />
+                            </div>
                         </div>
                     </div>
                     <div className="flex flex-col gap-1.5 text-xl">

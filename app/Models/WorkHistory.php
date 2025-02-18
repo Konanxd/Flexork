@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WorkHistory extends Model
 {
-    protected $table = 'work_history';
+    protected $table = 'work_histories';
     protected $primaryKey = 'id_work';
 
     protected $fillable = [

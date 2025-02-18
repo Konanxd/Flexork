@@ -22,13 +22,21 @@ class CompanyController extends Controller
 
         return Inertia::render('Company/CompanyDashboard', [
             'auth' => [
-                'user' => Auth::user() ? [
-                    'id' => $user->id_user,
-                    'name' => $company->name_company,
-                    'email' => $user->email,
-                ] : null,
+                'user' => Auth::user() ?? null,
                 'vacancies' => $vacancies ?? []
             ]
+        ]);
+    }
+
+    public function profile()
+    {
+        $company = Company::where('id_user', Auth::id())->firstOrFail();
+
+        return Inertia::render('Company/CompanyProfile', [
+            'auth' => [
+                'user' => Auth::user() ?? []
+            ],
+            'company' => $company
         ]);
     }
 
@@ -50,8 +58,8 @@ class CompanyController extends Controller
                         'seeker' => [
                             'name_seeker' => $apply->cv->seeker->name_seeker
                         ],
-                        'cv_name' => $apply->cv->original_cv_name, // Original CV name
-                        'cv_url' => asset("storage/cvs/{$apply->cv->id_seeker}/{$apply->cv->cv_name}") // Generate full URL
+                        'cv_name' => $apply->cv->original_cv_name,
+                        'cv_url' => asset("storage/cvs/{$apply->cv->id_seeker}/{$apply->cv->cv_name}")
                     ]
                 ];
             });
@@ -65,6 +73,15 @@ class CompanyController extends Controller
     public function create()
     {
         return Inertia::render('Auth/PenyediaRegister');
+    }
+
+    public function edit()
+    {
+        $company = Company::where('id_user', Auth::id())->firstOrFail();
+
+        return Inertia::render('Company/CompanyEdit', [
+            'company' => $company
+        ]);
     }
 
     public function accept($id_apply)

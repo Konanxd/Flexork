@@ -12,8 +12,8 @@ class ReviewsController extends Controller
     public function check($id)
     {
         $exists = DB::table('reviews')
-            ->join('work_history', 'work_history.id_work', 'reviews.id_work')
-            ->where('work_history.id_work', '=', $id)
+            ->join('work_histories', 'work_histories.id_work', 'reviews.id_work')
+            ->where('work_histories.id_work', '=', $id)
             ->exists();
 
         return response()->json([
@@ -24,7 +24,7 @@ class ReviewsController extends Controller
     public function read($id)
     {
         $reviews = DB::table('reviews')
-            ->join('work_history', 'work_history.id_work', 'reviews.id_work')
+            ->join('work_histories', 'work_histories.id_work', 'reviews.id_work')
             ->where('id_vacancy', '=', $id)
             ->get();
 

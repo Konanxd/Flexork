@@ -17,12 +17,14 @@ return new class extends Migration
             $table->string('title_vacancy');
             $table->text('description_vacancy');
             $table->boolean('is_active');
+            $table->string('minhour');
+            $table->string('maxhour');
             $table->location('location_vacancy');
             $table->date('deadline_vacancy');
             $table->json('jobdesk_vacancy');
             $table->json('benefit_vacancy');
-            $table->float('salary_vacancy');
-            $table->string('workhours_vacancy');
+            $table->integer('minsalary');
+            $table->integer('maxsalary');
             $table->string('experience_vacancy');
             $table->timestamps();
 

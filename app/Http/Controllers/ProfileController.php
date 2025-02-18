@@ -7,6 +7,7 @@ use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Seeker;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -18,17 +19,13 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        // $user = Auth::user();
         $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
         $cvs = CV::where('id_seeker', $seeker->id_seeker)->get();
 
         return Inertia::render('Profile/Profile', [
             'auth' => [
-                'user' => Auth::user() ? [
-                    'id' => $user->id_user,
-                    'name' => $seeker->name_seeker,
-                    'email' => $user->email,
-                ] : null,
+                'user' => Auth::user() ?? null,
                 'seeker' => $seeker,
                 'cvs' => $cvs
             ],
@@ -43,11 +40,7 @@ class ProfileController extends Controller
 
         return Inertia::render('Profile/AccountEdit', [
             'auth' => [
-                'user' => Auth::user() ? [
-                    'id' => $user->id_user,
-                    'name' => $seeker->name_seeker,
-                    'email' => $user->email,
-                ] : null,
+                'user' => Auth::user() ?? null,
                 'seeker' => $seeker
             ],
             'status' => session('status'),
@@ -65,6 +58,7 @@ class ProfileController extends Controller
             'born_date' => 'required|date',
             'address' => 'required|string',
             'phone_seeker' => 'required|string|unique:seekers',
+            'photo' => 'file|mimes:pdf|max:2048'
         ]);
         // $request->user()->fill($request->validated());
 
@@ -80,6 +74,23 @@ class ProfileController extends Controller
             'name' => $request->name,
             'email' => $request->email
         ]);
+
+        if ($request->photo != null) {
+            $file = $request->file('photo');
+            $encryptedName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+
+            $storagePath = storage_path("app/public/photo/{$user->id_user}");
+
+            if (!file_exists($storagePath)) {
+                mkdir($storagePath, 0775, true);
+            }
+
+            $file->storeAs("public/photo/{$user->id_user}", $encryptedName);
+
+            chmod($storagePath, 0775);
+
+            $user->update(['photo_path' => "public/photo/{$user->id_user}/$encryptedName"]);
+        }
 
         $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
 

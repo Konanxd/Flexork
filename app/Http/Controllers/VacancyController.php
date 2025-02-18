@@ -34,11 +34,7 @@ class VacancyController extends Controller
 
         return Inertia::render('Dashboard', [
             'auth' => [
-                'user' => Auth::user() ? [
-                    'id' => $user->id_user,
-                    'name' => $seeker->name_seeker,
-                    'email' => $user->email,
-                ] : null,
+                'user' => Auth::user() ?? null,
                 'counter' => [
                     'total' => $countPending + $countAccepted + $countRejected,
                     'pending' => $countPending,
@@ -90,11 +86,11 @@ class VacancyController extends Controller
 
         // dd(Vacancy::with('company', 'tags')->get());
 
-        $works = DB::table('work_history')
-            ->join('seekers', 'seekers.id_seeker', '=', 'work_history.id_seeker')
+        $works = DB::table('work_histories')
+            ->join('seekers', 'seekers.id_seeker', '=', 'work_histories.id_seeker')
             ->where('id_vacancy', '=', $id)
             ->whereNotIn(
-                'work_history.id_work',
+                'work_histories.id_work',
                 function ($query) {
                     $query->select('id_work')
                         ->from('reviews');
@@ -103,7 +99,7 @@ class VacancyController extends Controller
             ->get();
 
         $reviews = DB::table('reviews')
-            ->join('work_history', 'work_history.id_work', 'reviews.id_work')
+            ->join('work_histories', 'work_histories.id_work', 'reviews.id_work')
             ->join('users', 'users.id_user', 'reviews.id_user')
             ->where('id_vacancy', '=', $id)
             ->get();
@@ -126,7 +122,7 @@ class VacancyController extends Controller
 
         return Inertia::render('Jobs/Details', [
             'vacancy' => $vacancy,
-            'auth' => Auth::user(),
+            'auth' => Auth::user() ?? null,
             'works' => $works,
             'reviews' => $reviews,
             'cvs' => Auth::user()->type_user === 'pelamar' ? $cvs : null
@@ -144,12 +140,15 @@ class VacancyController extends Controller
             $request->validate([
                 'title_vacancy' => 'required|string',
                 'description_vacancy' => 'required|string',
-                'workhours_vacancy' => 'required|string',
+                'minhours' => 'required|string',
+                'maxhours' => 'required|string',
+                'location_vacancy' => 'required|string',
                 'experience_vacancy' => 'required|string',
                 'deadline_vacancy' => 'required|date',
                 'jobdesk_vacancy' => 'required|json',
                 'benefit_vacancy' => 'required|json',
-                'salary_vacancy' => 'required|integer',
+                'minsalary' => 'required|integer',
+                'maxsalary' => 'required|integer',
             ]);
         } catch (ValidationException $e) {
             dd($e->errors());
@@ -165,11 +164,13 @@ class VacancyController extends Controller
             'title_vacancy' => $request->title_vacancy,
             'description_vacancy' => $request->description_vacancy,
             'workhours_vacancy' => $request->workhours_vacancy,
+            'location_vacancy' => $request->experience_vacancy,
             'experience_vacancy' => $request->experience_vacancy,
             'deadline_vacancy' => $request->deadline_vacancy,
             'jobdesk_vacancy' => $request->jobdesk_vacancy,
             'benefit_vacancy' => $request->benefit_vacancy,
-            'salary_vacancy' => $request->salary_vacancy,
+            'minsalary' => $request->minsalary,
+            'maxsalary' => $request->maxsalary,
             'is_active' => '1'
         ]);
 
@@ -194,11 +195,13 @@ class VacancyController extends Controller
                 'title_vacancy' => 'required|string',
                 'description_vacancy' => 'required|string',
                 'workhours_vacancy' => 'required|string',
+                'location_vacancy' => 'required|string',
                 'experience_vacancy' => 'required|string',
                 'deadline_vacancy' => 'required|date',
                 'jobdesk_vacancy' => 'required',
                 'benefit_vacancy' => 'required',
-                'salary_vacancy' => 'required|integer',
+                'minsalary' => 'required|integer',
+                'minsalary' => 'required|integer',
             ]);
         } catch (ValidationException $e) {
             dd($e->errors());
@@ -210,11 +213,13 @@ class VacancyController extends Controller
         $vacancy->title_vacancy = $validated['title_vacancy'];
         $vacancy->description_vacancy = $validated['description_vacancy'];
         $vacancy->workhours_vacancy = $validated['workhours_vacancy'];
+        $vacancy->location_vacancy = $validated['location_vacancy'];
         $vacancy->experience_vacancy = $validated['experience_vacancy'];
         $vacancy->deadline_vacancy = $validated['deadline_vacancy'];
         $vacancy->jobdesk_vacancy = json_encode($validated['jobdesk_vacancy']); // Store as JSON
         $vacancy->benefit_vacancy = json_encode($validated['benefit_vacancy']); // Store as JSON
-        $vacancy->salary_vacancy = $validated['salary_vacancy'];
+        $vacancy->minsalary = $validated['minsalary'];
+        $vacancy->maxsalary = $validated['maxsalary'];
 
         // Save the updated vacancy
         $vacancy->save();

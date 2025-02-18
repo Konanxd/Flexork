@@ -20,7 +20,9 @@ use App\Http\Controllers\VacancyController;
 //     ]);
 // });
 
-
+Route::middleware('guest')->get('/', function () {
+    return redirect()->route('dashboard.pelamar');
+});
 
 Route::middleware('auth')->get('/dashboard', function () {
     if (Auth::user()->type_user === 'pelamar') {
@@ -62,6 +64,12 @@ Route::middleware(['auth', 'company'])->group(function () {
         ->name('dashboard.penyedia');
     Route::get('/dashboard/penyedia/{id}/daftar_pelamar', [CompanyController::class, 'details'])
         ->name('penyedia.details');
+
+    Route::get('/profil', [CompanyController::class, 'profile'])
+        ->name('penyedia.profile');
+    Route::get('/profil/edit', [CompanyController::class, 'edit'])
+        ->name('penyedia.edit');
+
     Route::get('/buka-lowongan', [VacancyController::class, 'create'])
         ->name('vacancy.create');
     Route::post('/buka-lowongan', [VacancyController::class, 'store'])
@@ -118,9 +126,6 @@ Route::get('/company/profile', function () {
     return Inertia::render('Company/CompanyProfile');
 });
 
-Route::get('/company/edit', function () {
-    return Inertia::render('Company/CompanyEdit');
-});
 Route::get('/company/job/preview', function () {
     return Inertia::render('Company/JobPreview');
 });
