@@ -1,10 +1,10 @@
 const TagView = ({ className = '', tag, ...props }) => {
     return (
         <div
-            className={`flex w-fit items-center justify-center rounded-full px-4 py-2 capitalize ${className}`}
+            className={`flex w-fit max-w-60 items-center justify-center rounded-full px-4 py-2 capitalize ${className}`}
             {...props}
         >
-            {tag}
+            <span className="line-clamp-1">{tag}</span>
         </div>
     );
 };

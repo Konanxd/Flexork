@@ -300,7 +300,10 @@ const Details = ({
                         <div className="flex flex-col gap-6">
                             <SubTitle>
                                 <div className="flex flex-row items-center gap-4">
-                                    <img src="assets/company.png" />
+                                    <img
+                                        src="/assets/defaultPic.jpg"
+                                        className="size-16 overflow-hidden rounded-full"
+                                    />
                                     <div className="flex flex-col">
                                         <div className="poppins-semibold">
                                             {vacancy.company.name_company}

@@ -10,12 +10,12 @@ const NavBar = ({ auth }) => {
                     <img src={'../assets/logo.png'} alt="Flexork" width={160} />
                 </Link>
                 {auth?.user ? (
-                    <div className="text-md flex flex-row gap-1 text-[#1673DE]">
+                    <div className="text-md flex flex-row gap-1 font-medium text-[#1673DE]">
                         Halo,{' '}
                         <span className="text-[#1673DE]">{auth.user.name}</span>
                     </div>
                 ) : (
-                    <div className="flex gap-3 uppercase text-[#1673DE]">
+                    <div className="flex gap-3 font-medium uppercase text-[#1673DE]">
                         <NavLink href={'login'} className="hover:text-blue-400">
                             masuk
                         </NavLink>

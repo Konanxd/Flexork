@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import PrimaryButton from './PrimaryButton';
 import TextInput from './TextInput';
 
 export default function SearchBar({
@@ -97,7 +98,7 @@ export default function SearchBar({
 
             {/* Dropdown Filter */}
             {FilterOpen && (
-                <div className="absolute left-0 top-14 z-50 w-full bg-white px-10 py-6 drop-shadow-lg">
+                <div className="absolute left-1/2 top-14 z-50 w-10/12 max-w-[1400px] -translate-x-1/2 snap-center bg-white px-10 py-6 drop-shadow-lg">
                     <div className="flex flex-col gap-4">
                         <h1 className="text-xl font-semibold">Hari Kerja</h1>
                         <div className="grid grid-cols-4 gap-2">
@@ -130,9 +131,9 @@ export default function SearchBar({
             />
 
             {/* Search Button */}
-            <button
+            <PrimaryButton
                 onClick={onClick}
-                className="flex flex-row items-center gap-2 bg-[#9F9F9F] px-6 py-2 uppercase text-white"
+                className="flex flex-row items-center gap-2 rounded-none bg-[#9F9F9F] px-6 py-2 uppercase text-white hover:bg-[#7F7F7F]"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +144,7 @@ export default function SearchBar({
                     <path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"></path>
                 </svg>
                 cari
-            </button>
+            </PrimaryButton>
         </div>
     );
 }
