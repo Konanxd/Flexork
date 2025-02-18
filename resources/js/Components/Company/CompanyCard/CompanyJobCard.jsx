@@ -17,7 +17,7 @@ export default function CompanyJobCard({ vacancy, ...props }) {
         >
             <div
                 className="flex cursor-pointer flex-col gap-4"
-                onClick={() => router.visit('/company/job/preview')}
+                onClick={() => router.visit(`/lowongan/${vacancy.id_vacancy}`)}
             >
                 <div className="flex flex-col gap-1">
                     <h1 className="text-lg font-semibold uppercase">
@@ -27,7 +27,7 @@ export default function CompanyJobCard({ vacancy, ...props }) {
                         berakhir pada {vacancy.deadline_vacancy}
                     </span>
                 </div>
-                <div className="">
+                <div className="flex flex-row gap-3">
                     {tags.map((tag) => (
                         <TagView
                             key={tag.id_tag}

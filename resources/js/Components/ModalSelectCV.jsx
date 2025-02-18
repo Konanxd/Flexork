@@ -58,7 +58,10 @@ export default function ModalSelectCV({ onClose, cvs, vacancyId, onSuccess }) {
                         ))}
                     </select>
 
-                    <PrimaryButton type="submit" className="w-full">
+                    <PrimaryButton
+                        type="submit"
+                        className="w-full bg-[#1673DE] text-white"
+                    >
                         Kirim
                     </PrimaryButton>
                 </form>

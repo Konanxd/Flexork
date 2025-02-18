@@ -18,7 +18,7 @@ export default function AccountEdit({ auth }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        router.post(route('profile.update'), data, {
+        router.patch(route('profile.update'), data, {
             preserveScroll: true,
         });
     };
@@ -117,7 +117,7 @@ export default function AccountEdit({ auth }) {
                     <SocialMediaInput></SocialMediaInput>
                 </div> */}
                 <div className="flex flex-col gap-3">
-                    <PrimaryButton className="w-full py-4 text-lg font-semibold uppercase focus:ring-transparent">
+                    <PrimaryButton className="w-full bg-[#1673DE] py-4 text-lg font-semibold uppercase text-white focus:ring-transparent">
                         simpan
                     </PrimaryButton>
                     <SecondaryButton

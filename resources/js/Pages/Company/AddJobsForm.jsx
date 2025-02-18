@@ -23,7 +23,7 @@ export default function AddJobsForm({ auth, tags }) {
         tags: [],
     });
 
-    console.log(formData);
+    // console.log(formData);
 
     const [selectedJobTypes, setSelectedJobTypes] = useState([]);
 

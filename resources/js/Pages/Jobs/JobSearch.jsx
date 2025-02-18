@@ -27,7 +27,7 @@ export default function JobSearch() {
     };
 
     return (
-        <GuestLayout className="flex h-full flex-col gap-6 py-6">
+        <GuestLayout className="flex h-auto flex-col gap-6 py-6">
             <SearchBar filters={filters} updateFilters={updateFilters} />
             <div className="xs:grid-cols-2 grid w-full gap-4 px-7 drop-shadow-lg md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">
                 {vacancies != undefined ? (

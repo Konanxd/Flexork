@@ -33,9 +33,8 @@ Route::middleware('auth')->get('/dashboard', function () {
     abort(403);
 })->name('dashboard');
 
-Route::get('/dashboard/pelamar', [VacancyController::class, 'dashboard'])
-    ->name('dashboard.pelamar');
-Route::get('/cari', [VacancyController::class, 'index'])->name('vacancy.index');
+// Route::get('/dashboard/pelamar', [VacancyController::class, 'dashboard'])
+//     ->name('dashboard.pelamar');
 Route::get('/lowongan/{id}', [VacancyController::class, 'details'])->name('vacancy.details');
 
 
@@ -43,7 +42,7 @@ Route::get('/lowongan/{id}', [VacancyController::class, 'details'])->name('vacan
 Route::middleware(['auth', 'seeker'])->group(function () {
     Route::get('/dashboard/pelamar', [VacancyController::class, 'dashboard'])
         ->name('dashboard.pelamar');
-
+        Route::get('/cari', [VacancyController::class, 'index'])->name('vacancy.index');
     Route::get('/profil', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profil/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profil', [ProfileController::class, 'update'])->name('profile.update');
@@ -124,7 +123,7 @@ Route::get('/company/list-pelamar', function () {
     return Inertia::render('Company/SeekerList');
 });
 
-Route::get('/company/profile', function () {
+Route::get('/profile/penyedia', function () {
     return Inertia::render('Company/CompanyProfile');
 });
 

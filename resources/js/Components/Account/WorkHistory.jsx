@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import ModalReview from './ModalReview';
-import UserRatingCard from './UserRatingCard';
 
 export default function WorkHistory() {
     const [reviewOpen, setReviewOpen] = useState(false);
@@ -19,7 +18,7 @@ export default function WorkHistory() {
                 Riwayat Bekerja Anda
             </h1>
 
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
                 {workHistory.map((work, index) => (
                     <UserRatingCard
                         key={index}
@@ -28,7 +27,7 @@ export default function WorkHistory() {
                         onClick={() => setReviewOpen(true)}
                     />
                 ))}
-            </div>
+            </div> */}
 
             {reviewOpen &&
                 workHistory.map((work, index) => (

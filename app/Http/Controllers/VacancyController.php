@@ -35,7 +35,7 @@ class VacancyController extends Controller
 
         return Inertia::render('Dashboard', [
             'auth' => [
-                'user' => Auth::user() ?? null,
+                'user' => Auth::user() ??  null,
                 'counter' => [
                     'total' => $countPending + $countAccepted + $countRejected,
                     'pending' => $countPending,
@@ -158,6 +158,7 @@ class VacancyController extends Controller
                 'location_vacancy' => 'required|string',
                 'experience_vacancy' => 'required|string',
                 'deadline_vacancy' => 'required|date',
+                'location_vacancy'=> 'required|string',
                 'jobdesk_vacancy' => 'required|json',
                 'benefit_vacancy' => 'required|json',
                 'minsalary' => 'required|integer',
@@ -180,6 +181,7 @@ class VacancyController extends Controller
             'location_vacancy' => $request->experience_vacancy,
             'experience_vacancy' => $request->experience_vacancy,
             'deadline_vacancy' => $request->deadline_vacancy,
+            'location_vacancy'=> $request->location_vacancy,
             'jobdesk_vacancy' => $request->jobdesk_vacancy,
             'benefit_vacancy' => $request->benefit_vacancy,
             'minsalary' => $request->minsalary,
@@ -217,6 +219,7 @@ class VacancyController extends Controller
                 'location_vacancy' => 'required|string',
                 'experience_vacancy' => 'required|string',
                 'deadline_vacancy' => 'required|date',
+                'location_vacancy'=> 'required|string',
                 'jobdesk_vacancy' => 'required',
                 'benefit_vacancy' => 'required',
                 'minsalary' => 'required|integer',
@@ -236,6 +239,7 @@ class VacancyController extends Controller
         $vacancy->location_vacancy = $validated['location_vacancy'];
         $vacancy->experience_vacancy = $validated['experience_vacancy'];
         $vacancy->deadline_vacancy = $validated['deadline_vacancy'];
+        $vacancy->location_vacancy = $validated['location_vacancy'];
         $vacancy->jobdesk_vacancy = json_encode($validated['jobdesk_vacancy']); // Store as JSON
         $vacancy->benefit_vacancy = json_encode($validated['benefit_vacancy']); // Store as JSON
         $vacancy->minsalary = $validated['minsalary'];
@@ -286,7 +290,7 @@ class VacancyController extends Controller
     public function status($id)
     {
         $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
-        $applies = Applies::where('id_seeker', $seeker->id_user)
+        $applies = Applies::where('id_seeker', $seeker->id_seeker)
             ->where('id_vacancy', $id)
             ->first();
 

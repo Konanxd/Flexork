@@ -23,7 +23,7 @@ class ProfileController extends Controller
         $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
         $cvs = CV::where('id_seeker', $seeker->id_seeker)->get();
 
-        return Inertia::render('Profile/Profile', [
+        return Inertia::render('Profile/profile', [
             'auth' => [
                 'user' => Auth::user() ?? null,
                 'seeker' => $seeker,

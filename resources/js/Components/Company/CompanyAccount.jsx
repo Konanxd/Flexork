@@ -7,7 +7,11 @@ export default function CompanyAccount({ auth, company }) {
         <div className="flex h-full flex-col gap-3">
             <div className="m flex w-full flex-row items-center gap-6 rounded-t-lg bg-gray-400 p-8 sm:flex-col md:flex-row lg:flex-row">
                 <img
-                    src="assets/profile-example.jpg"
+                    src={
+                        auth.user.photo_path
+                            ? auth.user.photo_path
+                            : 'assets/defaultPic.jpg'
+                    }
                     className="size-16 rounded-full bg-slate-300"
                 ></img>
                 <div className="flex w-full flex-col gap-5 text-white sm:items-center md:items-start">

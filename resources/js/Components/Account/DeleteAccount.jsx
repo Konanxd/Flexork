@@ -1,3 +1,7 @@
+import { useState } from 'react';
+import PrimaryButton from '../PrimaryButton';
+import SecondaryButton from '../SecondaryButton';
+
 export default function DeleteAccount() {
     const Segment = 'flex flex-col gap-1';
     const SubSegment = 'ml-4';
@@ -42,6 +46,17 @@ export default function DeleteAccount() {
         </div>
     );
 
+    const [DeleteAcc, setDeleteAcc] = useState(false);
+
+    const handleDelete = () => {
+        profile.destroy();
+        setDeleteAcc(false); // Tutup modal setelah menghapus
+    };
+
+    const handleClose = () => {
+        setDeleteAcc(false);
+    };
+
     return (
         <div className="px-24 py-16">
             <span className="flex flex-col justify-center gap-14">
@@ -70,9 +85,49 @@ export default function DeleteAccount() {
                         tim dukungan Flexork melalui Flexork@email.com.
                     </p>
                 </div>
-                <button className="rounded-lg bg-red-500 px-5 py-3 text-white hover:bg-red-400">
+                <button
+                    className="rounded-lg bg-red-500 px-5 py-3 text-white hover:bg-red-400"
+                    onClick={() => setDeleteAcc(true)}
+                >
                     hapus akun
                 </button>
+
+                {DeleteAcc && (
+                    <div
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
+                        onClick={handleClose} // Klik di luar modal menutup modal
+                    >
+                        <div
+                            className="relative flex w-[400px] flex-col gap-6 rounded-lg bg-white p-6 shadow-lg"
+                            onClick={(e) => e.stopPropagation()} // Mencegah klik di dalam modal menutupnya
+                        >
+                            <div className="flex flex-col gap-2">
+                                <h1 className="text-center text-lg font-semibold">
+                                    Konfirmasi Penghapusan Akun
+                                </h1>
+                                <p className="text-center text-sm text-gray-600">
+                                    Apakah Anda yakin ingin menghapus akun ini?
+                                    Tindakan ini tidak dapat dibatalkan.
+                                </p>
+                            </div>
+
+                            <div className="flex justify-end gap-3">
+                                <SecondaryButton
+                                    className="w-full bg-gray-500 text-white hover:bg-gray-400"
+                                    onClick={handleClose}
+                                >
+                                    Batal
+                                </SecondaryButton>
+                                <PrimaryButton
+                                    className="w-full bg-red-500 text-white hover:bg-red-400"
+                                    onClick={handleDelete}
+                                >
+                                    Hapus
+                                </PrimaryButton>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </span>
         </div>
     );

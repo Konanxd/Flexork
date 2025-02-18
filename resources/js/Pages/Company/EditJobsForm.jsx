@@ -321,7 +321,9 @@ export default function EditJobsForm({ vacancy }) {
                     </PrimaryButton>
                     <SecondaryButton
                         className="w-full bg-zinc-400 py-4 text-lg font-semibold uppercase text-white hover:bg-zinc-300 focus:ring-transparent"
-                        onClick={() => router.visit('/company/dashboard')}
+                        onClick={() =>
+                            router.visit(`/lowongan/${vacancy.id_vacancy}`)
+                        }
                     >
                         batal
                     </SecondaryButton>

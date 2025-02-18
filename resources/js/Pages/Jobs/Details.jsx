@@ -5,6 +5,7 @@ import BackIcon from '@/Components/Icon/BackIcon';
 import ModalSelectCV from '@/Components/ModalSelectCV';
 import PrimaryButton from '@/Components/PrimaryButton';
 import ReviewToUser from '@/Components/ReviewToUser';
+import SecondaryButton from '@/Components/SecondaryButton';
 import SubTitle from '@/Components/SubTitle';
 import TagView from '@/Components/TagView';
 import GuestLayout from '@/Layouts/GuestLayout';
@@ -100,6 +101,10 @@ const Details = ({
             </GuestLayout>
         );
 
+    const [modalConfirm, setModalConfirm] = useState(false);
+    const handleClose = () => {
+        setModalConfirm(false);
+    };
     return (
         <GuestLayout>
             {vacancy != undefined ? (
@@ -163,8 +168,8 @@ const Details = ({
                                 applicationStatus === 'pending' ? (
                                     <ApplyButton
                                         className="bg-[#1673DE] tracking-normal text-white hover:bg-zinc-400"
-                                        onClick={handleCancel}
                                         status={applicationStatus}
+                                        onClick={() => setModalConfirm(true)}
                                     />
                                 ) : (
                                     <ApplyButton
@@ -178,6 +183,39 @@ const Details = ({
                             )}
                         </div>
                     </div>
+
+                    {modalConfirm && (
+                        <div
+                            className="fixed inset-0 flex h-full w-full items-center justify-center bg-black/60"
+                            onClick={handleClose}
+                        >
+                            <div
+                                className="relative flex flex-col gap-5 rounded-lg bg-white p-10"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <h1>
+                                    apakah anda ingin membatalakn lamaran ini?
+                                </h1>
+                                <div className="flex flex-row gap-3">
+                                    <SecondaryButton
+                                        onClick={handleClose}
+                                        className="w-full bg-zinc-500 text-white"
+                                    >
+                                        tidak
+                                    </SecondaryButton>
+                                    <PrimaryButton
+                                        className="w-full bg-[#1673DE] text-white hover:bg-[#135bb0]"
+                                        onClick={() => {
+                                            handleCancel();
+                                            handleClose();
+                                        }}
+                                    >
+                                        Iya
+                                    </PrimaryButton>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {CVSelectOpen && (
                         <ModalSelectCV
@@ -305,7 +343,10 @@ const Details = ({
                         <div className="flex flex-col gap-6">
                             <SubTitle>
                                 <div className="flex flex-row items-center gap-4">
-                                    <img src="assets/company.png" />
+                                    <img
+                                        src="/assets/defaultPic.jpg"
+                                        className="size-16 overflow-hidden rounded-full"
+                                    />
                                     <div className="flex flex-col">
                                         <div className="poppins-semibold">
                                             {vacancy.company.name_company}

@@ -36,12 +36,23 @@ const MyAccount = ({ auth }) => {
         }
     };
 
+    console.log(auth.user.profile_picture);
+
+    // {
+    //     auth.user.profile_picture
+    //         ? auth.user.profile_picture
+    //         : 'assets/defaultPic.jpg';
+    // }
     return (
         <div className="h-full">
             <div className="m flex w-full flex-row items-center gap-6 rounded-t-lg bg-gray-400 p-8 sm:flex-col md:flex-row lg:flex-row">
                 <img
                     alt="auth.user.name"
-                    src="assets/profile-example.jpg"
+                    src={
+                        auth.user.photo_path
+                            ? auth.user.photo_path
+                            : 'assets/defaultPic.jpg'
+                    }
                     className="h-[100px] rounded-full"
                 ></img>
                 <div className="flex w-full flex-col gap-2 text-white sm:items-center md:items-start">

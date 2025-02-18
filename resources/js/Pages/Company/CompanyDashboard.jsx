@@ -14,7 +14,7 @@ export default function CompanyDashboard({ auth }) {
     };
 
     return (
-        <GuestLayout className="h-auto gap-6 p-6">
+        <GuestLayout className="gap-6 p-6">
             <div className="flex w-full flex-row items-center justify-between rounded-lg bg-white px-4 py-4 uppercase">
                 <span className="ml-2 text-lg font-semibold">
                     daftar lowongan
