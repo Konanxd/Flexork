@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class CV extends Model
 {
     protected $table = "cv_s";
+    protected $primaryKey = "id_cv";
 
     protected $fillable = [
         'id_seeker',

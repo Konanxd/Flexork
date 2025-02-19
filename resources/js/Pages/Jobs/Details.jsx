@@ -21,6 +21,7 @@ const Details = ({
     cvs,
     status: initialStatus,
 }) => {
+    console.log(cvs);
     const [applicationStatus, setApplicationStatus] = useState(
         initialStatus ?? null,
     );

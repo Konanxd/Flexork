@@ -259,9 +259,11 @@ class VacancyController extends Controller
             'id_vacancy' => 'required|integer',
         ]);
 
+        $seeker = Seeker::where('id_user', Auth::id())->first();
+
         Applies::create([
             'id_cv' => $request->id_cv,
-            'id_seeker' => Auth::id(),
+            'id_seeker' => $seeker->id_seeker,
             'id_vacancy' => $request->id_vacancy,
             'status' => 'pending'
         ]);
@@ -274,9 +276,10 @@ class VacancyController extends Controller
     public function cancel($id)
     {
         $seeker = Seeker::where('id_user', Auth::id())->firstOrFail();
-        $applies = Applies::where('id_seeker', $seeker->id_user)
+        $applies = Applies::where('id_seeker', $seeker->id_seeker)
             ->where('id_vacancy', $id)
             ->firstOrFail();
+
 
         // dd($applies);
 

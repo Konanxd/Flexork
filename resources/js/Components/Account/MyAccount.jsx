@@ -9,9 +9,9 @@ import MyAccountDesc from './MyAccountDesc';
 
 const MyAccount = ({ auth }) => {
     const [cvs, setCvs] = useState([]);
-    console.log(auth);
-    console.log(cvs);
-    console.log(auth.cvs);
+    // console.log(auth.cvs[0].path);
+    // console.log(cvs);
+    // console.log(auth.user.cvs);
 
     useEffect(() => {
         const fetchCvs = async () => {
@@ -30,27 +30,20 @@ const MyAccount = ({ auth }) => {
 
         try {
             await axios.delete(`/api/delete-cv/${id}`);
-            setCvs((prevCvs) => prevCvs.filter((cv) => cv.id !== id));
+            setCvs((prevCvs) => prevCvs.filter((cv) => cv.id_cv !== id));
         } catch (error) {
             alert('Gagal mengahpus CV.');
         }
     };
 
-    console.log(auth.user.profile_picture);
-
-    // {
-    //     auth.user.profile_picture
-    //         ? auth.user.profile_picture
-    //         : 'assets/defaultPic.jpg';
-    // }
     return (
         <div className="h-full">
             <div className="m flex w-full flex-row items-center gap-6 rounded-t-lg bg-gray-400 p-8 sm:flex-col md:flex-row lg:flex-row">
                 <img
                     alt="auth.user.name"
                     src={
-                        auth.user.photo_path
-                            ? auth.user.photo_path
+                        auth.user.profile_picture
+                            ? auth.user.profile_picture
                             : 'assets/defaultPic.jpg'
                     }
                     className="h-[100px] rounded-full"
@@ -211,13 +204,13 @@ const MyAccount = ({ auth }) => {
                     className="flex w-full flex-row gap-6 overflow-x-scroll pb-3 scrollbar-thin"
                 >
                     <FileUploadBtn onUpload={() => window.location.reload()} />
-                    {cvs.length > 0 ? (
+                    {auth.cvs.length > 0 ? (
                         auth.cvs.map((cv) => (
                             <FileStored
                                 key={cv.id_cv}
                                 filename={cv.original_cv_name}
                                 size={'2MB'}
-                                onDelete={() => handleDelete(cv.id)}
+                                onDelete={() => handleDelete(cv.id_cv)}
                                 fileUrl={`/storage/${cv.path}`}
                             />
                         ))

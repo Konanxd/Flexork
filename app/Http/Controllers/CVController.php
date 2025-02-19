@@ -83,7 +83,7 @@ class CVController extends Controller
         $seeker = Seeker::where('id_user', Auth::id())
             ->firstOrFail();
         $cv = Cv::where('id_seeker', $seeker->id_seeker)
-            ->where('id', $id)->first();
+            ->where('id_cv', $id)->first();
 
         if (!$cv) {
             return response()->json(['message' => 'CV not found'], 404);

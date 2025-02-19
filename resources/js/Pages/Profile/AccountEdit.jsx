@@ -121,7 +121,7 @@ export default function AccountEdit({ auth }) {
                         simpan
                     </PrimaryButton>
                     <SecondaryButton
-                        onClick={(e) => router.get('/profile')}
+                        onClick={(e) => router.get('/profil')}
                         className="bg-9F9F9F w-full bg-[#9F9F9F] py-4 text-lg font-semibold uppercase tracking-normal text-white hover:bg-[#F16F6F] focus:ring-transparent"
                     >
                         batal

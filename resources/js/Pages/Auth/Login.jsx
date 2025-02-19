@@ -116,7 +116,7 @@ export default function Login({ auth, status, canResetPassword }) {
                             className="w-full bg-[#1673DE] py-3 text-white"
                             disabled={processing}
                         >
-                            Log in
+                            Masuk
                         </PrimaryButton>
                     </div>
                 </form>
